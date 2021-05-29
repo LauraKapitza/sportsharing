@@ -1,0 +1,59 @@
+<div class="form">
+  <h2>Create A Course</h2>
+  <form action="/courses" method="POST">
+    <label>
+      Course Name
+      <input type="text" name="courseName" required/>
+    </label>
+
+    <label>
+      Date
+      <input type="date" name="date" required/>
+    </label>
+
+    <label>
+      Start time
+      <input type="time" name="startTime" required />
+    </label>
+
+    <label>
+      Maximun participants
+      <input type="number" name="maxParticipants" min="1" placeholder="10" />
+    </label>
+
+    <label>
+      Address
+      <input type="text" name="address" placeholder="10 Avenue Sport, 11111 Paris" required/>
+    </label>
+
+    <label>
+      Choose a category:
+      <select name="category" required>
+        <option value="">--Please choose an option--</option>
+        <option value="Climbing">Climbing</option>
+        <option value="Dance">Dance</option>
+        <option value="Functional Training">Functional Training</option>
+        <option value="Material Arts">Material Arts</option>
+        <option value="Pilates">Pilates</option>
+        <option value="Racket Sports">Racket Sports</option>
+        <option value="Strength Training">Strength Training</option>
+        <option value="Swimming">Swimming</option>
+        <option value="Team Sports">Team Sports</option>
+        <option value="Vibration Training">Vibration Training</option>
+        <option value="Water Sports">Water Sports</option>
+        <option value="Yoga">Yoga</option>
+    </select>
+    </label>
+
+    <label>
+      Description
+      <input type="text" name="description" placeholder="Please write some information about your course." />
+    </label>
+
+    <button type="submit">Create Course</button>
+
+    {{#if errorMessage}}
+      <p class="error">{{errorMessage}}</p>
+    {{/if}}
+  </form>
+</div>
