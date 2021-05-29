@@ -119,39 +119,45 @@ router.post('/logout', (req, res) => {
 ////////////////////////////////////////////////////////////////////////
 
 router.get('/userProfile', routeGuard, (req, res) => {
-  res.render('users/user-profile',{user:req.session.currentUser});
+  res.render('users/user-profile', { user: req.session.currentUser });
 });
 
 router.get('/userProfile/edit', routeGuard, (req, res) => {
-  res.render('users/user-profile-edit',{user:req.session.currentUser})
+  res.render('users/user-profile-edit', { user: req.session.currentUser })
 });
 
-router.post('/userProfile', routeGuard, fileUploader.single('image'), (req, res,next) => {
+router.post('/userProfile', routeGuard, fileUploader.single('image'), (req, res, next) => {
   console.log(req.session.currentUser._id);
 
   const password = req.body.password;
   console.log(password);
 
   bcryptjs
-  .genSalt(saltRounds)
-  .then(salt => bcryptjs.hash(password, salt))
-  .then(hashedPassword => {
-    return User.findByIdAndUpdate(
-      req.session.currentUser._id,
-      {
-      username:req.body.username,
-      email:req.body.email,
-      password:hashedPassword,
-      city:req.body.city,
-      telephone:req.body.telephone
-      },
-      { new: true });
-  })
-  .then(userFromDB => {
-    console.log('Updated user is: ', userFromDB);
-    res.redirect('/userProfile');
-  })
-  .catch(error => next(error));
+    .genSalt(saltRounds)
+    .then(salt => bcryptjs.hash(password, salt))
+    .then(hashedPassword => {
+      return User.findByIdAndUpdate(
+        req.session.currentUser._id,
+        {
+          username: req.body.username,
+          email: req.body.email,
+          password: hashedPassword,
+          city: req.body.city,
+          telephone: req.body.telephone
+        },
+        { new: true });
+    })
+    .then(userFromDB => {
+      console.log('Updated user is: ', userFromDB);
+      res.redirect('/userProfile');
+    })
+    .catch(error => next(error));
+});
+
+router.post('/userProfile/delete', routeGuard, (req, res, next) => {
+  User.findByIdAndRemove(req.session.currentUser._id)
+    .then(() => res.redirect('/'))
+    .catch(err => next(err));
 });
 
 module.exports = router;

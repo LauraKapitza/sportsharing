@@ -26,6 +26,9 @@
       <p class="error">{{errorMessage}}</p>
     {{/if}}
   </form>
+  <form id="delete-profile" action="/userProfile/delete" method="POST">
+    <button>delete</button>
+</form>
   {{else}}
     <p>Not logged in anymore, sorry!</p>
     <a href="/login">Login</a>
