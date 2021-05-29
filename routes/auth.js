@@ -20,7 +20,7 @@ router.get('/signup', (req, res) => res.render('auth/signup'));
 
 // .post() route ==> to process form data
 router.post('/signup', fileUploader.single('image'), (req, res, next) => {
-  const { username, email, password } = req.body;
+  const { username, email, password, city, telephone } = req.body;
 
   if (!username || !email || !password) {
     res.render('auth/signup', { errorMessage: 'All fields are mandatory. Please provide your username, email and password.' });
@@ -50,7 +50,7 @@ router.post('/signup', fileUploader.single('image'), (req, res, next) => {
         passwordHash: hashedPassword,
         city,
         telephone,
-        imageUrl: req.file.path
+        // imageUrl: req.file.path
       });
     })
     .then(userFromDB => {
@@ -90,11 +90,13 @@ router.post('/login', (req, res, next) => {
 
   User.findOne({ email })
     .then(user => {
+      // console.log("user:",user);
       if (!user) {
         res.render('auth/login', { errorMessage: 'Email is not registered. Try with other email.' });
         return;
       } else if (bcryptjs.compareSync(password, user.passwordHash)) {
         req.session.currentUser = user;
+        console.log("req session:", req.session.currentUser)
         res.redirect('/userProfile');
       } else {
         res.render('auth/login', { errorMessage: 'Incorrect password.' });
@@ -112,15 +114,8 @@ router.post('/logout', (req, res) => {
   res.redirect('/');
 });
 
-router.get('/userProfile', (req, res) => {
-  
-  if (req.session) {
-    res.render('users/user-profile');
-  } else if (req.session == undefined) {
-    res.redirect('/login')
-  } else {
-    console.log('yolo')
-  }
+router.get('/userProfile', routeGuard, (req, res) => {
+  res.render('users/user-profile',{user:req.session.currentUser});
 });
 
 module.exports = router;
