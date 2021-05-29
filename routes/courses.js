@@ -37,6 +37,13 @@ router.get('/courses/:id/edit', (req, res, next) => {
     .catch(err => next(err))
 })
 
+router.post('/courses/:id/delete', (req, res, next) => {
+  Courses.findByIdAndRemove(req.params.id)
+    .then(() => res.redirect('/courses'))
+    .catch(err => next(err))
+
+})
+
 router.post('/courses/:id', (req, res, next) => {
   let id = req.params.id;
   Courses.findByIdAndUpdate(

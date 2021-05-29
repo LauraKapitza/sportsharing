@@ -56,4 +56,8 @@
       <p class="error">{{errorMessage}}</p>
     {{/if}}
   </form>
+
+  <form id="delete-course" action="/courses/{{course.id}}/delete" method="POST">
+      <button>Delete Course</button>
+  </form>
 </div>
