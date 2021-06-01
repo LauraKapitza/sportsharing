@@ -40,6 +40,7 @@ router.post('/signup', fileUploader.single('image'), (req, res, next) => {
     .genSalt(saltRounds)
     .then(salt => bcryptjs.hash(password, salt))
     .then(hashedPassword => {
+      console.log("req.file.path: ",req.file.path)
       return User.create({
         // username: username
         username,
@@ -50,7 +51,7 @@ router.post('/signup', fileUploader.single('image'), (req, res, next) => {
         passwordHash: hashedPassword,
         city,
         telephone,
-        // imageUrl: req.file.path
+        imageUrl: req.file.path
       });
     })
     .then(userFromDB => {
@@ -127,10 +128,16 @@ router.get('/userProfile/edit', routeGuard, (req, res) => {
 });
 
 router.post('/userProfile', routeGuard, fileUploader.single('image'), (req, res, next) => {
-  console.log(req.session.currentUser._id);
+  console.log("currentUserId: ",req.session.currentUser._id);
 
   const password = req.body.password;
-  console.log(password);
+
+  let imgUrl;
+  if (req.file) {
+    imgUrl = req.file.path;
+  } else {
+    imgUrl = req.body.existingImage;
+  }
 
   bcryptjs
     .genSalt(saltRounds)
@@ -143,13 +150,15 @@ router.post('/userProfile', routeGuard, fileUploader.single('image'), (req, res,
           email: req.body.email,
           password: hashedPassword,
           city: req.body.city,
-          telephone: req.body.telephone
+          telephone: req.body.telephone,
+          imageUrl:imgUrl
         },
         { new: true });
     })
     .then(userFromDB => {
       console.log('Updated user is: ', userFromDB);
-      res.redirect('/userProfile');
+      // res.redirect('/userProfile');
+      res.render('users/user-profile',{user:userFromDB})
     })
     .catch(error => next(error));
 });

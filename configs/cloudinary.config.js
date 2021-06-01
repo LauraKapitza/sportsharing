@@ -12,7 +12,7 @@ const storage = new CloudinaryStorage({
   //cloudinary: cloudinary
   cloudinary,
   params: { // see: https://cloudinary.com/documentation/image_upload_api_reference#optional_parameters
-    folder: 'Lab-File-Upload',
+    folder: 'Ironhack-project2: Sportsharing',
     allowedFormats:['jpg', 'png'],
     public_id: (req, file) => file.originalname
   }
