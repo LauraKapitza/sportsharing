@@ -4,18 +4,23 @@
 
 {{#if user}}
 <h2>Welcome, {{ user.username }}!</h2>
-<form id="logout-form" action="/logout" method="POST">
-    <button>Logout</button>
-</form>
-<a href="/UserProfile/edit">Edit your profile</a>
-<a href="/courses/add">Create a course</a>
-<p>This is your profile page my friend! And your email is: {{ user.email }}</p>
+
 <div>
-    <p>This is your profile picture</p>
     <img src="{{user.imageUrl}}">
 </div>
 
-{{> calendar}}
+<div>
+    <p>Username: {{ user.username }}</p>
+    <p>Email: {{ user.email }}</p>
+    <p>City: {{ user.city }}</p>
+    <p>Telephone: {{ user.telephone }}</p>
+    <a href="/UserProfile/edit">Edit profile</a>
+</div>
+
+<div>
+    <a href='/courses'>See Courses</a>
+    <a href="/courses/add">Create a course</a>
+</div>
 
 {{else}}
 <p>Still no logged in user, sorry!</p>

@@ -1,12 +1,26 @@
 const express = require('express');
 const router  = express.Router();
 
+const User = require('../models/User.model');
 const Courses = require('../models/Course.model');
+const CATEOGORIES = require('../constants.js');
 
 router.get('/courses', (req, res, next) => {
   Courses.find()
     .then(coursesFromDB => {
-      res.render('courses/courses', {courses: coursesFromDB})
+      if (req.session.currentUser) {
+        User.findById(req.session.currentUser._id)
+          .then(user => {
+            const data = {
+              courses: coursesFromDB,
+              user: user 
+            }
+            res.render('courses/courses', data)
+          })
+          .catch(err => next(err))
+      } else {
+        res.render('courses/courses', {courses: coursesFromDB})
+      }
     })
     .catch(err => next(err))
 });

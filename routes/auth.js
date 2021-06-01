@@ -128,8 +128,6 @@ router.get('/userProfile/edit', routeGuard, (req, res) => {
 });
 
 router.post('/userProfile', routeGuard, fileUploader.single('image'), (req, res, next) => {
-  console.log("currentUserId: ",req.session.currentUser._id);
-
   const password = req.body.password;
 
   let imgUrl;
