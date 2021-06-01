@@ -6,12 +6,15 @@ const Courses = require('../models/Course.model');
 router.get('/courses', (req, res, next) => {
   Courses.find()
     .then(coursesFromDB => {
-      res.render('courses/courses', {courses: coursesFromDB})
+      res.render('courses/courses', {
+        courses: coursesFromDB,
+        user: req.session.currentUser
+      })
     })
     .catch(err => next(err))
 });
 
-router.get('/courses/add', (req, res) => res.render('courses/new'));
+router.get('/courses/add', (req, res) => res.render('courses/new',{ user: req.session.currentUser }));
 
 router.post('/courses', (req, res, next) => {
   Courses.create({
@@ -33,7 +36,10 @@ router.get('/courses/:id/edit', (req, res, next) => {
   Courses.findById(req.params.id)
     .populate('courseOwner')
     .populate('participants')
-    .then(courseFromDB => res.render('courses/edit', {course: courseFromDB}))
+    .then(courseFromDB => res.render('courses/edit', {
+      course: courseFromDB,
+      user: req.session.currentUser
+    }))
     .catch(err => next(err))
 })
 
@@ -70,7 +76,8 @@ router.get('/courses/:id', (req, res, next) => {
     .then(courseFromDB => {
       const data = {
         course: courseFromDB,
-        spaceTaken: courseFromDB.maxParticipants - courseFromDB.participants.length
+        spaceTaken: courseFromDB.maxParticipants - courseFromDB.participants.length,
+        user: req.session.currentUser
       }
       res.render('courses/details', data)
     })

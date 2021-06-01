@@ -4,9 +4,7 @@
 
 {{#if user}}
 <h2>Welcome, {{ user.username }}!</h2>
-<form id="logout-form" action="/logout" method="POST">
-    <button>Logout</button>
-</form>
+
 <a href="/UserProfile/edit">Edit your profile</a>
 <a href="/courses/add">Create a course</a>
 <p>This is your profile page my friend! And your email is: {{ user.email }}</p>
