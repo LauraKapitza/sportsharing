@@ -1,0 +1,131 @@
+<div class="calendar-container">
+  {{!-- TOD add if condition to change headline (user vs visitor) --}}
+  <h2>Course Calendar</h2> 
+  
+  <div class='claendar-header'>
+
+    <div class="dropdown">
+      {{!-- TOD add eventListener to update date according to the current week --}}
+      <button class='dropdown-btn'>31/05/2021 - 06/06/2021</button>
+      <div class="dropdown-menu">
+        <a class="dropdown-item" href="#">Previous week</a>
+        <a class="dropdown-item" href="#">Next week</a>
+      </div>
+
+      <button class='dropdown-btn'>Sport Category</button>
+      <div class="dropdown-menu">
+        <a class="dropdown-item" href="#">Climbing</a>
+        <a class="dropdown-item" href="#">Dance</a>
+        <a class="dropdown-item" href="#">Functional Training</a>
+        <a class="dropdown-item" href="#">Material Arts</a>
+        <a class="dropdown-item" href="#">Pilates</a>
+        <a class="dropdown-item" href="#">Racket Sports</a>
+        <a class="dropdown-item" href="#">Strength Training</a>
+        <a class="dropdown-item" href="#">Swimming</a>
+        <a class="dropdown-item" href="#">Team Sports</a>
+        <a class="dropdown-item" href="#">Vibration Training</a>
+        <a class="dropdown-item" href="#">Water Sports</a>
+        <a class="dropdown-item" href="#">Yoga</a>
+      </div>
+    </div>
+
+    <a href='/'>Create A Course</a>
+
+  </div>
+
+  <div class='course-list'>
+
+    <div class='day-slot'>
+      <h4>Monday</h>
+      <p>31/05/2021</p>
+      <ul>
+        {{#each courses}}
+          <li>
+            {{this.courseName}} <span> | </span>
+            <a href='/courses/{{this._id}}'>Show Details</a><span> | </span>
+          </li>
+        {{/each}}
+      </ul>
+    </div>
+
+    <div class='day-slot'>
+      <h4>Tuesday</h>
+      <p>01/06/2021</p>
+      <ul>
+        {{#each courses}}
+          <li>
+            {{this.courseName}} <span> | </span>
+            <a href='/courses/{{this._id}}'>Show Details</a><span> | </span>
+          </li>
+        {{/each}}
+      </ul>
+    </div>
+
+    <div class='day-slot'>
+      <h4>Wednesday</h>
+      <p>02/06/2021</p>
+      <ul>
+        {{#each courses}}
+          <li>
+            {{this.courseName}} <span> | </span>
+            <a href='/courses/{{this._id}}'>Show Details</a><span> | </span>
+          </li>
+        {{/each}}
+      </ul>
+    </div>
+
+    <div class='day-slot'>
+      <h4>Thursday</h>
+      <p>03/06/2021</p>
+      <ul>
+        {{#each courses}}
+          <li>
+            {{this.courseName}} <span> | </span>
+            <a href='/courses/{{this._id}}'>Show Details</a><span> | </span>
+          </li>
+        {{/each}}
+      </ul>
+    </div>
+
+    <div class='day-slot'>
+      <h4>Friday</h>
+      <p>04/06/2021</p>
+      <ul>
+        {{#each courses}}
+          <li>
+            {{this.courseName}} <span> | </span>
+            <a href='/courses/{{this._id}}'>Show Details</a><span> | </span>
+          </li>
+        {{/each}}
+      </ul>
+    </div>
+
+    <div class='day-slot'>
+      <h4>Saturday</h>
+      <p>05/06/2021</p>
+      <ul>
+        {{#each courses}}
+          <li>
+            {{this.courseName}} <span> | </span>
+            <a href='/courses/{{this._id}}'>Show Details</a><span> | </span>
+          </li>
+        {{/each}}
+      </ul>
+    </div>
+
+  <div class='day-slot'>
+      <h4>Sunday</h>
+      <p>06/06/2021</p>
+      <ul>
+        {{#each courses}}
+          <li>
+            {{this.courseName}} <span> | </span>
+            <a href='/courses/{{this._id}}'>Show Details</a><span> | </span>
+          </li>
+        {{/each}}
+      </ul>
+    </div>
+
+  </div>
+
+</div>

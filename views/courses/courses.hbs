@@ -4,11 +4,5 @@
 
 <h2>Here comes the Course Calendar</h2>
 <p> If you see that, it's working.</p>
-<ul>
-  {{#each courses}}
-    <li>
-      {{this.courseName}} <span> | </span>
-      <a href='/courses/{{this._id}}'>Show Details</a><span> | </span>
-    </li>
-  {{/each}}
-</ul>
+
+{{> calendar}}

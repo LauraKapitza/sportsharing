@@ -31,14 +31,13 @@ app.use(cookieParser());
 //   sourceMap: true
 // }));
       
-
-app.set('views', path.join(__dirname, 'views'));
+//views declaration
 app.set('view engine', 'hbs');
+app.set('views', path.join(__dirname, 'views'));
 hbs.registerPartials(path.join(__dirname, 'views/partials'));
 
 app.use(express.static(path.join(__dirname, 'public')));
 app.use(favicon(path.join(__dirname, 'public', 'images', 'favicon.ico')));
-
 
 const index = require('./routes/index');
 app.use('/', index);
