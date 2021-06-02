@@ -80,6 +80,7 @@ router.get('/login', (req, res) => res.render('auth/login'));
 
 // .post() login route ==> to process form data
 router.post('/login', (req, res, next) => {
+  console.log('coucou');
   const { email, password } = req.body;
 
   if (email === '' || password === '') {

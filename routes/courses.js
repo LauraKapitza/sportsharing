@@ -14,9 +14,15 @@ router.get('/courses', (req, res, next) => {
     .catch(err => next(err))
 });
 
+//Route post pour la recherche des cours
+router.post('/courses', (req, res, next) => {
+  res.send('ok');
+})
+
 router.get('/courses/add', (req, res) => res.render('courses/new',{ user: req.session.currentUser }));
 
-router.post('/courses', (req, res, next) => {
+//Route post pour la création d'un nouveau cours
+router.post('/courses/add', (req, res, next) => {
   Courses.create({
     courseOwner: req.session.currentUser._id, 
     courseName: req.body.courseName,

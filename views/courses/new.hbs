@@ -2,7 +2,7 @@
 
 <div class="form">
   <h2>Create A Course</h2>
-  <form action="/courses" method="POST">
+  <form action="/courses/add" method="POST">
     <label>
       Course Name
       <input type="text" name="courseName" required/>
@@ -10,12 +10,12 @@
 
     <label>
       Date
-      <input type="date" name="date" required/>
+      <input type="date" id="input-date" name="date" required/>
     </label>
 
     <label>
       Start time
-      <input type="time" name="startTime" required />
+      <input type="time" id="input-time" name="startTime" required />
     </label>
 
     <label>
