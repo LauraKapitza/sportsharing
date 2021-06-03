@@ -2,11 +2,18 @@ body {
   padding: 50px;
   font: 14px "Lucida Grande", Helvetica, Arial, sans-serif; }
 
-a {
-  color: #00B7FF; }
 
-img {
-  width: 100px; height: auto;
+img {width: 100px; height: auto;}
+
+.btn-blue {
+  background-color: #4758D6;
+  border-radius: 10px;
+  margin: 5px auto;
+  padding: 4px 20px;
+  text-align: center;
 }
 
-/*# sourceMappingURL=style.css.map */
+.btn-blue a {
+  color: white;
+  text-decoration: none;
+}

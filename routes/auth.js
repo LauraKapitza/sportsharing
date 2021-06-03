@@ -45,12 +45,8 @@ router.post('/signup', fileUploader.single('image'), (req, res, next) => {
     .then(salt => bcryptjs.hash(password, salt))
     .then(hashedPassword => {
       return User.create({
-        // username: username
         username,
         email,
-        // passwordHash => this is the key from the User model
-        //     ^
-        //     |            |--> this is placeholder (how we named returning value from the previous method (.hash()))
         passwordHash: hashedPassword,
         city,
         telephone,
@@ -58,7 +54,6 @@ router.post('/signup', fileUploader.single('image'), (req, res, next) => {
       });
     })
     .then(userFromDB => {
-      // console.log('Newly created user is: ', userFromDB);
       res.redirect('/userProfile');
     })
     .catch(error => {
@@ -94,13 +89,11 @@ router.post('/login', (req, res, next) => {
 
   User.findOne({ email })
     .then(user => {
-      // console.log("user:",user);
       if (!user) {
         res.render('auth/login', { errorMessage: 'Email is not registered. Try with other email.' });
         return;
       } else if (bcryptjs.compareSync(password, user.passwordHash)) {
         req.session.currentUser = user;
-        // console.log("req session:", req.session.currentUser)
         res.redirect('/userProfile');
       } else {
         res.render('auth/login', { errorMessage: 'Incorrect password.' });
@@ -123,39 +116,30 @@ router.post('/logout', (req, res) => {
 ////////////////////////////////////////////////////////////////////////
 
 router.get('/userProfile', routeGuard, (req, res,next) => {
-  // console.log("currentsession",req.session.currentUser)
   //Database query car modification dans edit non prise en compte dans req.session.currentUser
   User.findById(req.session.currentUser._id)
   .then(userFromDB => {
-    // console.log("fromdb",userFromDB)
     res.render('users/user-profile', {
       user: userFromDB,
     })
   })
   .catch(err => next(err))
 
-  // res.render('users/user-profile', { 
-  //   user: req.session.currentUser, 
-  // });
 });
 
 router.get('/userProfile/edit', routeGuard, (req, res, next) => {
-  // console.log(req.session.currentUser);
   //Database query car modification dans edit non prise en compte dans req.session.currentUser
   User.findById(req.session.currentUser._id)
   .then(userFromDB => {
-    // console.log("fromdb",userFromDB)
     res.render('users/user-profile-edit', {
       user: userFromDB,
     })
   })
   .catch(err => next(err))
 
-  // res.render('users/user-profile-edit', { user: req.session.currentUser })
 });
 
 router.post('/userProfile', routeGuard, fileUploader.single('image'), (req, res, next) => {
-  // console.log("currentUser: ",req.session.currentUser);
 
   const password = req.body.password;
 
@@ -183,8 +167,6 @@ router.post('/userProfile', routeGuard, fileUploader.single('image'), (req, res,
         { new: true });
     })
     .then(userFromDB => {
-      // console.log('Updated user is: ', userFromDB);
-      // res.redirect('/userProfile');
       res.render('users/user-profile',{user:userFromDB})
     })
     .catch(error => next(error));

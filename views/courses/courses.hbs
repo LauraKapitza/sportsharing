@@ -11,23 +11,23 @@
   {{/if}}
   <div class='calendar-header'>
 
-    <div class="dropdown">
+    <div class="week-btn">
       {{!-- TOD add eventListener to update date according to the current week --}}
-      <button class='dropdown-btn'>31/05/2021 - 06/06/2021</button>
-      <div class="dropdown-menu">
-        <a class="dropdown-item" href="#">Previous week</a>
-        <a class="dropdown-item" href="#">Next week</a>
-      </div>
+      <button class='btn-previous-week'><</button>
+      <button class='btn-current-week'>31/05/2021 - 06/06/2021</button>
+      <button class='btn-next-week'>></button>
+    </div>
 
-      <button class='dropdown-btn'>Sport Category</button>
+    <div class="dropdown">
+      <button class='drop-btn'>Sport Category</button>
       <div class="dropdown-menu">
         {{#each categories}}
         <a class="dropdown-item" href="#">{{this}}</a>
         {{/each}}
       </div>
     </div>
-
-    <a href='/courses/add'>Create A Course</a>
+    <div class='btn-blue'><a href='/courses/add'>Create A Course</a></div>
+    
 
   </div>
 
