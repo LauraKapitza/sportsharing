@@ -23,6 +23,14 @@ const courseSchema = new Schema(
       type: String,
       required: [true, 'Address is required.']
     },
+    zip: {
+      type: Number,
+      required: [true, 'Zip is required.']
+    },
+    city: {
+      type: String,
+      required: [true, 'City is required.']
+    },
     category: {
       type: String,
       enum: [

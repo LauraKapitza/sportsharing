@@ -1,10 +1,10 @@
 const express = require('express');
-const router  = express.Router();
+const router = express.Router();
 
 const User = require('../models/User.model');
 const Courses = require('../models/Course.model');
 const CATEGORIES = require('../constants');
-console.log(CATEGORIES)
+// console.log(CATEGORIES)
 
 router.get('/courses', (req, res, next) => {
   Courses.find()
@@ -13,13 +13,13 @@ router.get('/courses', (req, res, next) => {
         const data = {
           courses: coursesFromDB,
           user: req.session.currentUser,
-          categories: CATEGORIES 
+          categories: CATEGORIES
         }
         res.render('courses/courses', data)
       } else {
         const data = {
           courses: coursesFromDB,
-          categories: CATEGORIES 
+          categories: CATEGORIES
         }
         res.render('courses/courses', data)
       }
@@ -28,7 +28,7 @@ router.get('/courses', (req, res, next) => {
 });
 
 //Route post pour la recherche des cours
-router.get('/courses/add', (req, res) => res.render('courses/new',{ 
+router.get('/courses/add', (req, res) => res.render('courses/new', {
   user: req.session.currentUser,
   categories: CATEGORIES
 }));
@@ -37,18 +37,20 @@ router.post('/courses', (req, res, next) => {
   res.send('ok');
 })
 
-router.get('/courses/add', (req, res) => res.render('courses/new',{ user: req.session.currentUser }));
+router.get('/courses/add', (req, res) => res.render('courses/new', { user: req.session.currentUser }));
 
 //Route post pour la création d'un nouveau cours
 router.post('/courses/add', (req, res, next) => {
   Courses.create({
-    courseOwner: req.session.currentUser._id, 
+    courseOwner: req.session.currentUser._id,
     courseName: req.body.courseName,
     date: req.body.date,
     startTime: req.body.startTime,
     maxParticipants: req.body.maxParticipants,
     participants: [],
     address: req.body.address,
+    zip: req.body.zip,
+    city: req.body.city,
     category: req.body.category,
     description: req.body.description
   })
@@ -85,13 +87,15 @@ router.post('/courses/:id', (req, res, next) => {
       startTime: req.body.startTime,
       maxParticipants: req.body.maxParticipants,
       address: req.body.address,
+      zip: req.body.zip,
+      city: req.body.city,
       category: req.body.category,
       description: req.body.description
     },
-    {new: true}
+    { new: true }
   )
-  .then(() => res.redirect(`/courses/${id}`))
-  .catch(err => next(err))
+    .then(() => res.redirect(`/courses/${id}`))
+    .catch(err => next(err))
 })
 
 router.get('/courses/:id', (req, res, next) => {
