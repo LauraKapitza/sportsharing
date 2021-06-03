@@ -77,34 +77,33 @@ router.post('/courses/:id/delete', (req, res, next) => {
 
 })
 
-// router.post('/courses/:id/join', (req, res, next) => {
-//   console.log("req.body", req.body);
-//   let participants;
-//   Courses.findById(req.params.id)
-//     .then(courseFromDB => {
-//       console.log("course fromdb",courseFromDB);
-//       participants = courseFromDB.push(req.session.currentUser)
-//       console.log("participants",participants);
+router.post('/courses/:id/join', (req, res, next) => {
+  let updatedParticipants;
+  Courses.findById(req.params.id)
+    .then(courseFromDB => {
+      console.log("course fromdb",courseFromDB);
+      updatedParticipants = courseFromDB.participants.push(req.session.currentUser)
+      console.log("participants",updatedParticipants[0]);
       
-//       Courses.findByIdAndUpdate(
-//         req.params.id,
-//         {
-//           courseName: courseFromDB.courseName,
-//           date: courseFromDB.date,
-//           startTime: courseFromDB.startTime,
-//           maxParticipants: courseFromDB.maxParticipants,
-//           address: courseFromDB.address,
-//           zip: courseFromDB.zip,
-//           city: courseFromDB.city,
-//           category: courseFromDB.category,
-//           description: courseFromDB.description
-//         },
-//         { new: true }
-//       )
-//       .then(res.redirect(`/courses/${req.params.id}`))
-//     })    
-//     .catch(err => next(err))
-// });
+      Courses.findByIdAndUpdate(
+        req.params.id,
+        {
+          courseName: courseFromDB.courseName,
+          date: courseFromDB.date,
+          startTime: courseFromDB.startTime,
+          maxParticipants: courseFromDB.maxParticipants,
+          address: courseFromDB.address,
+          zip: courseFromDB.zip,
+          city: courseFromDB.city,
+          category: courseFromDB.category,
+          description: courseFromDB.description
+        },
+        { new: true }
+      )
+      .then(res.redirect(`/courses/${req.params.id}`))
+    })    
+    .catch(err => next(err))
+});
 
 router.post('/courses/:id', (req, res, next) => {
   Courses.findByIdAndUpdate(
@@ -122,7 +121,7 @@ router.post('/courses/:id', (req, res, next) => {
     },
     { new: true }
   )
-    .then(() => res.redirect(`/courses/${id}`))
+    .then(() => res.redirect(`/courses/${req.params.id}`))
     .catch(err => next(err))
 })
 
