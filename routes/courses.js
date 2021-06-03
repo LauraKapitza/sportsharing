@@ -28,7 +28,10 @@ router.get('/courses', (req, res, next) => {
 });
 
 //Route post pour la recherche des cours
-router.get('/courses/add', (req, res) => res.render('courses/new',{ user: req.session.currentUser,categories: CATEGORIES}));
+router.get('/courses/add', (req, res) => res.render('courses/new',{ 
+  user: req.session.currentUser,
+  categories: CATEGORIES
+}));
 
 router.post('/courses', (req, res, next) => {
   res.send('ok');
