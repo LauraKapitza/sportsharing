@@ -6,13 +6,13 @@
   <form action="/userProfile" method="POST" enctype='multipart/form-data'>
     <label>
       Username
-      <input type="text" name="username" placeholder="{{user.username}}" />
+      <input type="text" name="username" value="{{user.username}}" />
     </label>
 
 
     <label>
       Email
-      <input type="email" name="email" placeholder="{{user.email}}" />
+      <input type="email" name="email" value="{{user.email}}" />
     </label>
 
 
@@ -24,21 +24,30 @@
 
     <label>
       City
-      <input type="text" name="city" placeholder="{{user.city}}" />
+      <input type="text" name="city" value="{{user.city}}" />
     </label>
-    
+
 
     <label>
       Telephone
-      <input type="text" name="telephone" placeholder="{{user.telephone}}" />
+      <input type="text" name="telephone" value="{{user.telephone}}" />
     </label>
-    
+
 
     <label>
       Profile Picture
+      <div>
+        <p>This is your profile picture</p>
+        {{#if user.imageUrl}}
+        <img src="{{user.imageUrl}}">
+        {{else}}
+        <img src="/images/avatar.svg" >
+        {{/if}}
+      </div>
       <input type="file" name="image" id="input-image">
+      <input type="text" name="existingImage" hidden id="" value="{{user.imageUrl}}">
     </label>
-    
+
 
     <button type="submit">Update profile</button>
 

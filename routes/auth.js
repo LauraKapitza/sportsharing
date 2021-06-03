@@ -21,6 +21,10 @@ router.get('/signup', (req, res) => res.render('auth/signup'));
 // .post() route ==> to process form data
 router.post('/signup', fileUploader.single('image'), (req, res, next) => {
   const { username, email, password, city, telephone } = req.body;
+  let imageUrl;
+  if (req.file) {
+    imageUrl = req.file.path;
+  }
 
   if (!username || !email || !password) {
     res.render('auth/signup', { errorMessage: 'All fields are mandatory. Please provide your username, email and password.' });
@@ -40,7 +44,6 @@ router.post('/signup', fileUploader.single('image'), (req, res, next) => {
     .genSalt(saltRounds)
     .then(salt => bcryptjs.hash(password, salt))
     .then(hashedPassword => {
-      console.log("req.file.path: ",req.file.path)
       return User.create({
         // username: username
         username,
@@ -51,11 +54,11 @@ router.post('/signup', fileUploader.single('image'), (req, res, next) => {
         passwordHash: hashedPassword,
         city,
         telephone,
-        imageUrl: req.file.path
+        imageUrl
       });
     })
     .then(userFromDB => {
-      console.log('Newly created user is: ', userFromDB);
+      // console.log('Newly created user is: ', userFromDB);
       res.redirect('/userProfile');
     })
     .catch(error => {
@@ -80,7 +83,6 @@ router.get('/login', (req, res) => res.render('auth/login'));
 
 // .post() login route ==> to process form data
 router.post('/login', (req, res, next) => {
-  console.log('coucou');
   const { email, password } = req.body;
 
   if (email === '' || password === '') {
@@ -98,7 +100,7 @@ router.post('/login', (req, res, next) => {
         return;
       } else if (bcryptjs.compareSync(password, user.passwordHash)) {
         req.session.currentUser = user;
-        console.log("req session:", req.session.currentUser)
+        // console.log("req session:", req.session.currentUser)
         res.redirect('/userProfile');
       } else {
         res.render('auth/login', { errorMessage: 'Incorrect password.' });
@@ -120,16 +122,40 @@ router.post('/logout', (req, res) => {
 ///////////////////////////// USERPROFILE //////////////////////////////
 ////////////////////////////////////////////////////////////////////////
 
-router.get('/userProfile', routeGuard, (req, res) => {
-  res.render('users/user-profile', { user: req.session.currentUser });
+router.get('/userProfile', routeGuard, (req, res,next) => {
+  // console.log("currentsession",req.session.currentUser)
+  //Database query car modification dans edit non prise en compte dans req.session.currentUser
+  User.findById(req.session.currentUser._id)
+  .then(userFromDB => {
+    // console.log("fromdb",userFromDB)
+    res.render('users/user-profile', {
+      user: userFromDB,
+    })
+  })
+  .catch(err => next(err))
+
+  // res.render('users/user-profile', { 
+  //   user: req.session.currentUser, 
+  // });
 });
 
-router.get('/userProfile/edit', routeGuard, (req, res) => {
-  res.render('users/user-profile-edit', { user: req.session.currentUser })
+router.get('/userProfile/edit', routeGuard, (req, res, next) => {
+  // console.log(req.session.currentUser);
+  //Database query car modification dans edit non prise en compte dans req.session.currentUser
+  User.findById(req.session.currentUser._id)
+  .then(userFromDB => {
+    // console.log("fromdb",userFromDB)
+    res.render('users/user-profile-edit', {
+      user: userFromDB,
+    })
+  })
+  .catch(err => next(err))
+
+  // res.render('users/user-profile-edit', { user: req.session.currentUser })
 });
 
 router.post('/userProfile', routeGuard, fileUploader.single('image'), (req, res, next) => {
-  console.log("currentUserId: ",req.session.currentUser._id);
+  // console.log("currentUser: ",req.session.currentUser);
 
   const password = req.body.password;
 
@@ -157,7 +183,7 @@ router.post('/userProfile', routeGuard, fileUploader.single('image'), (req, res,
         { new: true });
     })
     .then(userFromDB => {
-      console.log('Updated user is: ', userFromDB);
+      // console.log('Updated user is: ', userFromDB);
       // res.redirect('/userProfile');
       res.render('users/user-profile',{user:userFromDB})
     })

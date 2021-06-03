@@ -5,27 +5,27 @@
   <form action="/courses/{{course.id}}" method="POST">
     <label>
       Course Name
-      <input type="text" name="courseName" placeholder="{{course.courseName}}" required/>
+      <input type="text" name="courseName" value="{{course.courseName}}" required/>
     </label>
 
     <label>
       Date
-      <input type="date" id="input-date" name="date" placeholder="{{course.date}}" required/>
+      <input type="date" id="input-date" name="date" value="{{course.date}}" required/>
     </label>
 
     <label>
       Start time
-      <input type="time" id="input-time" name="startTime" placeholder="{{course.startTime}}" required />
+      <input type="time" id="input-time" name="startTime" value="{{course.startTime}}" required />
     </label>
 
     <label>
       Maximun participants
-      <input type="number" name="maxParticipants" min="1" placeholder="{{course.maxParticipants}}" />
+      <input type="number" name="maxParticipants" min="1" value="{{course.maxParticipants}}" />
     </label>
 
     <label>
       Address
-      <input type="text" name="address" placeholder="{{course.address}}" required/>
+      <input type="text" name="address" value="{{course.address}}" required/>
     </label>
 
     <label>
@@ -49,7 +49,7 @@
 
     <label>
       Description
-      <input type="text" name="description" placeholder="{{course.description}}" />
+      <input type="text" name="description" value="{{course.description}}" />
     </label>
 
     <button type="submit">Change Course</button>
