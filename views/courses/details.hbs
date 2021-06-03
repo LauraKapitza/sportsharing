@@ -21,7 +21,16 @@
 
 <p>Free Spaces: {{spaceTaken}} / {{course.maxParticipants}}</p>
 
+{{#if userCourseOwner}}
 <a href='/courses/{{course.id}}/edit'>Edit</a>
-<form id="join-course" action="/courses/{{course.id}}/join" method="POST">
-  <button>Join Course</button>
-</form>
+{{else}}
+    {{#if userSignUp}}
+    <form id="unsubscribe-course" action="/courses/{{course.id}}/unsubscribe" method="POST">
+      <button>Unsubscribe Course</button>
+    </form>
+    {{else}}
+    <form id="join-course" action="/courses/{{course.id}}/join" method="POST">
+      <button>Join Course</button>
+    </form>
+    {{/if}}
+{{/if}}

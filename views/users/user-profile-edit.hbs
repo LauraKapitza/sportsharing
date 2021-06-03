@@ -2,6 +2,7 @@
 
 <div id="form">
   <h2>Edit your profile</h2>
+  <a href='/userProfile'>Back</a>
   {{#if user}}
   <form action="/userProfile" method="POST" enctype='multipart/form-data'>
     <label>
@@ -9,30 +10,25 @@
       <input type="text" name="username" value="{{user.username}}" />
     </label>
 
-
     <label>
       Email
       <input type="email" name="email" value="{{user.email}}" />
     </label>
-
 
     <label for="input-password">
       Password
       <input type="password" name="password" id="input-password" placeholder="********" />
     </label>
 
-
     <label>
       City
       <input type="text" name="city" value="{{user.city}}" />
     </label>
 
-
     <label>
       Telephone
       <input type="text" name="telephone" value="{{user.telephone}}" />
     </label>
-
 
     <label>
       Profile Picture
@@ -47,7 +43,6 @@
       <input type="file" name="image" id="input-image">
       <input type="text" name="existingImage" hidden id="" value="{{user.imageUrl}}">
     </label>
-
 
     <button type="submit">Update profile</button>
 

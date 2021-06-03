@@ -74,20 +74,27 @@ router.post('/courses/:id/delete', (req, res, next) => {
   Courses.findByIdAndRemove(req.params.id)
     .then(() => res.redirect('/courses'))
     .catch(err => next(err))
-
 })
 
 router.post('/courses/:id/join', (req, res, next) => {
   Courses.findById(req.params.id)
     .then(courseFromDB => {
-      console.log("course fromdb before",courseFromDB);
       courseFromDB.participants.push(req.session.currentUser._id)
-      console.log("course fromdb after",courseFromDB);
-
       courseFromDB.save()
         .then(res.redirect(`/courses/${req.params.id}`))
         .catch(next)
-    })    
+    })
+    .catch(err => next(err))
+});
+
+router.post('/courses/:id/unsubscribe', (req, res, next) => {
+  Courses.findById(req.params.id)
+    .then(courseFromDB => {
+      courseFromDB.participants = courseFromDB.participants.filter(participant => participant != req.session.currentUser._id);      
+      courseFromDB.save()
+        .then(res.redirect(`/courses/${req.params.id}`))
+        .catch(next)
+    })
     .catch(err => next(err))
 });
 
@@ -111,17 +118,44 @@ router.post('/courses/:id', (req, res, next) => {
     .catch(err => next(err))
 })
 
+function isAlreadyParticipant(arr, user) {
+  for (let i = 0; i < arr.length;i++){
+    if (arr[i]._id == user._id) {
+      return true;
+    }
+  } 
+  return false;
+}
+
 router.get('/courses/:id', (req, res, next) => {
   Courses.findById(req.params.id)
     .populate('courseOwner')
     .populate('participants')
     .then(courseFromDB => {
-      const data = {
-        course: courseFromDB,
-        spaceTaken: courseFromDB.maxParticipants - courseFromDB.participants.length,
-        user: req.session.currentUser
+      //1. User = Organisateur
+      if (req.session.currentUser._id == courseFromDB.courseOwner._id) {
+        res.render('courses/details', {
+          course: courseFromDB,
+          spaceTaken: courseFromDB.maxParticipants - courseFromDB.participants.length,
+          user: req.session.currentUser,
+          userCourseOwner:true
+        })
+        //2. User = Participant
+      } else if ( isAlreadyParticipant(courseFromDB.participants, req.session.currentUser)) {
+        res.render('courses/details', {
+          course: courseFromDB,
+          spaceTaken: courseFromDB.maxParticipants - courseFromDB.participants.length,
+          user: req.session.currentUser,
+          userSignUp: true
+        })
+        //3. User != Participant && != Owner => il peut s'inscrire
+      } else {
+        res.render('courses/details', {
+          course: courseFromDB,
+          spaceTaken: courseFromDB.maxParticipants - courseFromDB.participants.length,
+          user: req.session.currentUser
+        })
       }
-      res.render('courses/details', data)
     })
     .catch(err => next(err))
 })
