@@ -1,20 +1,35 @@
 const express = require('express');
 const router  = express.Router();
 
+const User = require('../models/User.model');
 const Courses = require('../models/Course.model');
+const CATEGORIES = require('../constants');
+console.log(CATEGORIES)
 
 router.get('/courses', (req, res, next) => {
   Courses.find()
     .then(coursesFromDB => {
-      res.render('courses/courses', {
-        courses: coursesFromDB,
-        user: req.session.currentUser
-      })
+      if (req.session.currentUser) {
+        const data = {
+          courses: coursesFromDB,
+          user: req.session.currentUser,
+          categories: CATEGORIES 
+        }
+        res.render('courses/courses', data)
+      } else {
+        const data = {
+          courses: coursesFromDB,
+          categories: CATEGORIES 
+        }
+        res.render('courses/courses', data)
+      }
     })
     .catch(err => next(err))
 });
 
 //Route post pour la recherche des cours
+router.get('/courses/add', (req, res) => res.render('courses/new',{ user: req.session.currentUser,categories: CATEGORIES}));
+
 router.post('/courses', (req, res, next) => {
   res.send('ok');
 })
@@ -44,7 +59,8 @@ router.get('/courses/:id/edit', (req, res, next) => {
     .populate('participants')
     .then(courseFromDB => res.render('courses/edit', {
       course: courseFromDB,
-      user: req.session.currentUser
+      user: req.session.currentUser,
+      categories: CATEGORIES
     }))
     .catch(err => next(err))
 })
