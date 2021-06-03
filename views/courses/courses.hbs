@@ -21,18 +21,9 @@
 
       <button class='dropdown-btn'>Sport Category</button>
       <div class="dropdown-menu">
-        <a class="dropdown-item" href="#">Climbing</a>
-        <a class="dropdown-item" href="#">Dance</a>
-        <a class="dropdown-item" href="#">Functional Training</a>
-        <a class="dropdown-item" href="#">Material Arts</a>
-        <a class="dropdown-item" href="#">Pilates</a>
-        <a class="dropdown-item" href="#">Racket Sports</a>
-        <a class="dropdown-item" href="#">Strength Training</a>
-        <a class="dropdown-item" href="#">Swimming</a>
-        <a class="dropdown-item" href="#">Team Sports</a>
-        <a class="dropdown-item" href="#">Vibration Training</a>
-        <a class="dropdown-item" href="#">Water Sports</a>
-        <a class="dropdown-item" href="#">Yoga</a>
+        {{#each categories}}
+        <a class="dropdown-item" href="#">{{this}}</a>
+        {{/each}}
       </div>
     </div>
 
