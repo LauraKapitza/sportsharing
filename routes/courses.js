@@ -27,7 +27,7 @@ router.get('/courses', (req, res, next) => {
     .catch(err => next(err))
 });
 
-router.get('/courses/add', (req, res) => res.render('courses/new', {categories: CATEGORIES}));
+router.get('/courses/add', (req, res) => res.render('courses/new',{ user: req.session.currentUser,categories: CATEGORIES}));
 
 router.post('/courses', (req, res, next) => {
   Courses.create({
@@ -49,14 +49,11 @@ router.get('/courses/:id/edit', (req, res, next) => {
   Courses.findById(req.params.id)
     .populate('courseOwner')
     .populate('participants')
-    .then(courseFromDB => {
-      const data = {
-        course: courseFromDB,
-        categories: CATEGORIES,
-
-      }
-      res.render('courses/edit', data)
-    })
+    .then(courseFromDB => res.render('courses/edit', {
+      course: courseFromDB,
+      user: req.session.currentUser,
+      categories: CATEGORIES
+    }))
     .catch(err => next(err))
 })
 
@@ -93,7 +90,8 @@ router.get('/courses/:id', (req, res, next) => {
     .then(courseFromDB => {
       const data = {
         course: courseFromDB,
-        spaceTaken: courseFromDB.maxParticipants - courseFromDB.participants.length
+        spaceTaken: courseFromDB.maxParticipants - courseFromDB.participants.length,
+        user: req.session.currentUser
       }
       res.render('courses/details', data)
     })

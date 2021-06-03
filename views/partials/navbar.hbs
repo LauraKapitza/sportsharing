@@ -1,8 +1,11 @@
 <img src="" alt="logo">
 {{!-- si user non connecté --}}
-<a href="/login">Login</a>
-<a href="/signup">Sign up</a>
-{{!-- si user connecté --}}
+{{#if user}}
 <form id="logout-form" action="/logout" method="POST">
     <button>Logout</button>
 </form>
+{{!-- si user connecté --}}
+{{else}}
+<a href="/login">Login</a>
+<a href="/signup">Sign up</a>
+{{/if}}
