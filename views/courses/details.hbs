@@ -8,16 +8,20 @@
 <p>Start time: {{course.startTime}}</p>
 <p>Description: {{course.description}}</p>
 <p>Address: {{course.address}}</p>
+<p>Zip: {{course.zip}}</p>
+<p>City: {{course.city}}</p>
 <p>
   Participants:
-  <ul>
-    
-    {{#each course.participants}}
-      <li>{{this.username}}</li>
-    {{/each}}
-  </ul>
+<ul>
+  {{#each course.participants}}
+  <li>{{this.username}}</li>
+  {{/each}}
+</ul>
 </p>
 
 <p>Free Spaces: {{spaceTaken}} / {{course.maxParticipants}}</p>
 
 <a href='/courses/{{course.id}}/edit'>Edit</a>
+<form id="join-course" action="/courses/{{course.id}}/join" method="POST">
+  <button>Join Course</button>
+</form>

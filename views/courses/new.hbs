@@ -4,6 +4,16 @@
   <h2>Create A Course</h2>
   <form action="/courses/add" method="POST">
     <label>
+      Choose a category:
+      <select name="category" required>
+        <option value="">--Please choose an option--</option>
+        {{#each categories}}
+          <option value="{{this}}">{{this}}</option>
+        {{/each}}
+    </select>
+    </label>
+    
+    <label>
       Course Name
       <input type="text" name="courseName" required/>
     </label>
@@ -25,17 +35,17 @@
 
     <label>
       Address
-      <input type="text" name="address" placeholder="10 Avenue Sport, 11111 Paris" required/>
+      <input type="text" name="address" placeholder="10 Avenue Sport" required/>
     </label>
 
     <label>
-      Choose a category:
-      <select name="category" required>
-        <option value="">--Please choose an option--</option>
-        {{#each categories}}
-          <option value="{{this}}">{{this}}</option>
-        {{/each}}
-    </select>
+      Zip code
+      <input type="number" name="zip" placeholder="" required/>
+    </label>
+
+    <label>
+      City
+      <input type="text" name="city" placeholder="Paris" required/>
     </label>
 
     <label>

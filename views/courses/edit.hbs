@@ -4,6 +4,16 @@
   <h2>Edit Your Course</h2>
   <form action="/courses/{{course.id}}" method="POST">
     <label>
+      Choose a category:
+      <select name="category" value="{{course.category}}" required>
+        <option value="{{course.category}}">{{course.category}}</option>
+        {{#each categories}}
+        <option value="{{this}}">{{this}}</option>
+        {{/each}}
+    </select>
+    </label>
+
+    <label>
       Course Name
       <input type="text" name="courseName" value="{{course.courseName}}" required/>
     </label>
@@ -29,13 +39,13 @@
     </label>
 
     <label>
-      Choose a category:
-      <select name="category" value="{{course.category}}" required>
-        <option value="{{course.category}}">{{course.category}}</option>
-        {{#each categories}}
-        <option value="{{this}}">{{this}}</option>
-        {{/each}}
-    </select>
+      Zip code
+      <input type="number" name="zip" value="{{course.zip}}" required/>
+    </label>
+
+    <label>
+      City
+      <input type="text" name="city" value="{{course.city}}" required/>
     </label>
 
     <label>
