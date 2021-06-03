@@ -27,7 +27,7 @@ router.get('/courses', (req, res, next) => {
     .catch(err => next(err))
 });
 
-router.get('/courses/add', (req, res) => res.render('courses/new'));
+router.get('/courses/add', (req, res) => res.render('courses/new', {categories: CATEGORIES}));
 
 router.post('/courses', (req, res, next) => {
   Courses.create({
@@ -49,7 +49,14 @@ router.get('/courses/:id/edit', (req, res, next) => {
   Courses.findById(req.params.id)
     .populate('courseOwner')
     .populate('participants')
-    .then(courseFromDB => res.render('courses/edit', {course: courseFromDB}))
+    .then(courseFromDB => {
+      const data = {
+        course: courseFromDB,
+        categories: CATEGORIES,
+
+      }
+      res.render('courses/edit', data)
+    })
     .catch(err => next(err))
 })
 

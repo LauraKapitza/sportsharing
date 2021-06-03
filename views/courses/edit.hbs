@@ -30,20 +30,11 @@
 
     <label>
       Choose a category:
-      <select name="category" required>
-        <option value="">{{course.category}}</option>
-        <option value="Climbing">Climbing</option>
-        <option value="Dance">Dance</option>
-        <option value="Functional Training">Functional Training</option>
-        <option value="Material Arts">Material Arts</option>
-        <option value="Pilates">Pilates</option>
-        <option value="Racket Sports">Racket Sports</option>
-        <option value="Strength Training">Strength Training</option>
-        <option value="Swimming">Swimming</option>
-        <option value="Team Sports">Team Sports</option>
-        <option value="Vibration Training">Vibration Training</option>
-        <option value="Water Sports">Water Sports</option>
-        <option value="Yoga">Yoga</option>
+      <select name="category" value="{{course.category}}" required>
+        <option value="{{course.category}}">{{course.category}}</option>
+        {{#each categories}}
+        <option value="{{this}}">{{this}}</option>
+        {{/each}}
     </select>
     </label>
 
