@@ -77,10 +77,38 @@ router.post('/courses/:id/delete', (req, res, next) => {
 
 })
 
+// router.post('/courses/:id/join', (req, res, next) => {
+//   console.log("req.body", req.body);
+//   let participants;
+//   Courses.findById(req.params.id)
+//     .then(courseFromDB => {
+//       console.log("course fromdb",courseFromDB);
+//       participants = courseFromDB.push(req.session.currentUser)
+//       console.log("participants",participants);
+      
+//       Courses.findByIdAndUpdate(
+//         req.params.id,
+//         {
+//           courseName: courseFromDB.courseName,
+//           date: courseFromDB.date,
+//           startTime: courseFromDB.startTime,
+//           maxParticipants: courseFromDB.maxParticipants,
+//           address: courseFromDB.address,
+//           zip: courseFromDB.zip,
+//           city: courseFromDB.city,
+//           category: courseFromDB.category,
+//           description: courseFromDB.description
+//         },
+//         { new: true }
+//       )
+//       .then(res.redirect(`/courses/${req.params.id}`))
+//     })    
+//     .catch(err => next(err))
+// });
+
 router.post('/courses/:id', (req, res, next) => {
-  let id = req.params.id;
   Courses.findByIdAndUpdate(
-    id,
+    req.params.id,
     {
       courseName: req.body.courseName,
       date: req.body.date,
