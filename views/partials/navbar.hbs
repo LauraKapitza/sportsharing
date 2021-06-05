@@ -1,11 +1,22 @@
-<img src="" alt="logo">
-{{!-- si user non connecté --}}
-{{#if user}}
-<form id="logout-form" action="/logout" method="POST">
-    <button>Logout</button>
-</form>
-{{!-- si user connecté --}}
-{{else}}
-<a href="/login">Login</a>
-<a href="/signup">Sign up</a>
-{{/if}}
+<nav>
+    <div class="nav-img-container">
+        <img id="burger" src="/images/menu_burger_icon.svg" alt="burger">
+        <img id="logo" src="/images/logo_sport.svg" alt="logo">
+    </div>
+    {{!-- si user non connecté --}}
+    <div class="nav-btn-container">
+        {{#if user}}
+        <form id="logout-form" action="/logout" method="POST">
+            <button>Logout</button>
+        </form>
+        {{!-- si user connecté --}}
+        {{else}}
+        <div class="btn-white">
+            <a href="/login">Login</a>
+        </div>
+        <div class="btn-blue">
+            <a href="/signup">Sign up</a>
+        </div>
+        {{/if}}
+    </div>
+</nav>
