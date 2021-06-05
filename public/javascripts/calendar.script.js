@@ -2,11 +2,19 @@ const $btnPreviousWeek = document.querySelector('.btn-previous-week');
 const $btnNextWeek =document.querySelector('.btn-previous-week');
 const $p = document.querySelector('.current-week');
 
-let test = new Date()
+
+////////////////////////////////////////////////////////////////////////
+////////////////////////// FUNCTIONS ///////////////////////////////////
+////////////////////////////////////////////////////////////////////////
 
 function startOfWeek(date) {
   let firstDay = date.getDate() - date.getDay() + (date.getDay === 0 ? -6 : 1)
   return new Date(date.setDate(firstDay))
+}
+
+function startOfNextWeek(date){
+  let nextweek = new Date(date.getFullYear(), date.getMonth(), date.getDate()+7);
+  return nextweek;
 }
 
 function endOfWeek(date) {
@@ -42,8 +50,14 @@ function showCurrentWeek() {
 
 showCurrentWeek()
 
+
+////////////////////////////////////////////////////////////////////////
+/////////////////////// EVENT LISTENERS ////////////////////////////////
+////////////////////////////////////////////////////////////////////////
+
 $btnNextWeek.addEventListener('click', (e) => {
-  console.log('next week')
+  // let firstDay = $p.innerHTML
+  let nextWeek = startOfWeek(firstDay)
 }, false);
 
 $btnPreviousWeek.addEventListener('click', (e) => {
