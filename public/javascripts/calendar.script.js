@@ -3,15 +3,12 @@ const $btnPreviousWeek = document.querySelector('.btn-previous-week');
 const $btnNextWeek =document.querySelector('.btn-next-week');
 const $p = document.querySelector('.current-week');
 
-// //CATEGORY BTN
-// const $category = document.querySelector('.dropdown-menu');
 
 ////////////////////////////////////////////////////////////////////////
 ////////////////////////// FUNCTIONS ///////////////////////////////////
 ////////////////////////////////////////////////////////////////////////
 
-// CURRENT WEEK
-
+//GET FIRST DAY OF A WEEK
 function startOfWeek(date) {
   let firstDay = date.getDate() - date.getDay() + (date.getDay === 0 ? -6 : 1);
   return new Date(date.setDate(firstDay))
@@ -22,6 +19,7 @@ function endOfWeek(date) {
   return new Date(date.setDate(lastDay))
 }
 
+//CHANGE FORMAT OF DATE
 function getFormattedDate(date) {
   let dd = String(date.getDate());
   let mm = String(date.getMonth() + 1);
@@ -33,6 +31,7 @@ function getFormattedDate(date) {
   return `${dd}/${mm}/${yy}`
 }
 
+//CHANGE WEEK NAV BTN VALUE
 function showCurrentWeek() {
   let today = new Date()
   let firstDay = startOfWeek(today)
@@ -46,32 +45,47 @@ function showCurrentWeek() {
 
 showCurrentWeek()
 
-// NEXT WEEK
-
-function startOfNextWeek(date){
-  let day = new Date(date.getTime() + 24 * 60 * 60 * 1000)
+// GET FIRST DAY OF NEXT WEEK
+function startOfNextWeek(firstDay){
+  let day = new Date(firstDay.getTime() + 24 * 60 * 60 * 1000)
   let week = new Date(day.getFullYear(), day.getMonth(), day.getDate()+6);
   return week;
 }
 
-// PREVIOUS WEEK
-
-function startOfPreviousWeek(date){
-  let day = new Date(date.getTime() - 24 * 60 * 60 * 1000)
+// GET FIRST DAY OF PREVIOUS WEEK
+function startOfPreviousWeek(firstDay){
+  let day = new Date(firstDay.getTime() - 24 * 60 * 60 * 1000)
   let week = new Date(day.getFullYear(), day.getMonth(), day.getDate()-6);
   return week;
 }
 
-// UPDATE WEEK
+//GET DATES OF TUESDAY - SUNDAY
+function daysOfWeek(monday) {
+  const weekArr = [];
+  for(i=0; i<7; i++) {
+    let day = monday.getDate() - (monday.getDay() - 1) + i;
+    weekArr.push(new Date(monday.setDate(day)))
+  }
+  console.log(weekArr)
+  return weekArr;
+}
 
-function updateWeek(date) {
-  let firstDay = startOfWeek(date)
-  let lastDay = endOfWeek(date)
+// UPDATE DAY SLOTS ON DOM
+function updateWeek(firstday) {
+  let weekdays = daysOfWeek(firstday);
+  const [monday, tuesday, wednesday, thursday, friday, saturday, sunday] = weekdays
+
+  let mondayFormatted = getFormattedDate(monday);
+  let sundayFormatted = getFormattedDate(sunday);
+  $p.innerHTML = `${mondayFormatted} - ${sundayFormatted}`;
   
-  let firstDayFormatted = getFormattedDate(firstDay);
-  let lastDayFormatted = getFormattedDate(lastDay)
-  
-  $p.innerHTML = `${firstDayFormatted} - ${lastDayFormatted}`
+  document.getElementById('monday').innerHTML = mondayFormatted;
+  document.getElementById('tuesday').innerHTML = getFormattedDate(tuesday);
+  document.getElementById('wednesday').innerHTML = getFormattedDate(wednesday);
+  document.getElementById('thursday').innerHTML = getFormattedDate(thursday);
+  document.getElementById('friday').innerHTML = getFormattedDate(friday);
+  document.getElementById('saturday').innerHTML = getFormattedDate(saturday);
+  document.getElementById('sunday').innerHTML = sundayFormatted;
 }
 
 ////////////////////////////////////////////////////////////////////////
@@ -92,11 +106,4 @@ $btnPreviousWeek.addEventListener('click', () => {
   let previousWeek = startOfPreviousWeek(date);
   updateWeek(previousWeek);
 });
-
-// //CATEGORY BTN
-// $category.addEventListener('click', (e) => {
-//   let category = e.target.innerHTML
-//   document.querySelector('.drop-btn').innerHTML = category;
-//   // document.querySelector('.dropdown-menu').style.display = 'none';
-// })
 
