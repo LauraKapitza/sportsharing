@@ -1,29 +1,31 @@
 {{> navbar}}
 
-<h2>{{course.courseName}}</h2>
-<a href='/courses'>Back</a>
-<p>Category: {{course.category}}</p>
-<p>Organiser: {{course.courseOwner.username}}</p>
-<p>Date: {{convertedDate}}</p>
-<p>Start time: {{course.startTime}}</p>
-<p>Description: {{course.description}}</p>
-<p>Address: {{course.address}}</p>
-<p>Zip: {{course.zip}}</p>
-<p>City: {{course.city}}</p>
-<p>
-  Participants:
-<ul>
-  {{#each course.participants}}
-  <li>{{this.username}}</li>
-  {{/each}}
-</ul>
-</p>
+<div class="details-container"></div>
+  <h2>{{course.courseName}}</h2>
+  <a href='/courses'>Back</a>
 
-<p>Free Spaces: {{spaceTaken}} / {{course.maxParticipants}}</p>
+  <p>Category:<span class="marge">{{course.category}}</span></p>
+  <p>Organiser:<span class="marge">{{course.courseOwner.username}}</span></p>
+  <p>Date:<span class="marge">{{convertedDate}}</span></p>
+  <p>Start time:<span class="marge">{{course.startTime}}</span></p>
+  <p>Description:<span class="marge">{{course.description}}</span></p>
+  <p>Address:<span class="marge">{{course.address}}</span></p>
+  <p>Zip:<span class="marge">{{course.zip}}</span></p>
+  <p>City:<span class="marge">{{course.city}}</span></p>
+  <p>
+    Participants:
+  <ul>
+    {{#each course.participants}}
+    <li>{{this.username}}</li>
+    {{/each}}
+  </ul>
+  </p>
 
-{{#if userCourseOwner}}
-<a href='/courses/{{course.id}}/edit'>Edit</a>
-{{else}}
+  <p>Free Spaces: {{spaceTaken}} / {{course.maxParticipants}}</p>
+
+  {{#if userCourseOwner}}
+  <a href='/courses/{{course.id}}/edit'>Edit</a>
+  {{else}}
     {{#if userSignUp}}
     <form id="unsubscribe-course" action="/courses/{{course.id}}/unsubscribe" method="POST">
       <button>Unsubscribe Course</button>
@@ -33,4 +35,5 @@
       <button>Join Course</button>
     </form>
     {{/if}}
-{{/if}}
+  {{/if}}
+</div>

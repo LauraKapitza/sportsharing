@@ -1,6 +1,6 @@
 {{> navbar}}
 
-<div id="form">
+<div class="form">
   <h2>Edit your profile</h2>
   <a href='/userProfile'>Back</a>
   {{#if user}}
@@ -15,9 +15,9 @@
       <input type="email" name="email" value="{{user.email}}" />
     </label>
 
-    <label for="input-password">
+    <label>
       Password
-      <input type="password" name="password" id="input-password" placeholder="********" />
+      <input type="password" name="password" placeholder="********" />
     </label>
 
     <label>
@@ -32,29 +32,30 @@
 
     <label>
       Profile Picture
-      <div>
-        <p>This is your profile picture</p>
-        {{#if user.imageUrl}}
-        <img src="{{user.imageUrl}}">
-        {{else}}
-        <img src="/images/avatar.svg" >
-        {{/if}}
-      </div>
+      {{#if user.imageUrl}}
+      <img src="{{user.imageUrl}}">
+      {{else}}
+      <img src="/images/avatar.svg">
+      {{/if}}
       <input type="file" name="image" id="input-image">
       <input type="text" name="existingImage" hidden id="" value="{{user.imageUrl}}">
     </label>
 
-    <button type="submit">Update profile</button>
-
+    <div class="nav-btn-container">
+      <div class="btn-blue">
+        <button type="submit">Update</button>
+      </div>
+      <div class="btn-red">
+        <a href="/userProfile/delete">Delete</a>
+      </div>
+    </div>
     {{#if errorMessage}}
     <p class="error">{{errorMessage}}</p>
     {{/if}}
   </form>
-  <form id="delete-profile" action="/userProfile/delete" method="POST">
-    <button>delete</button>
-  </form>
+
   {{else}}
-  <p>Not logged in anymore, sorry!</p>
+  <p class="error">Not logged in anymore, sorry!</p>
   <a href="/login">Login</a>
   {{/if}}
 </div>

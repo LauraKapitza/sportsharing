@@ -6,9 +6,11 @@
     {{!-- si user non connecté --}}
     <div class="nav-btn-container">
         {{#if user}}
-        <form id="logout-form" action="/logout" method="POST">
-            <button>Logout</button>
-        </form>
+        <div class="btn-white">
+            <form id="logout-form" action="/logout" method="POST">
+                <button>Log Out</button>
+            </form>
+        </div>
         {{!-- si user connecté --}}
         {{else}}
         <div class="btn-white">

@@ -5,6 +5,10 @@ body {
   font: 14px "Lucida Grande", Helvetica, Arial, sans-serif;
 }
 
+/* -------------------- */
+/* ------ NAVBAR ------ */
+/* -------------------- */
+
 nav{
   padding:5px;
   display: flex;
@@ -29,7 +33,6 @@ nav{
   background-color: #4758D6;
   border: solid 2px #4758D6;
   border-radius: 10px;
-  margin: 5px;
   color: white;
   padding: 4px 20px;
   text-align: center;
@@ -44,11 +47,97 @@ nav{
   background-color: white;
   border: solid 2px #0f1960;
   border-radius: 10px;
-  margin: 5px auto;
   padding: 4px 20px;
   text-align: center;
 }
 
+.nav-btn-container > div{
+  margin: 5px;
+}
+
 .btn-white a {
   color: #0f1960;
+  text-decoration: none;
 }
+
+.btn-white button {
+  background-color: white;
+  border:none;
+  color: #0f1960;
+}
+/* -------------------- */
+/* ---- ERROR MSG ----- */
+/* -------------------- */
+.error {
+  background: #ea3a3a;
+  color: #fff;
+  margin: 20px auto;
+  padding: 15px;
+  width: 100%;
+  border-radius: 10px;
+}
+
+/* -------------------- */
+/* ------- FORM ------- */
+/* -------------------- */
+.form{
+  width: 80vw;
+  margin-left: auto; margin-right: auto;
+}
+.form h2{
+  margin:20px;
+  color:#4758D6;
+  text-align: center;
+}
+
+.form label{
+  display: block;
+  margin: 25px auto;
+  color: #0f1960;
+  font-weight: 700;
+}
+
+.form label img{
+  width:100%;
+}
+
+.form input {
+  text-align: center;
+  width: 100%;
+  border-radius: 5px;
+  border:none ;
+  background-color: #eeeded;
+  color: #0f1960;
+  height: 2em;
+}
+
+.btn-blue button {
+  color: white;
+  border:none;
+  background-color:#4758D6;
+}
+
+.btn-red {
+  background-color: #ea3a3a;
+  border: solid 2px #ea3a3a;
+  border-radius: 10px;
+  color: white;
+  padding: 4px 20px;
+  text-align: center;
+}
+
+.btn-red a {
+  color: white;
+  border:none;
+  background-color:#ea3a3a;
+  text-decoration: none;
+}
+
+/* -------------------- */
+/* ------ DETAILS------ */
+/* -------------------- */
+
+.marge{
+  margin-left: 100px;
+}
+

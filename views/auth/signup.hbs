@@ -1,6 +1,6 @@
 {{> navbar}}
 
-<div id="form">
+<div class="form">
   <h2>Signup</h2>
   <form action="/signup" method="POST" enctype='multipart/form-data'>
     <label>
@@ -37,7 +37,9 @@
       <input type="file" name="image">
     </label>
 
-    <button type="submit">Create account</button>
+    <div class="btn-blue">
+      <button type="submit">Sign Up</button>
+    </div>
 
     {{#if errorMessage}}
     <p class="error">{{errorMessage}}</p>

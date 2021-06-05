@@ -172,9 +172,13 @@ router.post('/userProfile', routeGuard, fileUploader.single('image'), (req, res,
     .catch(error => next(error));
 });
 
-router.post('/userProfile/delete', routeGuard, (req, res, next) => {
+router.get('/userProfile/delete', routeGuard, (req, res, next) => {
+  console.log('route delete user profile');
   User.findByIdAndRemove(req.session.currentUser._id)
-    .then(() => res.redirect('/'))
+    .then(() => {
+      req.session.destroy();
+      res.redirect('/')
+    })
     .catch(err => next(err));
 });
 

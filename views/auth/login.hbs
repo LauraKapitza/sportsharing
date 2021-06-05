@@ -1,11 +1,11 @@
 {{> navbar}}
 
-<div id="form">
+<div class="form">
     <h2>Login</h2>
     <form action="/login" method="POST">
         <label>
             Email
-            <input type="email" name="email" placeholder="Your email" />
+            <input type="email" name="email" placeholder="Your E-mail" />
         </label>
 
 
@@ -14,7 +14,10 @@
             <input type="password" name="password" placeholder="********" />
         </label>
 
-        <button type="submit">Login</button>
+        <div class="btn-blue">
+            <button type="submit">Login</button>
+        </div>
+
 
         {{#if errorMessage}}
         <p class="error">{{errorMessage}}</p>
