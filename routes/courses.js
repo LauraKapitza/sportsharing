@@ -9,8 +9,10 @@ const CATEGORIES = require('../constants');
 router.get('/courses', (req, res, next) => {
   Courses.find()
     .then(coursesFromDB => {
-      const courses = [...coursesFromDB]
-      console.log(courses)
+      coursesFromDB.forEach((course, i) => {
+        day = course.date.toString().slice('', 3)
+        console.log(day)
+      })
       const data = {
         courses: courses,
         categories: CATEGORIES
