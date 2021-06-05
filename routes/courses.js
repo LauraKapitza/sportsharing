@@ -9,18 +9,6 @@ const CATEGORIES = require('../constants');
 router.get('/courses', (req, res, next) => {
   Courses.find()
     .then(coursesFromDB => {
-      // coursesFromDB.forEach((course, i) => {
-      //   day = course.date.toString().slice('', 3)
-      //   switch (day) {
-      //     case 'Mon': coursesFromDB[i].monday = true; break;
-      //     case 'Tue': coursesFromDB[i].tuesday = true; break;
-      //     case 'Wed': coursesFromDB[i].wednesday = true; break;
-      //     case 'Thu': coursesFromDB[i].thursday = true; break;
-      //     case 'Fri': coursesFromDB[i].friday = true; break;
-      //     case 'Sat': coursesFromDB[i].saturday = true; break;
-      //     case 'Sun': coursesFromDB[i].sunday = true; break;
-      //   }
-      // })
       const data = {
         courses: coursesFromDB,
         categories: CATEGORIES
@@ -38,8 +26,8 @@ router.get('/courses/add', (req, res) => res.render('courses/new', {
 }));
 
 router.post('/courses', (req, res, next) => {
-  const monday = req.body.monday.split('/');
-  const sunday = req.body.sunday.split('/');
+  const monday = req.body.firstday.split('/');
+  const sunday = req.body.lastday.split('/');
   let firstDay = new Date(`${monday[2]}-${monday[1]}-${monday[0]}`);
   let lastDay = new Date(`${sunday[2]}-${sunday[1]}-${sunday[0]}`);
 
@@ -47,7 +35,30 @@ router.post('/courses', (req, res, next) => {
     {date: {$gte: firstDay}}, 
     {date: {$lte: lastDay}}
   ]})
-    .then(coursesFromDb => res.send(coursesFromDb))
+    .then(coursesFromDB => {
+      const courses = {
+        monday: [],
+        tuesday: [],
+        wednesday: [],
+        thursday: [],
+        friday: [],
+        saturday: [],
+        sunday: []
+      }
+      coursesFromDB.forEach((course, i) => {
+        let day = course.date.toString().slice('', 3)
+        switch(day){
+          case 'Mon': courses.monday.push(course); break;
+          case 'Tue': courses.tuesday.push(course); break;
+          case 'Wed': courses.wednesday.push(course); break;
+          case 'Thu': courses.thursday.push(course); break;
+          case 'Fri': courses.friday.push(course); break;
+          case 'Sat': courses.saturday.push(course); break;
+          case 'Sun': courses.sunday.push(course); break;
+        }
+      })
+      res.render('courses/calendar', {courses: courses,layout: false})
+    }) 
     .catch(err => next(err))
 })
 

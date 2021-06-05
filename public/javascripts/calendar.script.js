@@ -1,12 +1,19 @@
+//CALENDAR
+const $div = document.getElementById('course-list');
+
 //WEEK NAV BTN
 const $btnPreviousWeek = document.querySelector('.btn-previous-week');
 const $btnNextWeek =document.querySelector('.btn-next-week');
 const $p = document.querySelector('.current-week');
-
+let todayDate = new Date()
 
 ////////////////////////////////////////////////////////////////////////
 ////////////////////////// FUNCTIONS ///////////////////////////////////
 ////////////////////////////////////////////////////////////////////////
+
+function updateCalendar(data) {
+  $div.innerHTML = data;
+}
 
 //GET FIRST DAY OF A WEEK
 function startOfWeek(date) {
@@ -32,10 +39,10 @@ function getFormattedDate(date) {
 }
 
 //CHANGE WEEK NAV BTN VALUE
-function showCurrentWeek() {
-  let today = new Date()
-  let firstDay = startOfWeek(today)
-  let lastDay = endOfWeek(today)
+function showWeek(day) {
+  
+  let firstDay = startOfWeek(day)
+  let lastDay = endOfWeek(day)
   
   let firstDayFormatted = getFormattedDate(firstDay);
   let lastDayFormatted = getFormattedDate(lastDay)
@@ -43,25 +50,25 @@ function showCurrentWeek() {
   $p.innerHTML = `${firstDayFormatted} - ${lastDayFormatted}`
 
   axios.post('/courses', {
-    monday: firstDayFormatted,
-    sunday: lastDayFormatted
+    firstday: firstDayFormatted,
+    lastday: lastDayFormatted
   })
-    .then((response) => console.log('Sending the week dates worked!', response.data))
+    .then((response) => updateCalendar(response.data))
     .catch(err => console.log(`Error while sending the week dates: ${err}`))
 }
 
 // GET FIRST DAY OF NEXT WEEK
 function startOfNextWeek(firstDay){
-  let day = new Date(firstDay.getTime() + 24 * 60 * 60 * 1000)
-  let week = new Date(day.getFullYear(), day.getMonth(), day.getDate()+6);
-  return week;
+  let startdate = new Date(firstDay.getTime() + 24 * 60 * 60 * 1000)
+  let dateFormatted = new Date(startdate.getFullYear(), startdate.getMonth(), startdate.getDate()+6);
+  return dateFormatted;
 }
 
 // GET FIRST DAY OF PREVIOUS WEEK
 function startOfPreviousWeek(firstDay){
-  let day = new Date(firstDay.getTime() - 24 * 60 * 60 * 1000)
-  let week = new Date(day.getFullYear(), day.getMonth(), day.getDate()-6);
-  return week;
+  let startdate = new Date(firstDay.getTime() - 24 * 60 * 60 * 1000)
+  let dateFormatted = new Date(startdate.getFullYear(), startdate.getMonth(), startdate.getDate()-6);
+  return dateFormatted;
 }
 
 //GET DATES OF TUESDAY - SUNDAY
@@ -92,7 +99,7 @@ function updateWeek(firstday) {
   document.getElementById('sunday').innerHTML = sundayFormatted;
 }
 
-showCurrentWeek()
+showWeek(todayDate)
 
 ////////////////////////////////////////////////////////////////////////
 /////////////////////// EVENT LISTENERS ////////////////////////////////
