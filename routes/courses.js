@@ -90,7 +90,7 @@ router.post('/courses/:id/join', (req, res, next) => {
 router.post('/courses/:id/unsubscribe', (req, res, next) => {
   Courses.findById(req.params.id)
     .then(courseFromDB => {
-      courseFromDB.participants = courseFromDB.participants.filter(participant => participant != req.session.currentUser._id);      
+      courseFromDB.participants = courseFromDB.participants.filter(participant => participant != req.session.currentUser._id);
       courseFromDB.save()
         .then(res.redirect(`/courses/${req.params.id}`))
         .catch(next)
@@ -118,13 +118,31 @@ router.post('/courses/:id', (req, res, next) => {
     .catch(err => next(err))
 })
 
+////////////////////////////////////////////////////////////////////////
+///////////CHECK IF USER ALREADY SIGN INTO A COURSE ////////////////////
+////////////////////////////////////////////////////////////////////////
 function isAlreadyParticipant(arr, user) {
-  for (let i = 0; i < arr.length;i++){
+  for (let i = 0; i < arr.length; i++) {
     if (arr[i]._id == user._id) {
       return true;
     }
-  } 
+  }
   return false;
+}
+
+////////////////////////////////////////////////////////////////////////
+////////////////CONVERT DATE FROM DB TO DD-MM-YYYY /////////////////////
+////////////////////////////////////////////////////////////////////////
+
+function twoDigitsNumber(myTime) {
+  return myTime.toString().length === 2 ? myTime.toString() : "0" + myTime.toString();
+}
+
+function dateConvertion(date) {
+  var day = twoDigitsNumber(date.getDate());
+  var month = twoDigitsNumber(date.getMonth() + 1);
+  var year = date.getFullYear();  
+  return day + "-" + month + "-" + year;
 }
 
 router.get('/courses/:id', (req, res, next) => {
@@ -136,14 +154,16 @@ router.get('/courses/:id', (req, res, next) => {
       if (req.session.currentUser._id == courseFromDB.courseOwner._id) {
         res.render('courses/details', {
           course: courseFromDB,
+          convertedDate: dateConvertion(courseFromDB.date),
           spaceTaken: courseFromDB.maxParticipants - courseFromDB.participants.length,
           user: req.session.currentUser,
-          userCourseOwner:true
+          userCourseOwner: true
         })
         //2. User = Participant
-      } else if ( isAlreadyParticipant(courseFromDB.participants, req.session.currentUser)) {
+      } else if (isAlreadyParticipant(courseFromDB.participants, req.session.currentUser)) {
         res.render('courses/details', {
           course: courseFromDB,
+          convertedDate: dateConvertion(courseFromDB.date),
           spaceTaken: courseFromDB.maxParticipants - courseFromDB.participants.length,
           user: req.session.currentUser,
           userSignUp: true
@@ -152,6 +172,7 @@ router.get('/courses/:id', (req, res, next) => {
       } else {
         res.render('courses/details', {
           course: courseFromDB,
+          convertedDate: dateConvertion(courseFromDB.date),
           spaceTaken: courseFromDB.maxParticipants - courseFromDB.participants.length,
           user: req.session.currentUser
         })

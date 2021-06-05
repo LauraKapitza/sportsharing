@@ -43,3 +43,15 @@ $searchDate.addEventListener('change',(e)=>{
     $searchTime.setAttribute("min","06:00");
   }  
 });
+////////////////////////////////////////////////////////////////////////
+///////////CHECK IF USER ALREADY SIGN INTO A COURSE ////////////////////
+////////////////////////////////////////////////////////////////////////
+
+// function isAlreadyParticipant(arr, user) {
+//   for (let i = 0; i < arr.length;i++){
+//     if (arr[i]._id == user._id) {
+//       return true;
+//     }
+//   } 
+//   return false;
+// }
