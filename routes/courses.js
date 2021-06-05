@@ -9,12 +9,20 @@ const CATEGORIES = require('../constants');
 router.get('/courses', (req, res, next) => {
   Courses.find()
     .then(coursesFromDB => {
-      coursesFromDB.forEach((course, i) => {
-        day = course.date.toString().slice('', 3)
-        console.log(day)
-      })
+      // coursesFromDB.forEach((course, i) => {
+      //   day = course.date.toString().slice('', 3)
+      //   switch (day) {
+      //     case 'Mon': coursesFromDB[i].monday = true; break;
+      //     case 'Tue': coursesFromDB[i].tuesday = true; break;
+      //     case 'Wed': coursesFromDB[i].wednesday = true; break;
+      //     case 'Thu': coursesFromDB[i].thursday = true; break;
+      //     case 'Fri': coursesFromDB[i].friday = true; break;
+      //     case 'Sat': coursesFromDB[i].saturday = true; break;
+      //     case 'Sun': coursesFromDB[i].sunday = true; break;
+      //   }
+      // })
       const data = {
-        courses: courses,
+        courses: coursesFromDB,
         categories: CATEGORIES
       }
       if (req.session.currentUser) data.user=req.session.currentUser;

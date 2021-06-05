@@ -41,9 +41,14 @@ function showCurrentWeek() {
   let lastDayFormatted = getFormattedDate(lastDay)
   
   $p.innerHTML = `${firstDayFormatted} - ${lastDayFormatted}`
-}
 
-showCurrentWeek()
+  axios.post('/courses', {
+    monday: firstDayFormatted,
+    sunday: lastDayFormatted
+  })
+    .then((response) => console.log('Sending the week dates worked!', response.data))
+    .catch(err => console.log(`Error while sending the week dates: ${err}`))
+}
 
 // GET FIRST DAY OF NEXT WEEK
 function startOfNextWeek(firstDay){
@@ -66,7 +71,6 @@ function daysOfWeek(monday) {
     let day = monday.getDate() - (monday.getDay() - 1) + i;
     weekArr.push(new Date(monday.setDate(day)))
   }
-  console.log(weekArr)
   return weekArr;
 }
 
@@ -87,6 +91,8 @@ function updateWeek(firstday) {
   document.getElementById('saturday').innerHTML = getFormattedDate(saturday);
   document.getElementById('sunday').innerHTML = sundayFormatted;
 }
+
+showCurrentWeek()
 
 ////////////////////////////////////////////////////////////////////////
 /////////////////////// EVENT LISTENERS ////////////////////////////////
