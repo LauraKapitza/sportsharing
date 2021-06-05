@@ -1,5 +1,5 @@
 /* -------------------- */
-/* FILTERS */
+/* WEEK NAV */
 /* -------------------- */
 
 .calendar-header {
@@ -8,10 +8,6 @@
   align-items: center;
 }
 
-
-/* -------------------- */
-/* WEEK NAV */
-/* -------------------- */
 .week-btn,
 .drop-btn {
   width: 80vw; 
@@ -42,45 +38,3 @@
   font-size: 12px;
   margin: 0;
 }
-
-/* -------------------- */
-/* DROPDOWN SPORT CATEGORY */
-/* -------------------- */
-
-.drop-btn {
-  background-color: white;
-  border: 2px solid #0F1960;
-  border-radius: 10px;
-  color: #0F1960;
-  padding: 4px 20px;
-}
-
-.dropdown {
-  position: relative;
-  display: inline-block;
-  margin: 0 auto;
-}
-
-.dropdown-menu {
-  display: none;
-  position: absolute;
-  background-color: #eeeded;
-  min-width: 160px;
-  box-shadow: 0px 8px 16px 0px rgba(0,0,0,0.2);
-  border-radius: 10px;
-  padding: 12px 16px;
-  z-index: 1;
-}
-
-.dropdown-menu a {
-  color: #0F1960;
-  padding: 12px 16px;
-  text-decoration: none;
-  display: block;
-}
-
-.dropdown-menu a:hover {background-color: #EEEDED;}
-
-.dropdown:hover .dropdown-menu {display: block;}
-
-.dropdown:hover .drop-btn {background-color: #d6d5d5;}

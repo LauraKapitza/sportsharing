@@ -4,7 +4,7 @@ const router = express.Router();
 const User = require('../models/User.model');
 const Courses = require('../models/Course.model');
 const CATEGORIES = require('../constants');
-// console.log(CATEGORIES)
+
 
 router.get('/courses', (req, res, next) => {
   Courses.find()

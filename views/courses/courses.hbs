@@ -10,25 +10,12 @@
     <h2>Course Calendar</h2> 
   {{/if}}
   <div class='calendar-header'>
-
     <div class="week-btn">
       {{!-- TOD add eventListener to update date according to the current week --}}
       <button class='btn-previous-week'><</button>
       <p class='current-week'>24/05/2021 - 30/05/2021</p>
       <button class='btn-next-week'>></button>
     </div>
-
-    <div class="dropdown">
-      <button class='drop-btn'>Choose Sport Category</button>
-      <div class="dropdown-menu">
-        {{#each categories}}
-        <a class="dropdown-item" href="#">{{this}}</a>
-        {{/each}}
-      </div>
-    </div>
-    <div class='btn-blue'><a href='/courses/add'>Create A Course</a></div>
-    
-
   </div>
 
   <div class='course-list'>
