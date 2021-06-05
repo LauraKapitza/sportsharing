@@ -9,20 +9,14 @@ const CATEGORIES = require('../constants');
 router.get('/courses', (req, res, next) => {
   Courses.find()
     .then(coursesFromDB => {
-      if (req.session.currentUser) {
-        const data = {
-          courses: coursesFromDB,
-          user: req.session.currentUser,
-          categories: CATEGORIES
-        }
-        res.render('courses/courses', data)
-      } else {
-        const data = {
-          courses: coursesFromDB,
-          categories: CATEGORIES
-        }
-        res.render('courses/courses', data)
+      const courses = [...coursesFromDB]
+      console.log(courses)
+      const data = {
+        courses: courses,
+        categories: CATEGORIES
       }
+      if (req.session.currentUser) data.user=req.session.currentUser;
+      res.render('courses/courses', data)
     })
     .catch(err => next(err))
 });
