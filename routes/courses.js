@@ -38,7 +38,17 @@ router.get('/courses/add', (req, res) => res.render('courses/new', {
 }));
 
 router.post('/courses', (req, res, next) => {
-  res.send('ok');
+  const monday = req.body.monday.split('/');
+  const sunday = req.body.sunday.split('/');
+  let firstDay = new Date(`${monday[2]}-${monday[1]}-${monday[0]}`);
+  let lastDay = new Date(`${sunday[2]}-${sunday[1]}-${sunday[0]}`);
+
+  Courses.find({$and:[
+    {date: {$gte: firstDay}}, 
+    {date: {$lte: lastDay}}
+  ]})
+    .then(coursesFromDb => res.send(coursesFromDb))
+    .catch(err => next(err))
 })
 
 router.get('/courses/add', (req, res) => res.render('courses/new', { user: req.session.currentUser }));
