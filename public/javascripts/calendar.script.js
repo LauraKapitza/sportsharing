@@ -1,7 +1,10 @@
+//WEEK NAV BTN
 const $btnPreviousWeek = document.querySelector('.btn-previous-week');
 const $btnNextWeek =document.querySelector('.btn-next-week');
 const $p = document.querySelector('.current-week');
 
+// //CATEGORY BTN
+// const $category = document.querySelector('.dropdown-menu');
 
 ////////////////////////////////////////////////////////////////////////
 ////////////////////////// FUNCTIONS ///////////////////////////////////
@@ -71,21 +74,29 @@ function updateWeek(date) {
   $p.innerHTML = `${firstDayFormatted} - ${lastDayFormatted}`
 }
 
-
 ////////////////////////////////////////////////////////////////////////
 /////////////////////// EVENT LISTENERS ////////////////////////////////
 ////////////////////////////////////////////////////////////////////////
 
-$btnNextWeek.addEventListener('click', (e) => {
+//WEEK BTN
+$btnNextWeek.addEventListener('click', () => {
   let arr = $p.innerHTML.slice(0, 10).split("/");
   let date = new Date(`${arr[2]}/${arr[1]}/${arr[0]}`);
   let nextWeek = startOfNextWeek(date);
   updateWeek(nextWeek);
 });
 
-$btnPreviousWeek.addEventListener('click', (e) => {
+$btnPreviousWeek.addEventListener('click', () => {
   let arr = $p.innerHTML.slice(0, 10).split("/");
   let date = new Date(`${arr[2]}/${arr[1]}/${arr[0]}`);
   let previousWeek = startOfPreviousWeek(date);
   updateWeek(previousWeek);
 });
+
+// //CATEGORY BTN
+// $category.addEventListener('click', (e) => {
+//   let category = e.target.innerHTML
+//   document.querySelector('.drop-btn').innerHTML = category;
+//   // document.querySelector('.dropdown-menu').style.display = 'none';
+// })
+

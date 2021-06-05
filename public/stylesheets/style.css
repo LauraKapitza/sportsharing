@@ -6,7 +6,9 @@ img {width: 100px; height: auto;}
 
 .btn-blue {
   background-color: #4758D6;
+  border: none;
   border-radius: 10px;
+  color: white;
   margin: 5px auto;
   padding: 4px 20px;
   text-align: center;

@@ -1,38 +1,29 @@
-<h1>Choose your course</h1>
+<h2>Choose your course</h2>
 
 <form action="/courses" method="POST">
 
   <label>
-    <select name="category" required>
+    <select class='searchbar-field' name="category" required>
       <option value="">--Please choose a category--</option>
-      <option value="Climbing">Climbing</option>
-      <option value="Dance">Dance</option>
-      <option value="Functional Training">Functional Training</option>
-      <option value="Material Arts">Material Arts</option>
-      <option value="Pilates">Pilates</option>
-      <option value="Racket Sports">Racket Sports</option>
-      <option value="Strength Training">Strength Training</option>
-      <option value="Swimming">Swimming</option>
-      <option value="Team Sports">Team Sports</option>
-      <option value="Vibration Training">Vibration Training</option>
-      <option value="Water Sports">Water Sports</option>
-      <option value="Yoga">Yoga</option>
+      {{#each categories}}
+        <option value="{{this}}">{{this}}</option>
+      {{/each}}
     </select>
   </label>
 
   <label>
-    <input type="date" id="input-date" name="date" placeholder="What date?" />
+    <input class='searchbar-field' type="date" id="input-date" name="date" placeholder="What date?" />
   </label>
 
   <label>
-    <input type="time" id="input-time" name="startTime" placeholder="What time?" />
+    <input class='searchbar-field' type="time" id="input-time" name="startTime" placeholder="What time?" />
   </label>
 
   <label>
-    <input type="text" name="location" placeholder="Where?" />
+    <input class='searchbar-field' type="text" name="location" placeholder="Where?" />
   </label>
 
-  <button type="submit">Search course</button>
+  <button class='btn-blue' type="submit">Search course</button>
 
   {{#if errorMessage}}
   <p class="error">{{errorMessage}}</p>
