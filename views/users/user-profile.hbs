@@ -1,25 +1,39 @@
 {{> navbar}}
 
-{{> searchbar}}
-
 {{#if user}}
-<h2>Welcome, {{ user.username }}!</h2>
 
-<div>
-    <img src="{{user.imageUrl}}">
-</div>
+<div class="form">
+    <h2>Your Profile</h2>
 
-<div>
-    <p>Username: {{ user.username }}</p>
-    <p>Email: {{ user.email }}</p>
-    <p>City: {{ user.city }}</p>
-    <p>Telephone: {{ user.telephone }}</p>
-    <a href="/UserProfile/edit">Edit profile</a>
-</div>
+    <img class="user-pic" src="{{user.imageUrl}}">
 
-<div>
-    <a href='/courses'>See Courses</a>
-    <a href="/courses/add">Create a course</a>
+    <table id="table-details">
+        <tr>
+            <td class="title">Username:</td>
+            <td class="info">{{user.username}}</td>
+        </tr>
+        <tr>
+            <td class="title">Email:</td>
+            <td class="info">{{user.email}}</td>
+        </tr>
+        <tr>
+            <td class="title">City:</td>
+            <td class="info">{{user.city}}</td>
+        </tr>
+        <tr>
+            <td class="title">Telephone:</td>
+            <td class="info">{{user.telephone}}</td>
+        </tr>
+    </table>
+
+    <div class="btn-blue">
+        <a href="/UserProfile/edit">Edit profile</a>
+    </div>
+
+    {{!-- <div>
+        <a href='/courses'>See Courses</a>
+        <a href="/courses/add">Create a course</a>
+    </div> --}}
 </div>
 
 {{else}}

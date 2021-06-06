@@ -30,16 +30,23 @@
       <input type="text" name="telephone" value="{{user.telephone}}" />
     </label>
 
-    <label>
-      Profile Picture
-      {{#if user.imageUrl}}
-      <img src="{{user.imageUrl}}">
-      {{else}}
-      <img src="/images/avatar.svg">
-      {{/if}}
-      <input type="file" name="image" id="input-image">
-      <input type="text" name="existingImage" hidden id="" value="{{user.imageUrl}}">
-    </label>
+    <div class="upload-container">
+      <p id="p-profil-pic">Profile Picture</p>
+
+      <label id="input-label">
+        <div class="btn-white">
+          Change image 
+        </div>
+        <input type="file" name="image" id="input-image">
+        <input type="text" name="existingImage" hidden id="" value="{{user.imageUrl}}"> 
+      </label>    
+    </div>
+
+    {{#if user.imageUrl}}
+    <img class="user-pic" src="{{user.imageUrl}}">
+    {{else}}
+    <img class="user-pic" src="/images/avatar.svg">
+    {{/if}}       
 
     <div class="nav-btn-container">
       <div class="btn-blue">

@@ -4,7 +4,7 @@
   <h2>{{course.courseName}}</h2>
   <a href='/courses'>Back</a>
 
-  <table id="course-details">
+  <table id="table-details">
     <tr>
       <td class="title">Category:</td>
       <td class="info">{{course.category}}</td>
@@ -62,7 +62,9 @@
   </form>
   {{else}}
   <form id="join-course" action="/courses/{{course.id}}/join" method="POST">
-    <button>Join Course</button>
+    <div class="btn-blue">
+      <button>Join Course</button>
+    </div>    
   </form>
   {{/if}}
   {{/if}}

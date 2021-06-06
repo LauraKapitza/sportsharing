@@ -27,8 +27,12 @@ nav{
   align-items: center;
 }
 
+.nav-img-container{
+  display: flex;
+}
+
 #burger{
-  width: 50px;
+  width: 25px;
 }
 #logo{
   width: 50px;
@@ -91,7 +95,6 @@ nav{
   margin-left: auto; margin-right: auto;
 }
 
-
 .form label{
   display: block;
   margin: 25px auto;
@@ -99,8 +102,23 @@ nav{
   font-weight: 700;
 }
 
-.form label img{
-  width:100%;
+.upload-container{
+  display: flex;
+  justify-content: space-between;
+}
+
+#p-profil-pic{
+  color: #0f1960;
+  font-weight: 700;
+  margin-top:auto;margin-bottom: auto;
+}
+
+#input-label{
+  margin:15px;
+}
+
+.user-pic{
+  width: 100%;
 }
 
 .form input {
@@ -111,6 +129,10 @@ nav{
   background-color: #eeeded;
   color: #0f1960;
   height: 2em;
+}
+
+#input-image {
+  display: none;
 }
 
 .btn-blue button {
@@ -141,9 +163,9 @@ nav{
 }
 
 /* -------------------- */
-/* ------ DETAILS------ */
+/* ---COURSE DETAILS--- */
 /* -------------------- */
-#course-details{
+#table-details{
   margin-bottom:20px;
 }
 .title{
@@ -155,3 +177,7 @@ nav{
   padding-bottom: 10px;
   color: #0f1960;
 }
+/* -------------------- */
+/* ----USER DETAILS---- */
+/* -------------------- */
+

@@ -55,7 +55,7 @@ if ($searchDate) {
 /////////////////// WRITE 'PARTICIPANTS:' IN TABLE /////////////////////
 ////////////////////////////////////////////////////////////////////////
 
-let $courseDetails = document.getElementById("course-details");
+let $courseDetails = document.getElementById("table-details");
 
 // CHECK IF ELEMENT IS ON THE PAGE
 if ($courseDetails) {
