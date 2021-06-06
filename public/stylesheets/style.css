@@ -5,6 +5,12 @@ body {
   font: 14px "Lucida Grande", Helvetica, Arial, sans-serif;
 }
 
+h2{
+  margin:20px;
+  color:#4758D6;
+  text-align: center;
+}
+
 /* -------------------- */
 /* ------ NAVBAR ------ */
 /* -------------------- */
@@ -84,11 +90,7 @@ nav{
   width: 80vw;
   margin-left: auto; margin-right: auto;
 }
-.form h2{
-  margin:20px;
-  color:#4758D6;
-  text-align: center;
-}
+
 
 .form label{
   display: block;
@@ -128,6 +130,11 @@ nav{
 
 .btn-red a {
   color: white;
+  text-decoration: none;
+}
+
+.btn-red button {
+  color: white;
   border:none;
   background-color:#ea3a3a;
   text-decoration: none;
@@ -136,8 +143,15 @@ nav{
 /* -------------------- */
 /* ------ DETAILS------ */
 /* -------------------- */
-
-.marge{
-  margin-left: 100px;
+#course-details{
+  margin-bottom:20px;
 }
-
+.title{
+  color: #0f1960;
+  font-weight: 700;
+}
+.info{
+  padding-left:80px;
+  padding-bottom: 10px;
+  color: #0f1960;
+}

@@ -174,6 +174,8 @@ router.post('/userProfile', routeGuard, fileUploader.single('image'), (req, res,
 
 router.get('/userProfile/delete', routeGuard, (req, res, next) => {
   console.log('route delete user profile');
+  //Qd delete profil => Delete courses pour ce user id
+  //                 => Désinscription pour les cours auxquels ce user id est inscrit.
   User.findByIdAndRemove(req.session.currentUser._id)
     .then(() => {
       req.session.destroy();

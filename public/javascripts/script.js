@@ -1,8 +1,12 @@
-document.addEventListener('DOMContentLoaded', () => {
+////// TIPPS ANTOINE POUR APPLIQUER JS COTE CLIENT SUR CERTAINES PAGE /////
 
-  console.log('IronGenerator JS imported successfully!');
-
-}, false);
+// const pathname = new URL(location.href).pathname
+// console.log(pathname);
+// if (pathname.startsWith('/about')) {
+//   // code for ABOUT page
+// } else if(pathname.startsWith('/contact')) {
+//   // code for CONTACT page
+// }
 
 ////////////////////////////////////////////////////////////////////////
 //////////////// CHECK TIME IS NOT IN THE PAST /////////////////////////
@@ -10,48 +14,51 @@ document.addEventListener('DOMContentLoaded', () => {
 let $searchDate = document.getElementById("input-date");
 let $searchTime = document.getElementById("input-time");
 
-let today = new Date(new Date().getTime() - new Date().getTimezoneOffset() * 60000).toISOString().split("T")[0];
-let tomorrow = new Date(new Date().getTime()+(1000*60*60*24)- new Date().getTimezoneOffset() * 60000).toISOString().split("T")[0];
-
-$searchDate.setAttribute("min", today); 
-$searchDate.setAttribute("value", today); 
-
 function twoDigitsNumber(myTime) {
   return myTime.toString().length === 2 ? myTime.toString() : "0" + myTime.toString();
 }
 
-let now = new Date();
-let timeNow = twoDigitsNumber(now.getHours())+":"+twoDigitsNumber(now.getMinutes());
+// CHECK IF ELEMENT IS ON THE PAGE
+if ($searchDate) {
+  
+  let today = new Date(new Date().getTime() - new Date().getTimezoneOffset() * 60000).toISOString().split("T")[0];
+  let tomorrow = new Date(new Date().getTime() + (1000 * 60 * 60 * 24) - new Date().getTimezoneOffset() * 60000).toISOString().split("T")[0];
 
-//Default min & max time values
-$searchTime.setAttribute("min","06:00");
-$searchTime.setAttribute("max","22:00");
+  $searchDate.setAttribute("min", today);
+  $searchDate.setAttribute("value", today);
 
-//Gestion de l'affichage par défault en fonction de l'heure
-if (now.getHours() < 6 ){
-  $searchTime.setAttribute("value","06:00");
-} else if  (now.getHours() >= 22 ){
-  $searchTime.setAttribute("value","06:00");
-  $searchDate.setAttribute("value", tomorrow);   
-} else{
-  $searchTime.setAttribute("value",timeNow);
-  $searchTime.setAttribute("min",timeNow);
+  let now = new Date();
+  let timeNow = twoDigitsNumber(now.getHours()) + ":" + twoDigitsNumber(now.getMinutes());
+
+  //Default min & max time values
+  $searchTime.setAttribute("min", "06:00");
+  $searchTime.setAttribute("max", "22:00");
+
+  //Gestion de l'affichage par défault en fonction de l'heure
+  if (now.getHours() < 6) {
+    $searchTime.setAttribute("value", "06:00");
+  } else if (now.getHours() >= 22) {
+    $searchTime.setAttribute("value", "06:00");
+    $searchDate.setAttribute("value", tomorrow);
+  } else {
+    $searchTime.setAttribute("value", timeNow);
+    $searchTime.setAttribute("min", timeNow);
+  }
+
+  $searchDate.addEventListener('change', (e) => {
+    if ($searchDate.value > today) {
+      $searchTime.setAttribute("min", "06:00");
+    }
+  });
+}
+////////////////////////////////////////////////////////////////////////
+/////////////////// WRITE 'PARTICIPANTS:' IN TABLE /////////////////////
+////////////////////////////////////////////////////////////////////////
+
+let $courseDetails = document.getElementById("course-details");
+
+// CHECK IF ELEMENT IS ON THE PAGE
+if ($courseDetails) {
+  $courseDetails.children[0].children[8].children[0].innerHTML = "Participants:"
 }
 
-$searchDate.addEventListener('change',(e)=>{
-  if ($searchDate.value > today){
-    $searchTime.setAttribute("min","06:00");
-  }  
-});
-////////////////////////////////////////////////////////////////////////
-///////////CHECK IF USER ALREADY SIGN INTO A COURSE ////////////////////
-////////////////////////////////////////////////////////////////////////
-
-// function isAlreadyParticipant(arr, user) {
-//   for (let i = 0; i < arr.length;i++){
-//     if (arr[i]._id == user._id) {
-//       return true;
-//     }
-//   } 
-//   return false;
-// }

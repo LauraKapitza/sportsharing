@@ -1,39 +1,69 @@
 {{> navbar}}
 
-<div class="details-container"></div>
+<div class="form">
   <h2>{{course.courseName}}</h2>
   <a href='/courses'>Back</a>
 
-  <p>Category:<span class="marge">{{course.category}}</span></p>
-  <p>Organiser:<span class="marge">{{course.courseOwner.username}}</span></p>
-  <p>Date:<span class="marge">{{convertedDate}}</span></p>
-  <p>Start time:<span class="marge">{{course.startTime}}</span></p>
-  <p>Description:<span class="marge">{{course.description}}</span></p>
-  <p>Address:<span class="marge">{{course.address}}</span></p>
-  <p>Zip:<span class="marge">{{course.zip}}</span></p>
-  <p>City:<span class="marge">{{course.city}}</span></p>
-  <p>
-    Participants:
-  <ul>
+  <table id="course-details">
+    <tr>
+      <td class="title">Category:</td>
+      <td class="info">{{course.category}}</td>
+    </tr>
+    <tr>
+      <td class="title">Organiser:</td>
+      <td class="info">{{course.courseOwner.username}}</td>
+    </tr>
+    <tr>
+      <td class="title">Date:</td>
+      <td class="info">{{convertedDate}}</td>
+    </tr>
+    <tr>
+      <td class="title">Start time:</td>
+      <td class="info">{{course.startTime}}</td>
+    </tr>
+    <tr>
+      <td class="title">Description:</td>
+      <td class="info">{{course.description}}</td>
+    </tr>
+    <tr>
+      <td class="title">Address:</td>
+      <td class="info">{{course.address}}</td>
+    </tr>
+    <tr>
+      <td class="title">Zip:</td>
+      <td class="info">{{course.zip}}</td>
+    </tr>
+    <tr>
+      <td class="title">City:</td>
+      <td class="info">{{course.city}}</td>
+    </tr>    
     {{#each course.participants}}
-    <li>{{this.username}}</li>
-    {{/each}}
-  </ul>
-  </p>
-
-  <p>Free Spaces: {{spaceTaken}} / {{course.maxParticipants}}</p>
+    <tr>
+      <td class="title"></td>
+      <td class="info">{{this.username}}</td>
+    </tr>
+    {{/each}}    
+    <tr>
+      <td class="title">Free Spaces:</td>
+      <td class="info">{{spaceTaken}} / {{course.maxParticipants}}</td>
+    </tr>
+  </table>
 
   {{#if userCourseOwner}}
-  <a href='/courses/{{course.id}}/edit'>Edit</a>
+  <div class="btn-blue">
+    <a href='/courses/{{course.id}}/edit'>Edit</a>
+  </div>
   {{else}}
-    {{#if userSignUp}}
-    <form id="unsubscribe-course" action="/courses/{{course.id}}/unsubscribe" method="POST">
+  {{#if userSignUp}}
+  <form id="unsubscribe-course" action="/courses/{{course.id}}/unsubscribe" method="POST">
+    <div class="btn-red">
       <button>Unsubscribe Course</button>
-    </form>
-    {{else}}
-    <form id="join-course" action="/courses/{{course.id}}/join" method="POST">
-      <button>Join Course</button>
-    </form>
-    {{/if}}
+    </div>
+  </form>
+  {{else}}
+  <form id="join-course" action="/courses/{{course.id}}/join" method="POST">
+    <button>Join Course</button>
+  </form>
+  {{/if}}
   {{/if}}
 </div>
