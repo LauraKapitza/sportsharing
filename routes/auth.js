@@ -175,30 +175,34 @@ router.post('/userProfile', routeGuard, fileUploader.single('image'), (req, res,
 });
 
 router.get('/userProfile/delete', routeGuard, (req, res, next) => {
-  console.log('route delete user profile');
-  //Qd delete profil => Désinscription pour les cours auxquels ce user id est inscrit.
-               
-  // Courses.deleteMany({courseOwner: req.session.currentUser._id})
-  // .then() //Cours has been deleted
-  // .catch(next)
+                 
+  Courses.deleteMany({courseOwner: req.session.currentUser._id})
+  .then() //Courses have been deleted
+  .catch(next)
 
-  Courses.updateMany({})
+  Courses.find({})
   .then(coursesFromDB => {
-    console.log(coursesFromDB);
+
     for (let i = 0; i < coursesFromDB.length;i++){
-      console.log("i: ",i);
-      console.log("cours:",coursesFromDB[i]);
-      // coursesFromDB.participants = courseFromDB.participants.filter(participant => participant == req.session.currentUser._id)
+      for (let j = 0; j < coursesFromDB[i].participants.length;j++){
+        if (coursesFromDB[i].participants[j] == req.session.currentUser._id){
+          coursesFromDB[i].participants.splice(j,1);
+        }
+      }
+      coursesFromDB[i].save()
+            .then() //User has been deleted from courses
+            .catch(next)
     }
   })
   .catch(next)
 
-  // User.findByIdAndRemove(req.session.currentUser._id)
-  //   .then(() => {
-  //     req.session.destroy();
-  //     res.redirect('/')
-  //   })
-  //   .catch(err => next(err));
+  User.findByIdAndRemove(req.session.currentUser._id)
+    .then(() => {
+      console.log('destruction sessison immini')
+      req.session.destroy();
+      res.redirect('/')
+    })
+    .catch(err => next(err));
 });
 
 module.exports = router;
