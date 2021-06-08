@@ -3,7 +3,6 @@
 {{> searchbar}}
 
 <div class="calendar-container">
-  {{!-- TOD add if condition to change headline (user vs visitor) --}}
   {{#if user}}
     <h2>Your Course Calendar</h2> 
   {{else}}
@@ -11,9 +10,8 @@
   {{/if}}
   <div class='calendar-header'>
     <div class="week-btn">
-      {{!-- TOD add eventListener to update date according to the current week --}}
       <button class='btn-previous-week'><</button>
-      <p class='current-week'>24/05/2021 - 30/05/2021</p>
+      <p id = "date-week" class='current-week'></p>
       <button class='btn-next-week'>></button>
     </div>
   </div>
@@ -21,5 +19,3 @@
   <div id='course-list'></div>
 
 </div>
-
-<script src="/javascripts/calendar.script.js"></script>
