@@ -1,11 +1,4 @@
-//CALENDAR
 const $div = document.getElementById('course-list');
-
-//WEEK NAV BTN
-const $btnPreviousWeek = document.querySelector('.btn-previous-week');
-const $btnNextWeek =document.querySelector('.btn-next-week');
-const $p = document.querySelector('.current-week');
-let todayDate = new Date()
 
 ////////////////////////////////////////////////////////////////////////
 ////////////////////////// FUNCTIONS ///////////////////////////////////
@@ -47,14 +40,14 @@ function showWeek(day) {
   let firstDayFormatted = getFormattedDate(firstDay);
   let lastDayFormatted = getFormattedDate(lastDay)
   
-  $p.innerHTML = `${firstDayFormatted} - ${lastDayFormatted}`
-
+  document.querySelector('.current-week').innerHTML = `${firstDayFormatted} - ${lastDayFormatted}`
+  
   axios.post('/courses', {
     firstday: firstDayFormatted,
     lastday: lastDayFormatted
   })
-    .then((response) => updateCalendar(response.data))
-    .catch(err => console.log(`Error while sending the week dates: ${err}`))
+  .then((response) => updateCalendar(response.data))
+  .catch(err => console.log(`Error while sending the week dates: ${err}`))
 }
 
 // GET FIRST DAY OF NEXT WEEK
@@ -85,10 +78,10 @@ function daysOfWeek(monday) {
 function updateWeek(firstday) {
   let weekdays = daysOfWeek(firstday);
   const [monday, tuesday, wednesday, thursday, friday, saturday, sunday] = weekdays
-
+  
   let mondayFormatted = getFormattedDate(monday);
   let sundayFormatted = getFormattedDate(sunday);
-  $p.innerHTML = `${mondayFormatted} - ${sundayFormatted}`;
+  document.querySelector('.current-week').innerHTML = `${mondayFormatted} - ${sundayFormatted}`;
   
   document.getElementById('monday').innerHTML = mondayFormatted;
   document.getElementById('tuesday').innerHTML = getFormattedDate(tuesday);
@@ -99,22 +92,25 @@ function updateWeek(firstday) {
   document.getElementById('sunday').innerHTML = sundayFormatted;
 }
 
-showWeek(todayDate)
 
 ////////////////////////////////////////////////////////////////////////
 /////////////////////// EVENT LISTENERS ////////////////////////////////
 ////////////////////////////////////////////////////////////////////////
+window.addEventListener('load', () => {
+  showWeek(new Date())
+})
+
 
 //WEEK BTN
-$btnNextWeek.addEventListener('click', () => {
-  let arr = $p.innerHTML.slice(0, 10).split("/");
+document.querySelector('.btn-next-week').addEventListener('click', () => {
+  let arr = document.querySelector('.current-week').innerHTML.slice(0, 10).split("/");
   let date = new Date(`${arr[2]}/${arr[1]}/${arr[0]}`);
   let nextWeek = startOfNextWeek(date);
   updateWeek(nextWeek);
 });
 
-$btnPreviousWeek.addEventListener('click', () => {
-  let arr = $p.innerHTML.slice(0, 10).split("/");
+document.querySelector('.btn-previous-week').addEventListener('click', () => {
+  let arr = document.querySelector('.current-week').innerHTML.slice(0, 10).split("/");
   let date = new Date(`${arr[2]}/${arr[1]}/${arr[0]}`);
   let previousWeek = startOfPreviousWeek(date);
   updateWeek(previousWeek);
