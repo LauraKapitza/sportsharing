@@ -69,8 +69,6 @@ router.get('/courses/add', (req, res) => res.render('courses/new', {
 }));
 
 
-router.get('/courses/add', (req, res) => res.render('courses/new', { user: req.session.currentUser }));
-
 //Route post pour la création d'un nouveau cours
 router.post('/courses/add', (req, res, next) => {
   Courses.create({

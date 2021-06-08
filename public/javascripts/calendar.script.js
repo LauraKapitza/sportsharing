@@ -1,7 +1,8 @@
 ////// TIPPS ANTOINE POUR APPLIQUER JS COTE CLIENT SUR CERTAINES PAGE /////
 
 const pathname = new URL(location.href).pathname
-if (pathname.startsWith('/courses')) {
+
+if (pathname === '/courses') {
 
   const $div = document.getElementById('course-list');
 
@@ -11,18 +12,26 @@ if (pathname.startsWith('/courses')) {
 
   function updateCalendar(data) {
     $div.innerHTML = data;
+
+    document.getElementById('monday').innerHTML = firstDayFormatted;
+    document.getElementById('tuesday').innerHTML = getFormattedDate(tuesday);
+    document.getElementById('wednesday').innerHTML = getFormattedDate(wednesday);
+    document.getElementById('thursday').innerHTML = getFormattedDate(thursday);
+    document.getElementById('friday').innerHTML = getFormattedDate(friday);
+    document.getElementById('saturday').innerHTML = getFormattedDate(saturday);
+    document.getElementById('sunday').innerHTML = sundayFormatted;
   }
 
-  //GET FIRST DAY OF A WEEK
-  function startOfWeek(date) {
-    let firstDay = date.getDate() - date.getDay() + (date.getDay === 0 ? -6 : 1);
-    return new Date(date.setDate(firstDay))
-  }
+  // //GET FIRST DAY OF A WEEK
+  // function startOfWeek(date) {
+  //   let firstDay = date.getDate() - date.getDay() + (date.getDay === 0 ? -6 : 1);
+  //   return new Date(date.setDate(firstDay))
+  // }
 
-  function endOfWeek(date) {
-    let lastDay = date.getDate() - (date.getDay() - 1) + 6;
-    return new Date(date.setDate(lastDay))
-  }
+  // function endOfWeek(date) {
+  //   let lastDay = date.getDate() - (date.getDay() - 1) + 6;
+  //   return new Date(date.setDate(lastDay))
+  // }
 
   //CHANGE FORMAT OF DATE
   function getFormattedDate(date) {
@@ -34,25 +43,6 @@ if (pathname.startsWith('/courses')) {
     if (dd.length < 2) dd = '0' + dd;
     
     return `${dd}/${mm}/${yy}`
-  }
-
-  //CHANGE WEEK NAV BTN VALUE
-  function showWeek(day) {
-    
-    let firstDay = startOfWeek(day)
-    let lastDay = endOfWeek(day)
-    
-    let firstDayFormatted = getFormattedDate(firstDay);
-    let lastDayFormatted = getFormattedDate(lastDay)
-    
-    document.querySelector('.current-week').innerHTML = `${firstDayFormatted} - ${lastDayFormatted}`
-    
-    axios.post('/courses', {
-      firstday: firstDayFormatted,
-      lastday: lastDayFormatted
-    })
-    .then((response) => updateCalendar(response.data))
-    .catch(err => console.log(`Error while sending the week dates: ${err}`))
   }
 
   // GET FIRST DAY OF NEXT WEEK
@@ -84,17 +74,16 @@ if (pathname.startsWith('/courses')) {
     let weekdays = daysOfWeek(firstday);
     const [monday, tuesday, wednesday, thursday, friday, saturday, sunday] = weekdays
     
-    let mondayFormatted = getFormattedDate(monday);
-    let sundayFormatted = getFormattedDate(sunday);
-    document.querySelector('.current-week').innerHTML = `${mondayFormatted} - ${sundayFormatted}`;
+    let firstDayFormatted = getFormattedDate(monday);
+    let lastDayFormatted = getFormattedDate(sunday);
+    document.querySelector('.current-week').innerHTML = `${firstDayFormatted} - ${lastDayFormatted}`;
     
-    document.getElementById('monday').innerHTML = mondayFormatted;
-    document.getElementById('tuesday').innerHTML = getFormattedDate(tuesday);
-    document.getElementById('wednesday').innerHTML = getFormattedDate(wednesday);
-    document.getElementById('thursday').innerHTML = getFormattedDate(thursday);
-    document.getElementById('friday').innerHTML = getFormattedDate(friday);
-    document.getElementById('saturday').innerHTML = getFormattedDate(saturday);
-    document.getElementById('sunday').innerHTML = sundayFormatted;
+    axios.post('/courses', {
+      firstday: firstDayFormatted,
+      lastday: lastDayFormatted
+    })
+    .then((response) => updateCalendar(response.data))
+    .catch(err => console.log(`Error while sending the week dates: ${err}`))
   }
 
 
@@ -103,7 +92,7 @@ if (pathname.startsWith('/courses')) {
   ////////////////////////////////////////////////////////////////////////
   window.addEventListener('load', () => {
     let today = new Date()
-    showWeek(today)
+    updateWeek(today)
   })
 
 
