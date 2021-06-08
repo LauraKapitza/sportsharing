@@ -6,7 +6,7 @@
   <form action="/courses/{{course.id}}" method="POST">
     <label>
       Choose a category:
-      <select name="category" value="{{course.category}}" required>
+      <select class='searchbar-field' name="category" value="{{course.category}}" required>
         <option value="{{course.category}}">{{course.category}}</option>
         {{#each categories}}
         <option value="{{this}}">{{this}}</option>

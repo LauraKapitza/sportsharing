@@ -5,7 +5,7 @@
   <form action="/courses/add" method="POST">
     <label>
       Choose a category:
-      <select name="category" required>
+      <select class='searchbar-field' name="category" required>
         <option value="">--Please choose an option--</option>
         {{#each categories}}
           <option value="{{this}}">{{this}}</option>

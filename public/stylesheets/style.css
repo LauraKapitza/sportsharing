@@ -7,7 +7,7 @@ body {
 
 h2{
   margin:20px;
-  color:#4758D6;
+  color:#0F1960;
   text-align: center;
 }
 
@@ -25,6 +25,7 @@ nav{
 .nav-btn-container{
   display: flex;
   align-items: center;
+  justify-content: space-between;
 }
 
 .nav-img-container{
@@ -114,7 +115,7 @@ nav{
 }
 
 #input-label{
-  margin:15px;
+  margin:15px 0px 15px 15px;
 }
 
 .user-pic{
@@ -178,6 +179,79 @@ nav{
   color: #0f1960;
 }
 /* -------------------- */
-/* ----USER DETAILS---- */
+/* ----- SEARCHBAR ---- */
 /* -------------------- */
+.form .searchbar-label{
+  margin: 10px auto;
+}
 
+.searchbar-field {
+  width: 100%;
+  background-color: white;
+  border: 2px solid #0F1960;
+  border-radius: 10px;
+  color: #0F1960;
+  padding: 4px 20px;
+}
+
+.date-container{
+  display: flex;
+  justify-content: space-between;
+}
+
+.date-container label{
+  margin: 10px 0;
+  width: 45%;  
+}
+
+.search-btn-container > div{
+  margin: 5px 0;
+}
+
+.dbl-btn-container{
+  width:45%;
+}
+
+/* -------------------- */
+/* ------ How To ------ */
+/* -------------------- */
+.howto{
+  background-color: #eeeded;
+  margin-top: 20px;
+  padding-top: 1px;
+}
+.howto ol {
+  list-style: none;
+  padding-left: 0;
+  width: 80vw;
+  margin-left: auto;margin-right: auto;
+}
+
+.howto li {
+  display: flex;
+  align-items: center;
+  padding: 10px;
+  background-color: white;
+  margin-bottom: 25px;
+  border-radius: 15px;
+}
+
+.howto li .title {
+  font-size: 150%;
+}
+
+.number{
+  background-color: #e1811f;
+  color: #eeeded;
+  padding: 0 25px;
+  border-radius: 40px;
+  text-align: center;
+  line-height: 80px;
+  font-size: 4em;
+}
+.howto li .caption {
+  margin-left: 1.2em;
+}
+.howto li p {
+  margin:5px;
+}

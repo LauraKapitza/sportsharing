@@ -1,31 +1,41 @@
-<h2>Choose your course</h2>
+<div class="form">
+  <h2>Choose your course</h2>
 
-<form action="/courses" method="POST">
+  <form action="/courses" method="POST">
 
-  <label>
-    <select class='searchbar-field' name="category" required>
-      <option value="">--Please choose a category--</option>
-      {{#each categories}}
+    <label class="searchbar-label">
+      <select class='searchbar-field' name="category" required>
+        <option value="">--Please choose a category--</option>
+        {{#each categories}}
         <option value="{{this}}">{{this}}</option>
-      {{/each}}
-    </select>
-  </label>
+        {{/each}}
+      </select>
+    </label>
 
-  <label>
-    <input class='searchbar-field' type="date" id="input-date" name="date" placeholder="What date?" />
-  </label>
+    <div class="date-container">
+      <label>
+        <input type="date" id="input-date" name="date" placeholder="What date?" />
+      </label>
 
-  <label>
-    <input class='searchbar-field' type="time" id="input-time" name="startTime" placeholder="What time?" />
-  </label>
+      <label>
+        <input type="time" id="input-time" name="startTime" placeholder="What time?" />
+      </label>
+    </div>
 
-  <label>
-    <input class='searchbar-field' type="text" name="location" placeholder="Where?" />
-  </label>
+    <label class="searchbar-label">
+      <input type="text" name="location" placeholder="Where?" />
+    </label>
 
-  <button class='btn-blue' type="submit">Search course</button>
-
-  {{#if errorMessage}}
-  <p class="error">{{errorMessage}}</p>
-  {{/if}}
-</form>
+    <div class="nav-btn-container search-btn-container">
+      <div class="btn-blue dbl-btn-container">
+        <button type="submit">Search</button>
+      </div>
+      <div class="btn-white dbl-btn-container">
+        <a href="/courses">Show all</a>
+      </div>
+    </div>
+    {{#if errorMessage}}
+    <p class="error">{{errorMessage}}</p>
+    {{/if}}
+  </form>
+</div>
