@@ -1,12 +1,3 @@
-////// TIPPS ANTOINE POUR APPLIQUER JS COTE CLIENT SUR CERTAINES PAGE /////
-
-// const pathname = new URL(location.href).pathname
-// console.log(pathname);
-// if (pathname.startsWith('/about')) {
-//   // code for ABOUT page
-// } else if(pathname.startsWith('/contact')) {
-//   // code for CONTACT page
-// }
 
 ////////////////////////////////////////////////////////////////////////
 //////////////// CHECK TIME IS NOT IN THE PAST /////////////////////////
