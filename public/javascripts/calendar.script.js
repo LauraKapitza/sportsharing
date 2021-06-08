@@ -1,7 +1,6 @@
 ////// TIPPS ANTOINE POUR APPLIQUER JS COTE CLIENT SUR CERTAINES PAGE /////
 
 const pathname = new URL(location.href).pathname
- console.log(pathname);
 if (pathname.startsWith('/courses')) {
 
   const $div = document.getElementById('course-list');
@@ -103,7 +102,8 @@ if (pathname.startsWith('/courses')) {
   /////////////////////// EVENT LISTENERS ////////////////////////////////
   ////////////////////////////////////////////////////////////////////////
   window.addEventListener('load', () => {
-    showWeek(new Date())
+    let today = new Date()
+    showWeek(today)
   })
 
 

@@ -7,6 +7,7 @@ const CATEGORIES = require('../constants');
 
 
 router.get('/courses', (req, res, next) => {
+  console.log("req.body for route.get courses", req.body)
   Courses.find()
     .then(coursesFromDB => {
       const data = {
@@ -20,45 +21,45 @@ router.get('/courses', (req, res, next) => {
 });
 
 router.post('/courses', (req, res, next) => {
-  console.log('yolo')
+  const monday = req.body.firstday.split('/');
+  const sunday = req.body.lastday.split('/');
+  let firstDay = new Date(`${monday[2]}-${monday[1]}-${monday[0]}`);
+  let lastDay = new Date(`${sunday[2]}-${sunday[1]}-${sunday[0]}`);
 
-  if (req.body.firstday && req.body.lastday) {
-    const monday = req.body.firstday.split('/');
-    const sunday = req.body.lastday.split('/');
-    let firstDay = new Date(`${monday[2]}-${monday[1]}-${monday[0]}`);
-    let lastDay = new Date(`${sunday[2]}-${sunday[1]}-${sunday[0]}`);
-  
+  console.log(firstDay)
+  console.log(lastDay)
 
-    Courses.find({$and:[
-      {date: {$gte: firstDay}}, 
-      {date: {$lte: lastDay}}
-    ]})
-      .then(coursesFromDB => {
-        const courses = {
-          monday: [],
-          tuesday: [],
-          wednesday: [],
-          thursday: [],
-          friday: [],
-          saturday: [],
-          sunday: []
+
+  Courses.find({$and:[
+    {date: {$gte: firstDay}}, 
+    {date: {$lte: lastDay}}
+  ]})
+    .then(coursesFromDB => {
+      console.log(coursesFromDB)
+      const courses = {
+        monday: [],
+        tuesday: [],
+        wednesday: [],
+        thursday: [],
+        friday: [],
+        saturday: [],
+        sunday: []
+      }
+      coursesFromDB.forEach((course, i) => {
+        let day = course.date.toString().slice('', 3)
+        switch(day){
+          case 'Mon': courses.monday.push(course); break;
+          case 'Tue': courses.tuesday.push(course); break;
+          case 'Wed': courses.wednesday.push(course); break;
+          case 'Thu': courses.thursday.push(course); break;
+          case 'Fri': courses.friday.push(course); break;
+          case 'Sat': courses.saturday.push(course); break;
+          case 'Sun': courses.sunday.push(course); break;
         }
-        coursesFromDB.forEach((course, i) => {
-          let day = course.date.toString().slice('', 3)
-          switch(day){
-            case 'Mon': courses.monday.push(course); break;
-            case 'Tue': courses.tuesday.push(course); break;
-            case 'Wed': courses.wednesday.push(course); break;
-            case 'Thu': courses.thursday.push(course); break;
-            case 'Fri': courses.friday.push(course); break;
-            case 'Sat': courses.saturday.push(course); break;
-            case 'Sun': courses.sunday.push(course); break;
-          }
-        })
-        res.render('courses/calendar', {courses: courses,layout: false})
-    }) 
-    .catch(err => next(err))
-  }
+      })
+      res.render('courses/calendar', {courses: courses,layout: false})
+  }) 
+  .catch(err => next(err))
 })
 
 //Route post pour la recherche des cours
