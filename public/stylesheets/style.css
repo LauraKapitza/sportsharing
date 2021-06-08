@@ -166,7 +166,7 @@ nav{
 /* -------------------- */
 /* ---COURSE DETAILS--- */
 /* -------------------- */
-#table-details{
+.table-details{
   margin-bottom:20px;
 }
 .title{
@@ -219,6 +219,7 @@ nav{
   background-color: #eeeded;
   margin-top: 20px;
   padding-top: 1px;
+  padding-bottom: 20px;
 }
 .howto ol {
   list-style: none;
