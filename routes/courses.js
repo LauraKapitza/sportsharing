@@ -9,20 +9,12 @@ const CATEGORIES = require('../constants');
 router.get('/courses', (req, res, next) => {
   Courses.find()
     .then(coursesFromDB => {
-      if (req.session.currentUser) {
-        const data = {
-          courses: coursesFromDB,
-          user: req.session.currentUser,
-          categories: CATEGORIES
-        }
-        res.render('courses/courses', data)
-      } else {
-        const data = {
-          courses: coursesFromDB,
-          categories: CATEGORIES
-        }
-        res.render('courses/courses', data)
+      const data = {
+        courses: coursesFromDB,
+        categories: CATEGORIES
       }
+      if (req.session.currentUser) data.user=req.session.currentUser;
+      res.render('courses/courses', data)
     })
     .catch(err => next(err))
 });
@@ -34,7 +26,40 @@ router.get('/courses/add', (req, res) => res.render('courses/new', {
 }));
 
 router.post('/courses', (req, res, next) => {
-  res.send('ok');
+  const monday = req.body.firstday.split('/');
+  const sunday = req.body.lastday.split('/');
+  let firstDay = new Date(`${monday[2]}-${monday[1]}-${monday[0]}`);
+  let lastDay = new Date(`${sunday[2]}-${sunday[1]}-${sunday[0]}`);
+
+  Courses.find({$and:[
+    {date: {$gte: firstDay}}, 
+    {date: {$lte: lastDay}}
+  ]})
+    .then(coursesFromDB => {
+      const courses = {
+        monday: [],
+        tuesday: [],
+        wednesday: [],
+        thursday: [],
+        friday: [],
+        saturday: [],
+        sunday: []
+      }
+      coursesFromDB.forEach((course, i) => {
+        let day = course.date.toString().slice('', 3)
+        switch(day){
+          case 'Mon': courses.monday.push(course); break;
+          case 'Tue': courses.tuesday.push(course); break;
+          case 'Wed': courses.wednesday.push(course); break;
+          case 'Thu': courses.thursday.push(course); break;
+          case 'Fri': courses.friday.push(course); break;
+          case 'Sat': courses.saturday.push(course); break;
+          case 'Sun': courses.sunday.push(course); break;
+        }
+      })
+      res.render('courses/calendar', {courses: courses,layout: false})
+    }) 
+    .catch(err => next(err))
 })
 
 router.get('/courses/add', (req, res) => res.render('courses/new', { user: req.session.currentUser }));
