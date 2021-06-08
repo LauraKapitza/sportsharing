@@ -94,6 +94,7 @@ nav{
 .form{
   width: 80vw;
   margin-left: auto; margin-right: auto;
+  padding-bottom: 20px;
 }
 
 .form label{
@@ -181,7 +182,30 @@ nav{
 /* -------------------- */
 /* ----- SEARCHBAR ---- */
 /* -------------------- */
-.form .searchbar-label{
+.form-searchbar{
+  width: 80vw;
+  margin-left: auto; margin-right: auto;
+  padding-bottom: 20px;
+}
+
+.form-searchbar label{
+  display: block;
+  margin: 25px auto;
+  color: #0f1960;
+  font-weight: 700;
+}
+
+.form-searchbar input {
+  text-align: center;
+  width: 100%;
+  border-radius: 5px;
+  border:none ;
+  background-color: #eeeded;
+  color: #0f1960;
+  height: 2em;
+}
+
+.form-searchbar .searchbar-label{
   margin: 10px auto;
 }
 
