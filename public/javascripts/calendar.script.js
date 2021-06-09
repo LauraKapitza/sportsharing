@@ -10,6 +10,7 @@ if (pathname === '/courses') {
   ////////////////////////// FUNCTIONS ///////////////////////////////////
   ////////////////////////////////////////////////////////////////////////
 
+  //UPDATE DOM FOR CALENDAR LIST
   function updateCalendar(data) {
     $div.innerHTML = data;
 
@@ -21,17 +22,6 @@ if (pathname === '/courses') {
     document.getElementById('saturday').innerHTML = getFormattedDate(saturday);
     document.getElementById('sunday').innerHTML = sundayFormatted;
   }
-
-  // //GET FIRST DAY OF A WEEK
-  // function startOfWeek(date) {
-  //   let firstDay = date.getDate() - date.getDay() + (date.getDay === 0 ? -6 : 1);
-  //   return new Date(date.setDate(firstDay))
-  // }
-
-  // function endOfWeek(date) {
-  //   let lastDay = date.getDate() - (date.getDay() - 1) + 6;
-  //   return new Date(date.setDate(lastDay))
-  // }
 
   //CHANGE FORMAT OF DATE
   function getFormattedDate(date) {
@@ -73,9 +63,11 @@ if (pathname === '/courses') {
   function updateWeek(firstday) {
     let weekdays = daysOfWeek(firstday);
     const [monday, tuesday, wednesday, thursday, friday, saturday, sunday] = weekdays
+
     
     let firstDayFormatted = getFormattedDate(monday);
     let lastDayFormatted = getFormattedDate(sunday);
+
     document.querySelector('.current-week').innerHTML = `${firstDayFormatted} - ${lastDayFormatted}`;
     
     axios.post('/courses', {
@@ -110,5 +102,22 @@ if (pathname === '/courses') {
     let previousWeek = startOfPreviousWeek(date);
     updateWeek(previousWeek);
   });
+
+
+  const form = document.getElementById("searchbar-form");
+    form.addEventListener("submit", (e) => {
+        e.preventDefault();
+
+        let data = {};
+        let formData = new FormData(form)
+        formData.forEach((value, key) => data[key] = value);
+
+        axios.post('/courses', data)
+        .then((response) => updateCalendar(response.data))
+        .catch(err => console.log(`Error while sending the week dates: ${err}`))
+
+   
+
+    }, false);
 
 }
