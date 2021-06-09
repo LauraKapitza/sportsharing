@@ -105,19 +105,16 @@ if (pathname === '/courses') {
 
 
   const form = document.getElementById("searchbar-form");
-    form.addEventListener("submit", (e) => {
-        e.preventDefault();
+  form.addEventListener("submit", (e) => {
+    e.preventDefault();
 
-        let data = {};
-        let formData = new FormData(form)
-        formData.forEach((value, key) => data[key] = value);
+    let data = {};
+    let formData = new FormData(form)
+    formData.forEach((value, key) => data[key] = value);
 
-        axios.post('/courses', data)
-        .then((response) => updateCalendar(response.data))
-        .catch(err => console.log(`Error while sending the week dates: ${err}`))
-
-   
-
-    }, false);
+    axios.post('/courses', data)
+      .then((response) => updateCalendar(response.data))
+      .catch(err => console.log(`Error while sending the week dates: ${err}`))
+  }, false);
 
 }
