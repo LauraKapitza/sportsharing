@@ -7,8 +7,13 @@
     <h1>Train with others!</h1>
     <h3>Meet other sport enthusiasts and discover the world of sport!</h3>
     <div class="picture-content-btn-container">
+      {{!-- <a href="/courses" class="picture-btn blue">Explore courses</a> --}}
+      {{#if user}}
       <a href="/courses" class="picture-btn blue">Explore courses</a>
-      <a href="/signup" class="picture-btn orange">Sign up</a>      
+      {{else}}
+      <a href="/courses" class="picture-btn blue">Explore courses</a>
+      <a href="/signup" class="picture-btn orange">Sign up</a>
+      {{/if}}
     </div>
   </div>
 </section>
