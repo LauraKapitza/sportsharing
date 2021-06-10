@@ -7,7 +7,7 @@
     <ul>
         <li>
           {{courses.courseName}} <span> | </span>
-          <a href='/courses/{{courses._id}}'>Show Details</a><span> | </span>
+          <a href='/courses/{{courses._id}}'>Show Details</a>
         </li>
     </ul>
   </article>
@@ -20,8 +20,8 @@
     <ul>
       {{#each courses.monday}}
         <li>
-          {{this.courseName}} <span> | </span>
-          <a href='/courses/{{this._id}}'>Show Details</a><span> | </span>
+          <h5>{{this.courseName}}</h5>
+          <a href='/courses/{{this._id}}'>Show Details</a>
         </li>
       {{/each}}
     </ul>
@@ -33,8 +33,8 @@
     <ul>
       {{#each courses.tuesday}}
         <li>
-          {{this.courseName}} <span> | </span>
-          <a href='/courses/{{this._id}}'>Show Details</a><span> | </span>
+          <h5>{{this.courseName}}</h5>
+          <a href='/courses/{{this._id}}'>Show Details</a>
         </li>
       {{/each}}
     </ul>
@@ -46,8 +46,8 @@
     <ul>
       {{#each courses.wednesday}}
         <li>
-          {{this.courseName}} <span> | </span>
-          <a href='/courses/{{this._id}}'>Show Details</a><span> | </span>
+          <h5>{{this.courseName}}</h5>
+          <div class=".btn-white"><a href='/courses/{{this._id}}'>Show Details</a></div>
         </li>
       {{/each}}
     </ul>
@@ -59,8 +59,8 @@
     <ul>
       {{#each courses.thursday}}
         <li>
-          {{this.courseName}} <span> | </span>
-          <a href='/courses/{{this._id}}'>Show Details</a><span> | </span>
+          <h5>{{this.courseName}}</h5>
+          <div class=".btn-white"><a href='/courses/{{this._id}}'>Show Details</a></div>
         </li>
       {{/each}}
     </ul>
@@ -72,8 +72,8 @@
     <ul>
       {{#each courses.friday}}
         <li>
-          {{this.courseName}} <span> | </span>
-          <a href='/courses/{{this._id}}'>Show Details</a><span> | </span>
+          <h5>{{this.courseName}}</h5>
+          <div class=".btn-white"><a href='/courses/{{this._id}}'>Show Details</a></div>
         </li>
       {{/each}}
     </ul>
@@ -85,8 +85,8 @@
     <ul>
       {{#each courses.saturday}}
         <li>
-          {{this.courseName}} <span> | </span>
-          <a href='/courses/{{this._id}}'>Show Details</a><span> | </span>
+          <h5>{{this.courseName}}</h5>
+          <div class=".btn-white"><a href='/courses/{{this._id}}'>Show Details</a></div>
         </li>
       {{/each}}
     </ul>
@@ -98,8 +98,8 @@
       <ul>
         {{#each courses.sunday}}
           <li>
-            {{this.courseName}} <span> | </span>
-            <a href='/courses/{{this._id}}'>Show Details</a><span> | </span>
+            <h5>{{this.courseName}}</h5>
+            <div class=".btn-white"><a href='/courses/{{this._id}}'>Show Details</a></div>
           </li>
         {{/each}}
       </ul>
