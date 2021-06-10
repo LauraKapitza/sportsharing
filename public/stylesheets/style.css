@@ -49,6 +49,7 @@ nav{
   text-align: center;
 }
 
+.btn-add a,
 .btn-blue a {
   color: white;
   text-decoration: none;

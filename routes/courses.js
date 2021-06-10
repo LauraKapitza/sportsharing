@@ -81,7 +81,6 @@ router.post('/courses', (req, res, next) => {
         res.render('courses/calendar', {
           courses: formatCourses(coursesFromDB),
           layout: false,
-          searchbarResult: true
         });
       }) 
       .catch(err => next(err))

@@ -61,14 +61,64 @@
   background: white;
   border-radius: 10px;
   margin: 0 auto;
-  padding: 20px 10px;
+  padding: 10px;
   width: 60vw;
 }
 
 .course-wrapper h4,
-.course-wrapper h5 {font-size: 1.25em}
+.course-wrapper h5 {
+  font-size: 1.25em;
+  margin: 0;
+}
+
+.course-wrapper h4 {
+  padding: 15px 0 5px;
+}
 
 .course-wrapper h5 {
   color: #4758D6;
+  padding: 0 10px;
+}
+
+.course-wrapper h6 {
+  font-size: 16px;
   margin: 0;
+}
+
+.course-wrapper .btn-white {
+  width: 40vw;
+  margin: 15px auto 0;
+  padding: 2px 10px;
+}
+
+.course-wrapper .btn-white a {
+  font-size: .85em;
+}
+
+.no-course-header,
+.course-header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 0 5px;
+}
+
+.course-header {margin-bottom: 15px;}
+
+.course-header p {
+  margin: 0;
+  text-align: center;
+}
+
+.btn-add {
+  background: #4758D6;
+  border-radius: 20px;
+  display: inline;
+  padding: 5px 7px;
+  width: 10vw;
+}
+
+.btn-add a {
+  font-size: 18px;
+  font-weight: 500;;
 }
