@@ -43,3 +43,32 @@
 /* CALENDAR WRAPPER */
 /* -------------------- */
 
+.course-wrapper {
+  background: #EEEDED;
+  border-radius: 10px;
+  color: #0F1960;
+  margin: 10px auto;
+  width: 80vw;
+}
+
+.course-wrapper article {
+  text-align: center;
+  margin: 10px 0 0;
+}
+
+.course-wrapper ul {
+  list-style-type: none;
+  background: white;
+  border-radius: 10px;
+  margin: 0 auto;
+  padding: 20px 10px;
+  width: 60vw;
+}
+
+.course-wrapper h4,
+.course-wrapper h5 {font-size: 1.25em}
+
+.course-wrapper h5 {
+  color: #4758D6;
+  margin: 0;
+}
