@@ -67,8 +67,6 @@ router.post('/courses', (req, res, next) => {
     let diff = todayForFirstDay.getDate() - todayForFirstDay.getDay() + (todayForFirstDay.getDay() === 0 ? -6 : 1);
     firstDay = new Date(todayForFirstDay.setDate(diff));
     lastDay = new Date(todayForNextDay.setDate(diff+1));
-    console.log(firstDay)
-    console.log(lastDay)
 
     let city = req.body.location.replace(/[^a-zA-Z ]/g, "").toLowerCase();
 
@@ -80,9 +78,11 @@ router.post('/courses', (req, res, next) => {
       {city: city}
     ]})
       .then(coursesFromDB => {
+        console.log(coursesFromDB)
         res.render('courses/calendar', {
           courses: formatCourses(coursesFromDB),
-          layout: false
+          layout: false,
+          searchbarResult: true
         });
       }) 
       .catch(err => next(err))
