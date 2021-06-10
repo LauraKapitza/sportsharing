@@ -1,5 +1,19 @@
 <section class='course-wrapper'>
+{{#if searchbarResult}}
+  {{#each courses}}
+  <article class='day-slot'>
+    <h4>Placeholder</h4>
+    <p id=""></p>
+    <ul>
+        <li>
+          {{courses.courseName}} <span> | </span>
+          <a href='/courses/{{courses._id}}'>Show Details</a><span> | </span>
+        </li>
+    </ul>
+  </article>
+  {{/each}}
 
+{{else}}
   <article class='day-slot'>
     <h4>Monday</h4>
     <p id="monday"></p>
@@ -90,5 +104,5 @@
         {{/each}}
       </ul>
   </article>
-
+{{/if}}
 </section>
