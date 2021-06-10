@@ -1,9 +1,43 @@
 const express = require('express');
 const router = express.Router();
 
-const User = require('../models/User.model');
 const Courses = require('../models/Course.model');
 const CATEGORIES = require('../constants');
+
+
+////////////////////////
+//FUNCTIONS
+////////////////////////
+
+function formatCourses(coursesFromDB) {
+  const courses = {
+    monday: [],
+    tuesday: [],
+    wednesday: [],
+    thursday: [],
+    friday: [],
+    saturday: [],
+    sunday: []
+  }
+  coursesFromDB.forEach((course, i) => {
+    let day = course.date.toString().slice('', 3)
+    switch(day){
+      case 'Mon': courses.monday.push(course); break;
+      case 'Tue': courses.tuesday.push(course); break;
+      case 'Wed': courses.wednesday.push(course); break;
+      case 'Thu': courses.thursday.push(course); break;
+      case 'Fri': courses.friday.push(course); break;
+      case 'Sat': courses.saturday.push(course); break;
+      case 'Sun': courses.sunday.push(course); break;
+    }
+  });
+
+  return courses;
+}
+
+
+
+
 
 
 router.get('/courses', (req, res, next) => {
@@ -21,45 +55,57 @@ router.get('/courses', (req, res, next) => {
 });
 
 router.post('/courses', (req, res, next) => {
-  const monday = req.body.firstday.split('/');
-  const sunday = req.body.lastday.split('/');
-  let firstDay = new Date(`${monday[2]}-${monday[1]}-${monday[0]}`);
-  let lastDay = new Date(`${sunday[2]}-${sunday[1]}-${sunday[0]}`);
-
-  console.log(firstDay)
-  console.log(lastDay)
+  let firstDay;
+  let lastDay;
 
 
-  Courses.find({$and:[
-    {date: {$gte: firstDay}}, 
-    {date: {$lte: lastDay}}
-  ]})
-    .then(coursesFromDB => {
-      console.log(coursesFromDB)
-      const courses = {
-        monday: [],
-        tuesday: [],
-        wednesday: [],
-        thursday: [],
-        friday: [],
-        saturday: [],
-        sunday: []
-      }
-      coursesFromDB.forEach((course, i) => {
-        let day = course.date.toString().slice('', 3)
-        switch(day){
-          case 'Mon': courses.monday.push(course); break;
-          case 'Tue': courses.tuesday.push(course); break;
-          case 'Wed': courses.wednesday.push(course); break;
-          case 'Thu': courses.thursday.push(course); break;
-          case 'Fri': courses.friday.push(course); break;
-          case 'Sat': courses.saturday.push(course); break;
-          case 'Sun': courses.sunday.push(course); break;
-        }
-      })
-      res.render('courses/calendar', {courses: courses,layout: false})
-  }) 
-  .catch(err => next(err))
+  if(req.body.date) {
+    //calculate the day frame
+    console.log(req.body)
+    let todayForFirstDay = new Date(req.body.date);
+    let todayForNextDay = new Date(req.body.date);
+    let diff = todayForFirstDay.getDate() - todayForFirstDay.getDay() + (todayForFirstDay.getDay() === 0 ? -6 : 1);
+    firstDay = new Date(todayForFirstDay.setDate(diff));
+    lastDay = new Date(todayForNextDay.setDate(diff+1));
+
+    let city = req.body.location.replace(/[^a-zA-Z ]/g, "").toLowerCase();
+
+    Courses.find({$and:[
+      {date: {$gte: firstDay}}, 
+      {date: {$lt: lastDay}},
+      {startTime: {$gte: req.body.startTime}},
+      {category: req.body.category},
+      {city: city}
+    ]})
+      .then(coursesFromDB => {
+        console.log(coursesFromDB)
+        res.render('courses/calendar', {
+          courses: formatCourses(coursesFromDB),
+          layout: false,
+          searchbarResult: true
+        });
+      }) 
+      .catch(err => next(err))
+    
+  } else {
+    const monday = req.body.firstday.split('/');
+    const sunday = req.body.lastday.split('/');
+    firstDay = new Date(`${monday[2]}-${monday[1]}-${monday[0]}`);
+    lastDay = new Date(`${sunday[2]}-${sunday[1]}-${sunday[0]}`);
+
+
+    Courses.find({$and:[
+      {date: {$gte: firstDay}}, 
+      {date: {$lte: lastDay}}
+    ]})
+      .then(coursesFromDB => {
+        res.render('courses/calendar', {
+          courses: formatCourses(coursesFromDB),
+          layout: false
+        })
+    }) 
+    .catch(err => next(err))
+  }
 })
 
 //Route post pour la recherche des cours
@@ -68,8 +114,6 @@ router.get('/courses/add', (req, res) => res.render('courses/new', {
   categories: CATEGORIES
 }));
 
-
-router.get('/courses/add', (req, res) => res.render('courses/new', { user: req.session.currentUser }));
 
 //Route post pour la création d'un nouveau cours
 router.post('/courses/add', (req, res, next) => {
