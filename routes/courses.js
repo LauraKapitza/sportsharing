@@ -224,8 +224,12 @@ router.get('/courses/:id', (req, res, next) => {
     .populate('courseOwner')
     .populate('participants')
     .then(courseFromDB => {
+      //0. User non connecté    
+      if(!req.session.currentUser) {
+        res.render('auth/login', { errorMessage: 'Please log in to access course details.' });
+      }
       //1. User = Organisateur
-      if (req.session.currentUser._id == courseFromDB.courseOwner._id) {
+      else if (req.session.currentUser._id == courseFromDB.courseOwner._id) {
         res.render('courses/details', {
           course: courseFromDB,
           convertedDate: dateConvertion(courseFromDB.date),

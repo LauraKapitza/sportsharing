@@ -35,9 +35,37 @@ nav{
 #burger{
   width: 25px;
 }
+
 #logo{
   width: 50px;
   margin-left:10px;
+}
+
+@media (min-width:900px) {
+  #burger{
+    display: none;
+  }
+}
+
+.menu{
+  position: absolute;
+  top: 20px;
+  left: 50%;
+  transform: translate(-50%, 0);
+}
+
+@media (max-width:900px) {
+  .menu{
+    display: none;
+  }
+}
+
+.menu a{
+  text-decoration: none;
+  margin-left: 10px;margin-right: 10px;
+  font-size: 18px;
+  color:#0f1960;
+  font-weight: 700;
 }
 
 .btn-blue {
@@ -97,16 +125,6 @@ nav{
   margin-left: auto; margin-right: auto;
   padding-bottom: 20px;
 }
-/* @media (min-width:700px) {
-  .form{
-    width: 50vw;
-  }
-}
-@media (min-width:900px) {
-  .form{
-    width: 30vw;
-  }
-} */
 
 .form label{
   display: block;
@@ -194,7 +212,7 @@ nav{
 /* ----- SEARCHBAR ---- */
 /* -------------------- */
 .form-searchbar{
-  width: 80vw;
+  width: 300px;
   margin-left: auto; margin-right: auto;
   padding-bottom: 20px;
 }
