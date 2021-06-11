@@ -41,7 +41,6 @@ function formatCourses(coursesFromDB) {
 ////////////////////////
 
 router.get('/courses', (req, res, next) => {
-  console.log("req.body for route.get courses", req.body)
   Courses.find()
     .then(coursesFromDB => {
       const data = {
@@ -60,26 +59,18 @@ router.post('/courses', (req, res, next) => {
 
 
   if (req.body.date) {
-    //calculate the day frame
     let todayForFirstDay = new Date(req.body.date);
-    let todayForNextDay = new Date(req.body.date);
-    let diff = todayForFirstDay.getDate() - todayForFirstDay.getDay() + (todayForFirstDay.getDay() === 0 ? -6 : 1);
-    firstDay = new Date(todayForFirstDay.setDate(diff));
-    lastDay = new Date(todayForNextDay.setDate(diff + 1));
+    let nextDay = new Date();
+    nextDay.setDate(nextDay.getDate()+1);
 
-    let city = req.body.location.replace(/[^a-zA-Z ]/g, "").toLowerCase();
-    console.log(req.body)
-    Courses.find({
-      $and: [
-        { date: { $gte: firstDay } },
-        { date: { $lt: lastDay } },
-        { startTime: { $gte: req.body.startTime } },
-        { category: req.body.category },
-        { city: city }
-      ]
-    })
+    Courses.find({$and:[
+      {date: {$gte: todayForFirstDay}}, 
+      {date: {$lt: nextDay}},
+      {startTime: {$gte: req.body.startTime}},
+      {category: req.body.category},
+      {city: req.body.location}
+    ]})
       .then(coursesFromDB => {
-        console.log(coursesFromDB)
         res.render('courses/calendar', {
           courses: formatCourses(coursesFromDB),
           layout: false,
