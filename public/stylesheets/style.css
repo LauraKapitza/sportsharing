@@ -11,6 +11,10 @@ h2{
   text-align: center;
 }
 
+button{
+  cursor: pointer;
+}
+
 /* -------------------- */
 /* ------ NAVBAR ------ */
 /* -------------------- */
@@ -36,6 +40,8 @@ nav{
   width: 25px;
 }
 
+
+
 #logo{
   width: 50px;
   margin-left:10px;
@@ -54,9 +60,39 @@ nav{
   transform: translate(-50%, 0);
 }
 
+#burger-checkbox {
+  display:none;
+}
+
 @media (max-width:900px) {
+  /* ------ AFFICHAGE MENU ------ */
+  #burger-checkbox + label {
+    background:url("/images/menu_burger_icon.svg") no-repeat;
+    width: 25px;
+    height: 25px;
+    margin-top: 12.5px;
+  }
+  
+  #burger-checkbox:checked + label {
+    background:url("/images/close.svg") no-repeat;
+    width: 25px;  
+    /* background-size: 100%;   */
+  }
+  /* ------ AFFICHAGE MENU ------ */
+
   .menu{
-    display: none;
+    display: none;    
+    position: absolute;
+    top: 65px;
+    left: 82px;
+  }
+  .menu a{
+    display: block;
+    margin-top: 20px;margin-bottom: 20px;
+    font-size: 18px;
+    color:#0f1960;
+    font-weight: 700;
+    text-decoration: none;
   }
 }
 
@@ -147,9 +183,12 @@ nav{
 #input-label{
   margin:15px 0px 15px 15px;
 }
-
+#input-label .btn-white{
+  cursor:pointer;
+}
 .user-pic{
   width: 100%;
+  margin-bottom: 10px;
 }
 
 .form input {
