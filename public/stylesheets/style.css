@@ -40,8 +40,6 @@ nav{
   width: 25px;
 }
 
-
-
 #logo{
   width: 50px;
   margin-left:10px;
@@ -258,8 +256,6 @@ nav{
 @media (min-width:900px) {
   .form-searchbar{
     width: 100vw;
-    display: flex;
-    justify-content: center;
     padding-top: 20px;
   }
   .form-searchbar h2{
@@ -268,6 +264,7 @@ nav{
 
   .form-searchbar form{
     display: flex;
+    justify-content: center;
   }
 }
 

@@ -69,10 +69,17 @@ if ($inputFile) {
 ////////////////////////////////////////////////////////////////////////
 let $burgerCheckbox = document.getElementById("burger-checkbox");
 let $menu = document.querySelector('.menu');
+let $searchbar = document.querySelector('.form-searchbar');
+let $howTo = document.querySelector('.howto');
+let $form = document.querySelector('.form');
+let $calendar = document.querySelector('.calendar-container');
+let $arrHtmlEl = [$searchbar,$howTo,$form,$calendar];
 
 function displayMenu() {
-  //Affichage menu
+  //Affichage menu au click sur burger
   $burgerCheckbox.checked ? $menu.style.display = "block" : $menu.style.display = "none";
+  //Cacher element 
+  $arrHtmlEl.map($el => $el ? ($burgerCheckbox.checked ? $el.style.display = "none" : $el.style.display = "block") : "");
 }
 
 $burgerCheckbox.addEventListener('change', () => {
@@ -81,4 +88,5 @@ $burgerCheckbox.addEventListener('change', () => {
 
 window.addEventListener('resize', () => {
   window.innerWidth > 900 ? $menu.style.display = "block" : displayMenu();
+  $arrHtmlEl.map($el => window.innerWidth > 900 ? $el.style.display = "block" : displayMenu());
 });
