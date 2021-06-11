@@ -11,7 +11,7 @@ function twoDigitsNumber(myTime) {
 
 // CHECK IF ELEMENT IS ON THE PAGE
 if ($searchDate) {
-  
+
   let today = new Date(new Date().getTime() - new Date().getTimezoneOffset() * 60000).toISOString().split("T")[0];
   let tomorrow = new Date(new Date().getTime() + (1000 * 60 * 60 * 24) - new Date().getTimezoneOffset() * 60000).toISOString().split("T")[0];
 
@@ -53,3 +53,32 @@ if ($courseDetails) {
   $courseDetails.children[0].children[8].children[0].innerHTML = "Participants:"
 }
 
+////////////////////////////////////////////////////////////////////////
+/////////////////////// PREVIEW IMAGE UPLOAD ///////////////////////////
+////////////////////////////////////////////////////////////////////////
+let $inputFile = document.getElementById("input-image");
+let $imgProfile = document.querySelector('.user-pic')
+
+if ($inputFile) {
+  $inputFile.addEventListener('change', () => {
+    $imgProfile.src = window.URL.createObjectURL($inputFile.files[0]);
+  })
+}
+////////////////////////////////////////////////////////////////////////
+/////////////////////////// AFFICHER MENU //////////////////////////////
+////////////////////////////////////////////////////////////////////////
+let $burgerCheckbox = document.getElementById("burger-checkbox");
+let $menu = document.querySelector('.menu');
+
+function displayMenu() {
+  //Affichage menu
+  $burgerCheckbox.checked ? $menu.style.display = "block" : $menu.style.display = "none";
+}
+
+$burgerCheckbox.addEventListener('change', () => {
+  displayMenu();
+})
+
+window.addEventListener('resize', () => {
+  window.innerWidth > 900 ? $menu.style.display = "block" : displayMenu();
+});

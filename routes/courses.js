@@ -21,7 +21,7 @@ function formatCourses(coursesFromDB) {
   }
   coursesFromDB.forEach((course, i) => {
     let day = course.date.toString().slice('', 3)
-    switch(day){
+    switch (day) {
       case 'Mon': courses.monday.push(course); break;
       case 'Tue': courses.tuesday.push(course); break;
       case 'Wed': courses.wednesday.push(course); break;
@@ -47,7 +47,7 @@ router.get('/courses', (req, res, next) => {
         courses: coursesFromDB,
         categories: CATEGORIES
       }
-      if (req.session.currentUser) data.user=req.session.currentUser;
+      if (req.session.currentUser) data.user = req.session.currentUser;
       res.render('courses/courses', data)
     })
     .catch(err => next(err))
@@ -58,18 +58,10 @@ router.post('/courses', (req, res, next) => {
   let lastDay;
 
 
-  if(req.body.date) {
-    //calculate the day frame
+  if (req.body.date) {
     let todayForFirstDay = new Date(req.body.date);
-    // let todayForNextDay = new Date(req.body.date);
-    // let diff = todayForFirstDay.getDate() - todayForFirstDay.getDay() + (todayForFirstDay.getDay() === 0 ? -6 : 1);
-    // firstDay = new Date(todayForFirstDay.setDate(diff));
-    // lastDay = new Date(todayForNextDay.setDate(diff+1));
-
-    var nextDay = new Date();
+    let nextDay = new Date();
     nextDay.setDate(nextDay.getDate()+1);
-    console.log(todayForFirstDay);
-    console.log(nextDay);
 
     Courses.find({$and:[
       {date: {$gte: todayForFirstDay}}, 
@@ -79,15 +71,13 @@ router.post('/courses', (req, res, next) => {
       {city: req.body.location}
     ]})
       .then(coursesFromDB => {
-        console.log("iiii")
-        console.log(coursesFromDB)
         res.render('courses/calendar', {
           courses: formatCourses(coursesFromDB),
           layout: false,
         });
-      }) 
+      })
       .catch(err => next(err))
-    
+
   } else {
     const monday = req.body.firstday.split('/');
     const sunday = req.body.lastday.split('/');
@@ -95,44 +85,55 @@ router.post('/courses', (req, res, next) => {
     lastDay = new Date(`${sunday[2]}-${sunday[1]}-${sunday[0]}`);
 
 
-    Courses.find({$and:[
-      {date: {$gte: firstDay}}, 
-      {date: {$lte: lastDay}}
-    ]})
+    Courses.find({
+      $and: [
+        { date: { $gte: firstDay } },
+        { date: { $lte: lastDay } }
+      ]
+    })
       .then(coursesFromDB => {
         res.render('courses/calendar', {
           courses: formatCourses(coursesFromDB),
           layout: false
         })
-    }) 
-    .catch(err => next(err))
+      })
+      .catch(err => next(err))
   }
 })
 
-//Route post pour la recherche des cours
-router.get('/courses/add', (req, res) => res.render('courses/new', {
-  user: req.session.currentUser,
-  categories: CATEGORIES
-}));
-
+//Route get pour la création d'un nouveau cours
+router.get('/courses/add', (req, res, next) => {
+  if (!req.session.currentUser) {
+    res.render('auth/login', { errorMessage: 'Please log in to add a course.' });
+  } else {
+    res.render('courses/new', {
+      user: req.session.currentUser,
+      categories: CATEGORIES
+    })
+  }
+});
 
 //Route post pour la création d'un nouveau cours
 router.post('/courses/add', (req, res, next) => {
-  Courses.create({
-    courseOwner: req.session.currentUser._id,
-    courseName: req.body.courseName,
-    date: req.body.date,
-    startTime: req.body.startTime,
-    maxParticipants: req.body.maxParticipants,
-    participants: [],
-    address: req.body.address,
-    zip: req.body.zip,
-    city: req.body.city,
-    category: req.body.category,
-    description: req.body.description
-  })
-    .then(() => res.redirect('/courses'))
-    .catch(err => next(err))
+  if (!req.session.currentUser) {
+    res.render('auth/login', { errorMessage: 'Please log in to add a course.' });
+  } else {
+    Courses.create({
+      courseOwner: req.session.currentUser._id,
+      courseName: req.body.courseName,
+      date: req.body.date,
+      startTime: req.body.startTime,
+      maxParticipants: req.body.maxParticipants,
+      participants: [],
+      address: req.body.address,
+      zip: req.body.zip,
+      city: req.body.city,
+      category: req.body.category,
+      description: req.body.description
+    })
+      .then(() => res.redirect('/courses'))
+      .catch(err => next(err))
+  }
 })
 
 router.get('/courses/:id/edit', (req, res, next) => {
@@ -218,7 +219,7 @@ function twoDigitsNumber(myTime) {
 function dateConvertion(date) {
   var day = twoDigitsNumber(date.getDate());
   var month = twoDigitsNumber(date.getMonth() + 1);
-  var year = date.getFullYear();  
+  var year = date.getFullYear();
   return day + "-" + month + "-" + year;
 }
 
@@ -228,7 +229,7 @@ router.get('/courses/:id', (req, res, next) => {
     .populate('participants')
     .then(courseFromDB => {
       //0. User non connecté    
-      if(!req.session.currentUser) {
+      if (!req.session.currentUser) {
         res.render('auth/login', { errorMessage: 'Please log in to access course details.' });
       }
       //1. User = Organisateur
