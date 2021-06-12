@@ -15,7 +15,7 @@ const courseSchema = new Schema(
     },
     startTime: {
       type: String,
-      required: [true, 'Start time is required.']
+      // required: [true, 'Start time is required.']
     },
     maxParticipants: Number,
     participants: [{ type: Schema.Types.ObjectId, ref: 'User' }],
