@@ -58,15 +58,11 @@ router.get('/courses', (req, res, next) => {
 router.post('/courses', (req, res, next) => {
   let firstDay;
   let lastDay;
-  console.log(req.body)
 
   if (req.body.date) {
     let todayForFirstDay = new Date(req.body.date);
     let nextDay = new Date(req.body.date);
     nextDay.setDate(nextDay.getDate()+1);
-
-    console.log(todayForFirstDay);
-    console.log(nextDay)
 
     Courses.find({$and:[
       {date: {$gte: todayForFirstDay}}, 
