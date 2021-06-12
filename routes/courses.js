@@ -58,12 +58,15 @@ router.get('/courses', (req, res, next) => {
 router.post('/courses', (req, res, next) => {
   let firstDay;
   let lastDay;
-
+  console.log(req.body)
 
   if (req.body.date) {
     let todayForFirstDay = new Date(req.body.date);
-    let nextDay = new Date();
+    let nextDay = new Date(req.body.date);
     nextDay.setDate(nextDay.getDate()+1);
+
+    console.log(todayForFirstDay);
+    console.log(nextDay)
 
     Courses.find({$and:[
       {date: {$gte: todayForFirstDay}}, 
@@ -73,6 +76,7 @@ router.post('/courses', (req, res, next) => {
       {city: req.body.location}
     ]})
       .then(coursesFromDB => {
+        console.log(coursesFromDB)
         res.render('courses/calendar', {
           courses: formatCourses(coursesFromDB),
           layout: false,
