@@ -255,7 +255,7 @@ nav{
 }
 @media (min-width:900px) {
   .form-searchbar{
-    width: 100vw;
+    width: 100%;
     padding-top: 20px;
   }
   .form-searchbar h2{
@@ -348,22 +348,19 @@ nav{
 /* -------------------- */
 /* ------ picture ----- */
 /* -------------------- */
-.picture{  
+.picture{
+  background-color: lightgrey;
   background-image: url('../images/bckgrd.png');
   background-size: cover;
   background-repeat: no-repeat;
-  background-position: center center;
+  background-position: top center;
   width: 100%;
   height: 800px;
   display: flex;
   align-items: center;
   justify-content: center;
 }
-@media (max-width:900px) {
-  .picture{
-    display: none;
-  }
-}
+
 .picture-content{
   width: 470px;
 }
@@ -399,6 +396,32 @@ nav{
   color: white;
 }
 
+@media (min-width: 300px) and (max-width: 600px) {
+  .picture{
+    height: 300px;
+  }
+  .picture h1{
+    font-size: 2em ;
+    color: white; 
+    text-align: center; 
+  }
+  .picture h3{
+    font-size: 1em;;
+    color: white;
+    width: 250px;
+    margin-left: auto;
+    margin-right: auto;
+  }
+  .picture-btn{
+    padding: 10px 20px;
+  }
+}
+
+@media (min-width: 600px) and (max-width: 900px) {
+  .picture{
+    height: 500px;
+  }
+}
 /* -------------------- */
 /* ------ How To ------ */
 /* -------------------- */
@@ -417,7 +440,7 @@ nav{
 @media (min-width:900px) {
   .howto ol {
     display: flex;
-    width: 100vw;
+    width: 100%;
   }
 }
 
