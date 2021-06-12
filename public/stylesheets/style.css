@@ -155,11 +155,16 @@ nav{
 /* ------- FORM ------- */
 /* -------------------- */
 .form{
-  width: 300px;
+  width: 75%;
+  min-width: 300px;
+  max-width: 600px;
   margin-left: auto; margin-right: auto;
   padding-bottom: 20px;
 }
-
+.h2-tbl-detail{
+  text-align: left;
+  margin:20px 0;
+}
 .form label{
   display: block;
   margin: 25px auto;
@@ -239,6 +244,7 @@ nav{
 .title{
   color: #0f1960;
   font-weight: 700;
+  vertical-align: top;
 }
 .info{
   padding-left:80px;
