@@ -21,6 +21,8 @@ function formatCourses(coursesFromDB) {
   }
   coursesFromDB.forEach((course, i) => {
     let day = course.date.toString().slice('', 3)
+    course.testt = 1;
+    console.log(course)
     switch (day) {
       case 'Mon': courses.monday.push(course); break;
       case 'Tue': courses.tuesday.push(course); break;
