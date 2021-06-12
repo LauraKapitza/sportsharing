@@ -5,7 +5,11 @@
 <div class="form">
     <h2>Your Profile</h2>
 
+    {{#if user.imageUrl}}
     <img class="user-pic" src="{{user.imageUrl}}">
+    {{else}}
+    <img class="user-pic" src="/images/avatar.svg">
+    {{/if}}    
 
     <table class="table-details">
         <tr>
