@@ -2,39 +2,77 @@ const express = require('express');
 const router = express.Router();
 
 const Courses = require('../models/Course.model');
-const CATEGORIES = require('../constants');
+const { CATEGORIES, WEEKDAYS } = require('../constants');
 
+const weekDayToIndex = {
+  'Mon': 0,
+  'Tue': 1,
+  'Wed': 2,
+  'Thu': 3,
+  'Fri': 4,
+  'Sat': 5,
+  'Sun': 6
+}
 
 ////////////////////////
 //FUNCTIONS
 ////////////////////////
 
-function formatCourses(coursesFromDB) {
-  const courses = {
-    monday: [],
-    tuesday: [],
-    wednesday: [],
-    thursday: [],
-    friday: [],
-    saturday: [],
-    sunday: []
+function formatDate(date) {
+  let dd = String(date.getDate());
+  let mm = String(date.getMonth() + 1);
+  let yy = String(date.getFullYear());
+  
+  if (mm.length < 2) mm = '0' + mm;
+  if (dd.length < 2) dd = '0' + dd;
+  
+  return `${dd}/${mm}/${yy}`
+}
+
+function datesOfWeek(monday) {
+  let _monday = new Date(monday);
+  const weekArr = [];
+  for(i=0; i<7; i++) {
+    let diff = _monday.getDate() - (_monday.getDay() - 1) + i;
+    let day = new Date(_monday.setDate(diff))
+    weekArr.push(formatDate(day))
   }
-  coursesFromDB.forEach((course, i) => {
-    let day = course.date.toString().slice('', 3)
-    course.testt = 1;
-    console.log(course)
-    switch (day) {
-      case 'Mon': courses.monday.push(course); break;
-      case 'Tue': courses.tuesday.push(course); break;
-      case 'Wed': courses.wednesday.push(course); break;
-      case 'Thu': courses.thursday.push(course); break;
-      case 'Fri': courses.friday.push(course); break;
-      case 'Sat': courses.saturday.push(course); break;
-      case 'Sun': courses.sunday.push(course); break;
-    }
+  return weekArr;
+}
+
+function formatCourses(coursesFromDB, dates, specificDay) {
+  let results = []
+  for (let index = 0; index < 7; index++) {
+    results.push({
+      courses: [],
+      date: dates[index],
+      dayName: WEEKDAYS[index]
+    })
+  }
+  
+  coursesFromDB.forEach(course => {
+    let day = course.date.toString().slice('', 3);
+    // get the index of the current day, 0 is monday
+    let index = weekDayToIndex[day];
+    // place the course in the correct day based on the index
+    results[index].courses.push(course);
   });
 
-  return courses;
+  // assign the date to each day.
+  results.map((el, k) => el.date = dates[k])
+
+  // handle search bar cases where we need only one result
+  // find in 'results' the day with the date of 'specificDay'
+  // return this result only
+  if (specificDay){
+    for (let index = 0; index < results.length; index++) {
+      if (results[index].date == formatDate(specificDay)){
+        return [results[index]]
+      }
+    }
+  }
+
+  return results;
 }
 
 
@@ -60,22 +98,26 @@ router.post('/courses', (req, res, next) => {
   let lastDay;
 
   if (req.body.date) {
-    let todayForFirstDay = new Date(req.body.date);
-    let nextDay = new Date(req.body.date);
-    nextDay.setDate(nextDay.getDate()+1);
+    let day = new Date(req.body.date)
+    let diff = day.getDate() - day.getDay() + (day.getDay() === 0 ? -6 : 1)
+    firstDay = new Date(day.setDate(diff))
+    let dates = datesOfWeek(firstDay)
+    
+    let selectedDay = new Date(req.body.date);
+    lastDay = new Date(req.body.date);
+    lastDay.setDate(lastDay.getDate()+1);
 
     Courses.find({$and:[
-      {date: {$gte: todayForFirstDay}}, 
-      {date: {$lt: nextDay}},
+      {date: {$gte: selectedDay}}, 
+      {date: {$lt: lastDay}},
       {startTime: {$gte: req.body.startTime}},
       {category: req.body.category},
       {city: req.body.location}
     ]})
       .then(coursesFromDB => {
-        console.log(coursesFromDB)
         res.render('courses/calendar', {
-          courses: formatCourses(coursesFromDB),
-          layout: false,
+          calendar: formatCourses(coursesFromDB, dates, selectedDay),
+          layout: false
         });
       })
       .catch(err => next(err))
@@ -85,6 +127,7 @@ router.post('/courses', (req, res, next) => {
     const sunday = req.body.lastday.split('/');
     firstDay = new Date(`${monday[2]}-${monday[1]}-${monday[0]}`);
     lastDay = new Date(`${sunday[2]}-${sunday[1]}-${sunday[0]}`);
+    let dates = datesOfWeek(firstDay)
 
 
     Courses.find({
@@ -95,7 +138,7 @@ router.post('/courses', (req, res, next) => {
     })
       .then(coursesFromDB => {
         res.render('courses/calendar', {
-          courses: formatCourses(coursesFromDB),
+          calendar: formatCourses(coursesFromDB, dates),
           layout: false
         })
       })
@@ -118,7 +161,9 @@ router.get('/courses/add', (req, res, next) => {
 //Route post pour la création d'un nouveau cours
 router.post('/courses/add', (req, res, next) => {
   if (!req.session.currentUser) {
-    res.render('auth/login', { errorMessage: 'Please log in to add a course.' });
+    res.render('auth/login', { 
+      errorMessage: 'Please log in to add a course.' 
+    });
   } else {
     Courses.create({
       courseOwner: req.session.currentUser._id,

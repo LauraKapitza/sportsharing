@@ -13,14 +13,6 @@ if (pathname === '/courses') {
   //UPDATE DOM FOR CALENDAR LIST
   function updateCalendar(data) {
     $div.innerHTML = data;
-
-    // document.getElementById('monday').innerHTML = firstDayFormatted;
-    // document.getElementById('tuesday').innerHTML = getFormattedDate(tuesday);
-    // document.getElementById('wednesday').innerHTML = getFormattedDate(wednesday);
-    // document.getElementById('thursday').innerHTML = getFormattedDate(thursday);
-    // document.getElementById('friday').innerHTML = getFormattedDate(friday);
-    // document.getElementById('saturday').innerHTML = getFormattedDate(saturday);
-    // document.getElementById('sunday').innerHTML = sundayFormatted;
   }
 
   //CHANGE FORMAT OF DATE

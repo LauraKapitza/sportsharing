@@ -1,5 +1,3 @@
-// routes/auth.routes.js
-
 const { Router } = require('express');
 const router = new Router();
 const bcryptjs = require('bcryptjs');
@@ -11,7 +9,6 @@ const mongoose = require('mongoose');
 const routeGuard = require('../configs/route-guard.config');
 
 const fileUploader = require('../configs/cloudinary.config.js');
-const CourseModel = require('../models/Course.model');
 
 ////////////////////////////////////////////////////////////////////////
 ///////////////////////////// SIGNUP //////////////////////////////////
@@ -29,7 +26,9 @@ router.post('/signup', fileUploader.single('image'), (req, res, next) => {
   }
 
   if (!username || !email || !password) {
-    res.render('auth/signup', { errorMessage: 'All fields are mandatory. Please provide your username, email and password.' });
+    res.render('auth/signup', { 
+      errorMessage: 'All fields are mandatory. Please provide your username, email and password.' 
+    });
     return;
   }
 
@@ -38,7 +37,9 @@ router.post('/signup', fileUploader.single('image'), (req, res, next) => {
   if (!regex.test(password)) {
     res
       .status(500)
-      .render('auth/signup', { errorMessage: 'Password needs to have at least 6 chars and must contain at least one number, one lowercase and one uppercase letter.' });
+      .render('auth/signup', { 
+        errorMessage: 'Password needs to have at least 6 chars and must contain at least one number, one lowercase and one uppercase letter.' 
+      });
     return;
   }
 
@@ -55,9 +56,7 @@ router.post('/signup', fileUploader.single('image'), (req, res, next) => {
         imageUrl
       });
     })
-    .then(userFromDB => {
-      res.redirect('/userProfile');
-    })
+    .then(userFromDB => res.redirect('/userProfile'))
     .catch(error => {
       if (error instanceof mongoose.Error.ValidationError) {
         res.status(500).render('auth/signup', { errorMessage: error.message });
@@ -92,12 +91,13 @@ router.post('/login', (req, res, next) => {
   User.findOne({ email })
     .then(user => {
       if (!user) {
-        res.render('auth/login', { errorMessage: 'Email is not registered. Try with other email.' });
+        res.render('auth/login', { 
+          errorMessage: 'Email is not registered. Try with other email.' 
+        });
         return;
       } else if (bcryptjs.compareSync(password, user.passwordHash)) {
         req.session.currentUser = user;
         console.log("route post login",req.session.currentUser)
-        // res.redirect('/userProfile');
         res.redirect('/courses');
       } else {
         res.render('auth/login', { errorMessage: 'Incorrect password.' });

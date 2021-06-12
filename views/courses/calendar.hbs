@@ -1,194 +1,31 @@
 <section class='course-wrapper'>
+  {{#each calendar}}
+    <article class='day-slot'>
 
-  <article class='day-slot'>
-    <h4>Monday</h4>
-    <p id="monday"></p>
-    <ul>
-      {{#if courses.monday}}
-
-        {{#each courses.monday}}
-          <li>
-              <div class="course-header">
-                <p>{{this.startTime}}</p>
-                <p>{{this.category}}</p>
-              </div>
-              <h5>{{this.courseName}}</h5>
-              <div class="btn-white"><a href='/courses/{{this._id}}'>Show Details</a></div>
-          </li>
-        {{/each}}
-
-      {{else}}
-        <li>
-          <div class="no-course-header">
-            <h6>No course(s)</h6>
-            <div class="btn-add"><a href="/courses/add">+</a></div>
-          </div>
-        </li>
-      {{/if}}
-    </ul>
-  </article>
-
-  <article class='day-slot'>
-    <h4>Tuesday</h4>
-    <p id="tuesday"></p>
-    <ul>
-      {{#if courses.tuesday}}
-
-        {{#each courses.tuesday}}
-          <li>
-              <div class="course-header">
-                <p>{{this.startTime}}</p>
-                <p>{{this.category}}</p>
-              </div>
-              <h5>{{this.courseName}}</h5>
-              <div class="btn-white"><a href='/courses/{{this._id}}'>Show Details</a></div>
-          </li>
-        {{/each}}
-
-      {{else}}
-        <li>
-          <div class="no-course-header">
-            <h6>No course(s)</h6>
-            <div class="btn-add"><a href="/courses/add">+</a></div>
-          </div>
-        </li>
-      {{/if}}
-    </ul>
-  </article>
-
-  <article class='day-slot'>
-    <h4>Wednesday</h4>
-    <p id="wednesday"></p>
-    <ul>
-      {{#if courses.wednesday}}
-
-        {{#each courses.wednesday}}
-          <li>
-              <div class="course-header">
-                <p>{{this.startTime}}</p>
-                <p>{{this.category}}</p>
-              </div>
-              <h5>{{this.courseName}}</h5>
-              <div class="btn-white"><a href='/courses/{{this._id}}'>Show Details</a></div>
-          </li>
-        {{/each}}
-
-      {{else}}
-        <li>
-          <div class="no-course-header">
-            <h6>No course(s)</h6>
-            <div class="btn-add"><a href="/courses/add">+</a></div>
-          </div>
-        </li>
-      {{/if}}
-    </ul>
-  </article>
-
-  <article class='day-slot'>
-    <h4>Thursday</h4>
-    <p id="thursday"></p>
-    <ul>
-      {{#if courses.thursday}}
-        {{#each courses.thursday}}
-          <li>
-              <div class="course-header">
-                <p>{{this.startTime}}</p>
-                <p>{{this.category}}</p>
-              </div>
-              <h5>{{this.courseName}}</h5>
-              <div class="btn-white"><a href='/courses/{{this._id}}'>Show Details</a></div>
-          </li>
-        {{/each}}
-
-      {{else}}
-        <li>
-          <div class="no-course-header">
-            <h6>No course(s)</h6>
-            <div class="btn-add"><a href="/courses/add">+</a></div>
-          </div>
-        </li>
-      {{/if}}
-    </ul>
-  </article>
-
-  <article class='day-slot'>
-    <h4>Friday</h4>
-    <p id="friday"></p>
-    <ul>
-      {{#if courses.friday}}
-        {{#each courses.friday}}
-          <li>
-              <div class="course-header">
-                <p>{{this.startTime}}</p>
-                <p>{{this.category}}</p>
-              </div>
-              <h5>{{this.courseName}}</h5>
-              <div class="btn-white"><a href='/courses/{{this._id}}'>Show Details</a></div>
-          </li>
-        {{/each}}
-
-      {{else}}
-        <li>
-          <div class="no-course-header">
-            <h6>No course(s)</h6>
-            <div class="btn-add"><a href="/courses/add">+</a></div>
-          </div>
-        </li>
-      {{/if}}
-    </ul>
-  </article>
-
-  <article class='day-slot'>
-    <h4>Saturday</h4>
-    <p id="saturday"></p>
-    <ul>
-      {{#if courses.saturday}}
-
-        {{#each courses.saturday}}
-          <li>
-              <div class="course-header">
-                <p>{{this.startTime}}</p>
-                <p>{{this.category}}</p>
-              </div>
-              <h5>{{this.courseName}}</h5>
-              <div class="btn-white"><a href='/courses/{{this._id}}'>Show Details</a></div>
-          </li>
-        {{/each}}
-      {{else}}
-        <li>
-          <div class="no-course-header">
-            <h6>No course(s)</h6>
-            <div class="btn-add"><a href="/courses/add">+</a></div>
-          </div>
-        </li>
-      {{/if}}
-    </ul>
-  </article>  
-
-  <article class='day-slot'>
-      <h4>Sunday</h4>
-      <p id="sunday"></p>
+      <h4>{{this.dayName}}</h4>
+      <p>{{this.date}}</p>
       <ul>
-        {{#if courses.sunday}}
-          {{#each courses.sunday}}
+        {{#if this.courses}}
+          {{#each this.courses}}
             <li>
-              <div class="course-header">
-                <p>{{this.startTime}}</p>
-                <p>{{this.category}}</p>
-              </div>
-              <h5>{{this.courseName}}</h5>
-              <div class="btn-white"><a href='/courses/{{this._id}}'>Show Details</a></div>
+                <div class="course-header">
+                  <p>{{this.startTime}}</p>
+                  <p>{{category}}</p>
+                </div>
+                <h5>{{this.courseName}}</h5>
+                <div class="btn-white"><a href='/courses/{{this._id}}'>Show Details</a></div>
             </li>
           {{/each}}
 
         {{else}}
-          <li>
-            <div class="no-course-header">
-              <h6>No course(s)</h6>
-              <div class="btn-add"><a href="/courses/add">+</a></div>
-            </div>
-          </li>
-      {{/if}}
+            <li>
+              <div class="no-course-header">
+                <h6>No course(s)</h6>
+                <div class="btn-add"><a href="/courses/add">+</a></div>
+              </div>
+            </li>
+        {{/if}}
       </ul>
-  </article>
-</section>
+    </article>
+  {{/each}}
+</section> 
