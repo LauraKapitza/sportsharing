@@ -8,8 +8,7 @@
   align-items: center;
 }
 
-.week-btn,
-.drop-btn {
+.week-btn {
   width: 80vw; 
 }
 
@@ -91,7 +90,6 @@
 }
 
 .course-wrapper .btn-white {
-  width: 40vw;
   margin: 15px auto 0;
   padding: 2px 10px;
 }
@@ -126,4 +124,28 @@
 .btn-add a {
   font-size: 18px;
   font-weight: 500;;
+}
+
+
+/* -------------------- */
+/* MEDIA QUERIES */
+/* -------------------- */
+
+@media (min-width: 900px) {
+  .course-wrapper {
+    width: 40%;
+  }
+
+  .week-btn {
+    width: 30%;
+  }
+
+  .course-wrapper li {
+    margin-right: auto; margin-left: auto;
+    width: 80%;
+  }
+
+  .btn-white {
+    width: 40%;
+  }
 }
