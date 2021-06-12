@@ -2,7 +2,7 @@
 
 <div class="form">
   <h2>Edit Your Course</h2>
-  <a href='/courses/{{course.id}}'>Back</a>
+  {{!-- <a href='/courses/{{course.id}}'>Back</a> --}}
   <form action="/courses/{{course.id}}" method="POST">
     <label>
       Choose a category:
@@ -11,17 +11,17 @@
         {{#each categories}}
         <option value="{{this}}">{{this}}</option>
         {{/each}}
-    </select>
+      </select>
     </label>
 
     <label>
       Course Name
-      <input type="text" name="courseName" value="{{course.courseName}}" required/>
+      <input type="text" name="courseName" value="{{course.courseName}}" required />
     </label>
 
     <label>
       Date
-      <input type="date" id="input-date" name="date" value="{{course.date}}" required/>
+      <input type="date" id="input-date" name="date" value="{{course.date}}" required />
     </label>
 
     <label>
@@ -36,17 +36,17 @@
 
     <label>
       Address
-      <input type="text" name="address" value="{{course.address}}" required/>
+      <input type="text" name="address" value="{{course.address}}" required />
     </label>
 
     <label>
       Zip code
-      <input type="number" name="zip" value="{{course.zip}}" required/>
+      <input type="number" name="zip" value="{{course.zip}}" required />
     </label>
 
     <label>
       City
-      <input type="text" name="city" value="{{course.city}}" required/>
+      <input type="text" name="city" value="{{course.city}}" required />
     </label>
 
     <label>
@@ -54,14 +54,24 @@
       <input type="text" name="description" value="{{course.description}}" />
     </label>
 
-    <button type="submit">Update Course</button>
+    {{!-- <button type="submit">Update Course</button> --}}
+
+    <div class="nav-btn-container">
+      <div class="btn-blue dbl-btn-container">
+        <button type="submit">Update</button>
+      </div>
+      <div class="btn-red dbl-btn-container">
+        <a href="/courses/{{course.id}}/delete">Delete</a>
+      </div>
+    </div>
 
     {{#if errorMessage}}
-      <p class="error">{{errorMessage}}</p>
+    <p class="error">{{errorMessage}}</p>
     {{/if}}
   </form>
 
-  <form id="delete-course" action="/courses/{{course.id}}/delete" method="POST">
-      <button>Delete Course</button>
-  </form>
+  {{!-- <form id="delete-course" action="/courses/{{course.id}}/delete" method="POST">
+    <button>Delete Course</button>
+  </form> --}}
+
 </div>

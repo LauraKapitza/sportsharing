@@ -73,6 +73,8 @@ let $searchbar = document.querySelector('.form-searchbar');
 let $howTo = document.querySelector('.howto');
 let $form = document.querySelector('.form');
 let $calendar = document.querySelector('.calendar-container');
+let $picture = document.querySelector('.picture');
+
 let $arrHtmlEl = [$searchbar,$howTo,$form,$calendar];
 
 function displayMenu() {
@@ -80,6 +82,7 @@ function displayMenu() {
   $burgerCheckbox.checked ? $menu.style.display = "block" : $menu.style.display = "none";
   //Cacher element 
   $arrHtmlEl.map($el => $el ? ($burgerCheckbox.checked ? $el.style.display = "none" : $el.style.display = "block") : "");
+  $picture ? ($burgerCheckbox.checked ? $picture.style.display = "none" : $picture.style.display = "flex") : "";
 }
 
 $burgerCheckbox.addEventListener('change', () => {
@@ -89,4 +92,5 @@ $burgerCheckbox.addEventListener('change', () => {
 window.addEventListener('resize', () => {
   window.innerWidth > 900 ? $menu.style.display = "block" : displayMenu();
   $arrHtmlEl.map($el => $el ? (window.innerWidth > 900 ? $el.style.display = "block" : displayMenu()): "");
+  $picture ? (window.innerWidth > 900 ? $picture .style.display = "flex" : displayMenu()): "";
 });
