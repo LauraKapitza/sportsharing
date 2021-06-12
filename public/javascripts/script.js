@@ -88,5 +88,5 @@ $burgerCheckbox.addEventListener('change', () => {
 
 window.addEventListener('resize', () => {
   window.innerWidth > 900 ? $menu.style.display = "block" : displayMenu();
-  $arrHtmlEl.map($el => window.innerWidth > 900 ? $el.style.display = "block" : displayMenu());
+  $arrHtmlEl.map($el => $el ? (window.innerWidth > 900 ? $el.style.display = "block" : displayMenu()): "");
 });
