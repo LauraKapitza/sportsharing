@@ -26,8 +26,17 @@
   border: none;
   background: none;
   font-size: 18px;
-  padding-left: 10px;
-  padding-right: 10px;
+  flex: 1;
+}
+
+.btn-previous-week{
+  padding-right: 20px;
+  text-align: right;
+}
+
+.btn-next-week{
+  padding-left: 20px;
+  text-align: left;
 }
 
 .week-btn button:hover {cursor: pointer;}
@@ -67,21 +76,56 @@
   border-radius: 10px;
   margin-bottom: 10px;
   padding: 10px;
+  box-shadow: 0px 5px 7px #00000029;
 }
 
-.course-wrapper h4,
-.course-wrapper h5 {
-  font-size: 1.25em;
-  margin: 0;
+.course-wrapper li.is-organizer{
+  box-shadow: 0 0 0px 2px #0F1960, 0px 10px 5px #00000047;
+  border-left: 5px solid #0F1960;
+  border-right: 5px solid #0F1960;
 }
+
+.course-wrapper li.is-organizer .course-header p:first-child{
+  background-color: #0F1960;
+}
+
+.course-wrapper li.is-organizer h5{
+  color: #0F1960;
+}
+
+.course-wrapper li.is-participant{
+  box-shadow: 0 0 0px 2px #7cd437, 0px 5px 7px #00000029;
+  border-left: 5px solid #7cd437;
+  border-right: 5px solid #7cd437;
+}
+
+.course-wrapper li.is-participant .course-header p:first-child{
+  background-color: #7cd437;
+}
+
+.course-wrapper li.is-participant h5{
+  color: #7cd437;
+}
+
+
 
 .course-wrapper h4 {
   padding: 15px 0 5px;
+  margin: 0;
+  font-size: 1.8rem;
+}
+
+.course-wrapper h4 + p{
+  color: #e1811f;
+  font-weight: bold;
+  margin: 0 0 13px;
 }
 
 .course-wrapper h5 {
   color: #4758D6;
   padding: 0 10px;
+  font-size: 1.25em;
+  margin: 0;
 }
 
 .course-wrapper h6 {
@@ -113,12 +157,20 @@
   text-align: center;
 }
 
+.course-header p:first-child{
+  padding: 10px;
+  border-radius: 30px;
+  background: #4658d5;
+  color: white;
+  font-weight: bold;
+}
+
 .btn-add {
   background: #4758D6;
   border-radius: 20px;
   display: inline;
   padding: 5px 7px;
-  width: 10vw;
+  width: 32px;
 }
 
 .btn-add a {
@@ -126,18 +178,22 @@
   font-weight: 500;;
 }
 
+.course-wrapper .btn-white {
+  width: 40%;
+}
+
 
 /* -------------------- */
 /* MEDIA QUERIES */
 /* -------------------- */
 
-@media (min-width: 900px) {
+@media (min-width: 768px) {
   .course-wrapper {
-    width: 40%;
+    max-width: 540px;
   }
 
-  .week-btn {
-    width: 30%;
+  .calendar-header .week-btn {
+    max-width: 540px;
   }
 
   .course-wrapper li {
@@ -145,7 +201,12 @@
     width: 80%;
   }
 
-  .btn-white {
-    width: 40%;
+  
+}
+
+
+@media (max-width: 500px) {
+  .course-wrapper .btn-white {
+    width: 80%;
   }
 }

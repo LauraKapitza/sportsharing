@@ -40,7 +40,7 @@ function datesOfWeek(monday) {
   return weekArr;
 }
 
-function formatCourses(coursesFromDB, dates, specificDay) {
+function formatCourses(coursesFromDB, dates, currentUser, specificDay) {
   let results = []
   for (let index = 0; index < 7; index++) {
     results.push({
@@ -55,7 +55,24 @@ function formatCourses(coursesFromDB, dates, specificDay) {
     // get the index of the current day, 0 is monday
     let index = weekDayToIndex[day];
     // place the course in the correct day based on the index
-    results[index].courses.push(course);
+
+    let _course = {
+      startTime: course.startTime,
+      category: course.category,
+      courseName: course.courseName,
+      _id: course._id,
+      organizer_is_user: course.courseOwner._id == currentUser ? true : false,
+      participant_is_user: false,
+    }
+
+    course.participants.forEach(participant => {
+      if (participant._id == currentUser) {
+        _course.participant_is_user = true;
+      }
+    });
+
+
+    results[index].courses.push(_course);
   });
 
   // assign the date to each day.
@@ -114,9 +131,11 @@ router.post('/courses', (req, res, next) => {
       {category: req.body.category},
       {city: req.body.location}
     ]})
+      .populate('courseOwner')
+      .populate('participants')
       .then(coursesFromDB => {
         res.render('courses/calendar', {
-          calendar: formatCourses(coursesFromDB, dates, selectedDay),
+          calendar: formatCourses(coursesFromDB, dates, req.session.currentUser._id, selectedDay),
           layout: false
         });
       })
@@ -129,16 +148,17 @@ router.post('/courses', (req, res, next) => {
     lastDay = new Date(`${sunday[2]}-${sunday[1]}-${sunday[0]}`);
     let dates = datesOfWeek(firstDay)
 
-
     Courses.find({
       $and: [
         { date: { $gte: firstDay } },
         { date: { $lte: lastDay } }
       ]
     })
+      .populate('courseOwner')
+      .populate('participants')
       .then(coursesFromDB => {
         res.render('courses/calendar', {
-          calendar: formatCourses(coursesFromDB, dates),
+          calendar: formatCourses(coursesFromDB, dates, req.session.currentUser._id),
           layout: false
         })
       })

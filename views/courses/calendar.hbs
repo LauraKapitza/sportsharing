@@ -7,10 +7,10 @@
       <ul>
         {{#if this.courses}}
           {{#each this.courses}}
-            <li>
+            <li class="{{#if this.organizer_is_user}}is-organizer{{/if}}{{#if this.participant_is_user}}is-participant{{/if}}">
                 <div class="course-header">
                   <p>{{this.startTime}}</p>
-                  <p>{{category}}</p>
+                  <p>{{this.category}}</p>
                 </div>
                 <h5>{{this.courseName}}</h5>
                 <div class="btn-white"><a href='/courses/{{this._id}}'>Show Details</a></div>
