@@ -134,10 +134,18 @@ router.post('/courses', (req, res, next) => {
       .populate('courseOwner')
       .populate('participants')
       .then(coursesFromDB => {
-        res.render('courses/calendar', {
-          calendar: formatCourses(coursesFromDB, dates, req.session.currentUser._id, selectedDay),
-          layout: false
-        });
+        if(req.session.currentUser){
+          res.render('courses/calendar', {
+            calendar: formatCourses(coursesFromDB, dates, req.session.currentUser._id, selectedDay),
+            layout: false
+          });
+        }else{
+          res.render('courses/calendar', {
+            calendar: formatCourses(coursesFromDB, dates, selectedDay),
+            layout: false
+          });
+        }
+        
       })
       .catch(err => next(err))
 
@@ -157,10 +165,19 @@ router.post('/courses', (req, res, next) => {
       .populate('courseOwner')
       .populate('participants')
       .then(coursesFromDB => {
-        res.render('courses/calendar', {
-          calendar: formatCourses(coursesFromDB, dates, req.session.currentUser._id),
-          layout: false
-        })
+        console.log(req.session.currentUser)
+        if(req.session.currentUser){
+          res.render('courses/calendar', {
+            calendar: formatCourses(coursesFromDB, dates, req.session.currentUser._id),
+            layout: false
+          })
+        } else {
+          res.render('courses/calendar', {
+            calendar: formatCourses(coursesFromDB, dates),
+            layout: false
+          })
+        }
+        
       })
       .catch(err => next(err))
   }
