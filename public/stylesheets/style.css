@@ -252,6 +252,11 @@ nav{
   padding-bottom: 10px;
   color: #0f1960;
 }
+
+#go-back {
+  margin-top: 20px;
+}
+
 /* -------------------- */
 /* ----- SEARCHBAR ---- */
 /* -------------------- */

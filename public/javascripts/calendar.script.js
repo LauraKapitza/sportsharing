@@ -1,6 +1,11 @@
-////// TIPPS ANTOINE POUR APPLIQUER JS COTE CLIENT SUR CERTAINES PAGE /////
-
 const pathname = new URL(location.href).pathname
+
+let goBackBtn = document.getElementById('go-back');
+  if (goBackBtn) {
+    goBackBtn.addEventListener('click', () => {
+      window.history.back();
+    })
+  }
 
 if (pathname === '/courses') {
 
