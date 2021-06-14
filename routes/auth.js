@@ -97,7 +97,7 @@ router.post('/login', (req, res, next) => {
         return;
       } else if (bcryptjs.compareSync(password, user.passwordHash)) {
         req.session.currentUser = user;
-        console.log("route post login",req.session.currentUser)
+        // console.log("route post login",req.session.currentUser)
         res.redirect('/courses');
       } else {
         res.render('auth/login', { errorMessage: 'Incorrect password.' });
@@ -200,7 +200,7 @@ router.get('/userProfile/delete', routeGuard, (req, res, next) => {
 
   User.findByIdAndRemove(req.session.currentUser._id)
     .then(() => {
-      console.log('destruction sessison immini')
+      // console.log('destruction sessison immini')
       req.session.destroy();
       res.redirect('/')
     })

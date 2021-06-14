@@ -165,7 +165,6 @@ router.post('/courses', (req, res, next) => {
       .populate('courseOwner')
       .populate('participants')
       .then(coursesFromDB => {
-        console.log(req.session.currentUser)
         if(req.session.currentUser){
           res.render('courses/calendar', {
             calendar: formatCourses(coursesFromDB, dates, req.session.currentUser._id),
