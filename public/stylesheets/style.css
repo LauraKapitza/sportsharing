@@ -27,7 +27,7 @@ nav{
 }
 
 .nav-wrapper {
-  width: 80vw; max-width: 1200px;
+  width: 90vw; max-width: 1200px;
   display: flex;
   justify-content: space-between;
   align-items: center;
@@ -255,6 +255,7 @@ nav{
 
 #go-back {
   margin-top: 20px;
+  color: #0f1960;
 }
 
 /* -------------------- */
