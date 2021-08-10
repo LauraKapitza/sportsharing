@@ -22,22 +22,28 @@ function formatDate(date) {
   let dd = String(date.getDate());
   let mm = String(date.getMonth() + 1);
   let yy = String(date.getFullYear());
-  
+
   if (mm.length < 2) mm = '0' + mm;
   if (dd.length < 2) dd = '0' + dd;
-  
+
   return `${dd}/${mm}/${yy}`
 }
 
 function datesOfWeek(monday) {
   let _monday = new Date(monday);
   const weekArr = [];
-  for(i=0; i<7; i++) {
+  for (i = 0; i < 7; i++) {
     let diff = _monday.getDate() - (_monday.getDay() - 1) + i;
     let day = new Date(_monday.setDate(diff))
     weekArr.push(formatDate(day))
   }
   return weekArr;
+}
+
+function timeToMinutes(myTime) {
+  let hm = myTime.split(':');
+  let minutes = Number(hm[0] * 60) + Number(hm[1]);
+  return minutes
 }
 
 function formatCourses(coursesFromDB, dates, currentUser, specificDay) {
@@ -49,7 +55,7 @@ function formatCourses(coursesFromDB, dates, currentUser, specificDay) {
       dayName: WEEKDAYS[index]
     })
   }
-  
+
   coursesFromDB.forEach(course => {
     let day = course.date.toString().slice('', 3);
     // get the index of the current day, 0 is monday
@@ -74,16 +80,22 @@ function formatCourses(coursesFromDB, dates, currentUser, specificDay) {
 
     results[index].courses.push(_course);
   });
-
+  
   // assign the date to each day.
   results.map((el, k) => el.date = dates[k])
+  
+  //Sort courses of the day per startTime
+  results.map(dayOfWeek => {
+    const byValue = (a, b) => timeToMinutes(a.startTime) - timeToMinutes(b.startTime);
+    dayOfWeek.courses.sort(byValue) 
+  })
 
   // handle search bar cases where we need only one result
   // find in 'results' the day with the date of 'specificDay'
   // return this result only
-  if (specificDay){
+  if (specificDay) {
     for (let index = 0; index < results.length; index++) {
-      if (results[index].date == formatDate(specificDay)){
+      if (results[index].date == formatDate(specificDay)) {
         return [results[index]]
       }
     }
@@ -119,33 +131,35 @@ router.post('/courses', (req, res, next) => {
     let diff = day.getDate() - day.getDay() + (day.getDay() === 0 ? -6 : 1)
     firstDay = new Date(day.setDate(diff))
     let dates = datesOfWeek(firstDay)
-    
+
     let selectedDay = new Date(req.body.date);
     lastDay = new Date(req.body.date);
-    lastDay.setDate(lastDay.getDate()+1);
+    lastDay.setDate(lastDay.getDate() + 1);
 
-    Courses.find({$and:[
-      {date: {$gte: selectedDay}}, 
-      {date: {$lt: lastDay}},
-      {startTime: {$gte: req.body.startTime}},
-      {category: req.body.category},
-      {city: req.body.location}
-    ]})
+    Courses.find({
+      $and: [
+        { date: { $gte: selectedDay } },
+        { date: { $lt: lastDay } },
+        { startTime: { $gte: req.body.startTime } },
+        { category: req.body.category },
+        { city: req.body.location }
+      ]
+    })
       .populate('courseOwner')
       .populate('participants')
       .then(coursesFromDB => {
-        if(req.session.currentUser){
+        if (req.session.currentUser) {
           res.render('courses/calendar', {
             calendar: formatCourses(coursesFromDB, dates, req.session.currentUser._id, selectedDay),
             layout: false
           });
-        }else{
+        } else {
           res.render('courses/calendar', {
             calendar: formatCourses(coursesFromDB, dates, selectedDay),
             layout: false
           });
         }
-        
+
       })
       .catch(err => next(err))
 
@@ -165,7 +179,7 @@ router.post('/courses', (req, res, next) => {
       .populate('courseOwner')
       .populate('participants')
       .then(coursesFromDB => {
-        if(req.session.currentUser){
+        if (req.session.currentUser) {
           res.render('courses/calendar', {
             calendar: formatCourses(coursesFromDB, dates, req.session.currentUser._id),
             layout: false
@@ -176,7 +190,7 @@ router.post('/courses', (req, res, next) => {
             layout: false
           })
         }
-        
+
       })
       .catch(err => next(err))
   }
@@ -197,8 +211,8 @@ router.get('/courses/add', (req, res, next) => {
 //Route post pour la création d'un nouveau cours
 router.post('/courses/add', (req, res, next) => {
   if (!req.session.currentUser) {
-    res.render('auth/login', { 
-      errorMessage: 'Please log in to add a course.' 
+    res.render('auth/login', {
+      errorMessage: 'Please log in to add a course.'
     });
   } else {
     Courses.create({
