@@ -23,3 +23,8 @@ You can use these credentials to log in
 - Password:   &nbsp;
 
 Enjoy your training!!
+
+### Contributors:
+
+[Laura Kapitza](https://github.com/LauraKapitza)
+[Julien Leblanc](https://github.com/JuLblc)
