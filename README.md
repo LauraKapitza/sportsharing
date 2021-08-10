@@ -10,8 +10,10 @@ Sportsharing is the web application we pair programmed to put to work the skills
 ### Pitch:
 
 You want to exercise in a flexible way?
+
 &nbsp;
 You want to do sports in group, but your friends are not motivated?
+
 &nbsp;
 You want to discover new sports?
 
