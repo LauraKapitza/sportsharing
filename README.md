@@ -9,13 +9,9 @@ Sportsharing is the web application we pair programmed to put to work the skills
 
 ### Pitch:
 
-You want to exercise in a flexible way?
-
-&nbsp;
-You want to do sports in group, but your friends are not motivated?
-
-&nbsp;
-You want to discover new sports?
+- You want to exercise in a flexible way?
+- You want to do sports in group, but your friends are not motivated?
+- You want to discover new sports?
 
 **→ Sportsharing is made for you !**
 
@@ -27,9 +23,3 @@ You can use these credentials to log in
 - Password:   &nbsp;
 
 Enjoy your training!!
-
-
-
-
-
-
