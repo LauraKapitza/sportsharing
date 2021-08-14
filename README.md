@@ -5,7 +5,9 @@
 ## Introduction
 Sportsharing is the web application we pair programmed to put to work the skills we had acquired during Module 2 (NodeJS, ExpressJS, Handlebars, MongoDB & Mongoose).
 
-![Sportsharing home mobile](https://raw.githubusercontent.com/LauraKapitza/sportsharing/main/public/images/sportsharing_mobil.png)
+<div class="pict-readme">
+<img src="https://raw.githubusercontent.com/LauraKapitza/sportsharing/main/public/images/sportsharing_mobil.png" alt="Sportsharing home mobile" width="400"/>
+</div>
 
 ### Pitch:
 
@@ -19,8 +21,8 @@ Sportsharing is the web application we pair programmed to put to work the skills
 
 You can use these credentials to log in
 
-- Login:    donkey@kong.com &nbsp;
-- Password:   &nbsp;
+- Login:&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;donkey@kong.com
+- Password:&nbsp;&nbsp;&nbsp;&nbsp;Toto123!
 
 Enjoy your training!!
 
