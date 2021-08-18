@@ -322,9 +322,12 @@ function dateConvertion(date) {
 
 router.get('/courses/:id', (req, res, next) => {
   Courses.findById(req.params.id)
-    .populate('courseOwner')
-    .populate('participants')
-    .then(courseFromDB => {
+  .populate('courseOwner')
+  .populate('participants')
+  .then(courseFromDB => {
+      console.log('max participant',courseFromDB.maxParticipants)
+      console.log('participants',courseFromDB.participants.length)
+      console.log('diff',courseFromDB.maxParticipants - courseFromDB.participants.length)
       //0. User non connecté    
       if (!req.session.currentUser) {
         res.render('auth/login', { errorMessage: 'Please log in to access course details.' });
@@ -347,7 +350,17 @@ router.get('/courses/:id', (req, res, next) => {
           user: req.session.currentUser,
           userSignUp: true
         })
-        //3. User != Participant && != Owner => il peut s'inscrire
+        //3. No more free space
+      } else if (courseFromDB.maxParticipants - courseFromDB.participants.length === 0){
+        console.log('no more space')    
+        res.render('courses/details', {
+          course: courseFromDB,
+          convertedDate: dateConvertion(courseFromDB.date),
+          spaceTaken: courseFromDB.maxParticipants - courseFromDB.participants.length,
+          user: req.session.currentUser,
+          isFull:true
+        })
+        //4. User != Participant && != Owner => il peut s'inscrire
       } else {
         res.render('courses/details', {
           course: courseFromDB,

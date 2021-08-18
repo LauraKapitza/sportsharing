@@ -4,8 +4,7 @@ const mongoose = require('mongoose');
 const User = require('../models/User.model');
 const Courses = require('../models/Course.model');
 
-// const MONGODB_URI = process.env.MONGODB_URI || 'mongodb://localhost/sportsharing';
-const MONGODB_URI = 'mongodb+srv://admin:admin@cluster0.vup2r.mongodb.net/sportsharing'
+const MONGODB_URI = process.env.MONGODB_URI || 'mongodb://localhost/sportsharing';
 
 console.log('mongoUri', MONGODB_URI)
 

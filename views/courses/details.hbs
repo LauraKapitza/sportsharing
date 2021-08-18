@@ -55,18 +55,26 @@
     <a href='/courses/{{course.id}}/edit'>Edit</a>
   </div>
   {{else}}
-  {{#if userSignUp}}
-  <form id="unsubscribe-course" action="/courses/{{course.id}}/unsubscribe" method="POST">
-    <div class="btn-red">
-      <button>Unsubscribe Course</button>
-    </div>
-  </form>
-  {{else}}
-  <form id="join-course" action="/courses/{{course.id}}/join" method="POST">
-    <div class="btn-blue">
-      <button>Join Course</button>
-    </div>    
-  </form>
-  {{/if}}
+    {{#if userSignUp}}
+    <form id="unsubscribe-course" action="/courses/{{course.id}}/unsubscribe" method="POST">
+      <div class="btn-red">
+        <button>Unsubscribe Course</button>
+      </div>
+    </form>
+    {{else}}
+      {{#if isFull}}
+      <form id="join-course">
+        <div class="btn-red">
+          <button disabled='true'>Course is full</button>
+        </div>    
+      </form>      
+      {{else}}
+      <form id="join-course" action="/courses/{{course.id}}/join" method="POST">
+        <div class="btn-blue">
+          <button>Join Course</button>
+        </div>    
+      </form>
+      {{/if}}
+    {{/if}}
   {{/if}}
 </div>
