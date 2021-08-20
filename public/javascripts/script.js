@@ -2,45 +2,53 @@
 ////////////////////////////////////////////////////////////////////////
 //////////////// CHECK TIME IS NOT IN THE PAST /////////////////////////
 ////////////////////////////////////////////////////////////////////////
-let $searchDate = document.getElementById("input-date");
-let $searchTime = document.getElementById("input-time");
-
 function twoDigitsNumber(myTime) {
   return myTime.toString().length === 2 ? myTime.toString() : "0" + myTime.toString();
 }
 
-// CHECK IF ELEMENT IS ON THE PAGE
-if ($searchDate) {
+function setInputFields() {
+  let $searchDate = document.getElementById("input-date");
+  let $searchTime = document.getElementById("input-time");
 
-  let today = new Date(new Date().getTime() - new Date().getTimezoneOffset() * 60000).toISOString().split("T")[0];
-  let tomorrow = new Date(new Date().getTime() + (1000 * 60 * 60 * 24) - new Date().getTimezoneOffset() * 60000).toISOString().split("T")[0];
+  // CHECK IF ELEMENT IS ON THE PAGE
+  if ($searchDate) {
+    console.log('try to reset')
+    let today = new Date(new Date().getTime() - new Date().getTimezoneOffset() * 60000).toISOString().split("T")[0];
+    let tomorrow = new Date(new Date().getTime() + (1000 * 60 * 60 * 24) - new Date().getTimezoneOffset() * 60000).toISOString().split("T")[0];
 
-  $searchDate.setAttribute("min", today);
-  $searchDate.setAttribute("value", today);
+    $searchDate.setAttribute("min", today);
+    $searchDate.setAttribute("value", today);
+    console.log('searchdate',$searchDate)
 
-  let now = new Date();
-  let timeNow = twoDigitsNumber(now.getHours()) + ":" + twoDigitsNumber(now.getMinutes());
+    let now = new Date();
+    let timeNow = twoDigitsNumber(now.getHours()) + ":" + twoDigitsNumber(now.getMinutes());
 
-  //Default min & max time values
-  $searchTime.setAttribute("min", "06:00");
-  $searchTime.setAttribute("max", "22:00");
+    //Default min & max time values
+    $searchTime.setAttribute("min", "06:00");
+    $searchTime.setAttribute("max", "22:00");
 
-  //Gestion de l'affichage par défault en fonction de l'heure
-  if (now.getHours() < 6) {
-    $searchTime.setAttribute("value", "06:00");
-  } else if (now.getHours() >= 22) {
-    $searchTime.setAttribute("value", "06:00");
-    $searchDate.setAttribute("value", tomorrow);
-  } else {
-    $searchTime.setAttribute("value", timeNow);
-    $searchTime.setAttribute("min", timeNow);
-  }
-
-  $searchDate.addEventListener('change', (e) => {
-    if ($searchDate.value > today) {
-      $searchTime.setAttribute("min", "06:00");
+    //Gestion de l'affichage par défault en fonction de l'heure
+    if (now.getHours() < 6) {
+      $searchTime.setAttribute("value", "06:00");
+    } else if (now.getHours() >= 22) {
+      $searchTime.setAttribute("value", "06:00");
+      $searchDate.setAttribute("value", tomorrow);
+    } else {
+      $searchTime.setAttribute("value", timeNow);
+      $searchTime.setAttribute("min", timeNow);
     }
-  });
+
+    $searchDate.addEventListener('change', (e) => {
+      if ($searchDate.value > today) {
+        $searchTime.setAttribute("min", "06:00");
+      }
+    });
+  }
+}
+
+function resetFields(){
+  let $searchForm = document.getElementById("searchbar-form");
+  $searchForm.reset();
 }
 ////////////////////////////////////////////////////////////////////////
 /////////////////// WRITE 'PARTICIPANTS:' IN TABLE /////////////////////
@@ -75,7 +83,7 @@ let $form = document.querySelector('.form');
 let $calendar = document.querySelector('.calendar-container');
 let $picture = document.querySelector('.picture');
 
-let $arrHtmlEl = [$searchbar,$howTo,$form,$calendar];
+let $arrHtmlEl = [$searchbar, $howTo, $form, $calendar];
 
 function displayMenu() {
   //Affichage menu au click sur burger
@@ -91,6 +99,10 @@ $burgerCheckbox.addEventListener('change', () => {
 
 window.addEventListener('resize', () => {
   window.innerWidth > 900 ? $menu.style.display = "block" : displayMenu();
-  $arrHtmlEl.map($el => $el ? (window.innerWidth > 900 ? $el.style.display = "block" : displayMenu()): "");
-  $picture ? (window.innerWidth > 900 ? $picture .style.display = "flex" : displayMenu()): "";
+  $arrHtmlEl.map($el => $el ? (window.innerWidth > 900 ? $el.style.display = "block" : displayMenu()) : "");
+  $picture ? (window.innerWidth > 900 ? $picture.style.display = "flex" : displayMenu()) : "";
+});
+
+window.addEventListener('load', () => {
+  setInputFields()
 });

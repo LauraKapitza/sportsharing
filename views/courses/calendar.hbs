@@ -1,7 +1,7 @@
 <section class='course-wrapper'>
   {{#each calendar}}
     <article class='day-slot'>
-
+    {{#if this.isNotExpired}}
       <h4>{{this.dayName}}</h4>
       <p>{{this.date}}</p>
       <ul>
@@ -26,6 +26,7 @@
             </li>
         {{/if}}
       </ul>
+    {{/if}}
     </article>
   {{/each}}
 </section> 

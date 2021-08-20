@@ -23,7 +23,12 @@
     </div>
 
     <label class="searchbar-label">
-      <input type="text" name="location" placeholder="Where?" />
+      <select class='searchbar-field' name="location" required>
+        <option value="">--Please choose a city--</option>
+        {{#each cities}}
+        <option value="{{this}}">{{this}}</option>
+        {{/each}}
+      </select>
     </label>
 
     <div class="nav-btn-container search-btn-container">

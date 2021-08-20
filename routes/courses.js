@@ -46,13 +46,23 @@ function timeToMinutes(myTime) {
   return minutes
 }
 
+function checkDateIsNotExpired(date) {
+  let dd = date.slice(0, 2)
+  let mm = date.slice(3, 5);
+  let yy = date.slice(6);
+
+  let dateToCheck = new Date(`${yy}/${mm}/${dd}`)
+  return dateToCheck.getTime() + (24 * 60 * 60 * 1000) - Date.now() > 0 ? true : false;
+}
+
 function formatCourses(coursesFromDB, dates, currentUser, specificDay) {
   let results = []
   for (let index = 0; index < 7; index++) {
     results.push({
       courses: [],
       date: dates[index],
-      dayName: WEEKDAYS[index]
+      dayName: WEEKDAYS[index],
+      isNotExpired: checkDateIsNotExpired(dates[index])
     })
   }
 
@@ -80,14 +90,14 @@ function formatCourses(coursesFromDB, dates, currentUser, specificDay) {
 
     results[index].courses.push(_course);
   });
-  
+
   // assign the date to each day.
   results.map((el, k) => el.date = dates[k])
-  
+
   //Sort courses of the day per startTime
   results.map(dayOfWeek => {
     const byValue = (a, b) => timeToMinutes(a.startTime) - timeToMinutes(b.startTime);
-    dayOfWeek.courses.sort(byValue) 
+    dayOfWeek.courses.sort(byValue)
   })
 
   // handle search bar cases where we need only one result
@@ -112,9 +122,11 @@ function formatCourses(coursesFromDB, dates, currentUser, specificDay) {
 router.get('/courses', (req, res, next) => {
   Courses.find()
     .then(coursesFromDB => {
+      let cities = [...new Set(coursesFromDB.map(course => course.city))];
       const data = {
         courses: coursesFromDB,
-        categories: CATEGORIES
+        categories: CATEGORIES,
+        cities: cities
       }
       if (req.session.currentUser) data.user = req.session.currentUser;
       res.render('courses/courses', data)
@@ -322,12 +334,9 @@ function dateConvertion(date) {
 
 router.get('/courses/:id', (req, res, next) => {
   Courses.findById(req.params.id)
-  .populate('courseOwner')
-  .populate('participants')
-  .then(courseFromDB => {
-      console.log('max participant',courseFromDB.maxParticipants)
-      console.log('participants',courseFromDB.participants.length)
-      console.log('diff',courseFromDB.maxParticipants - courseFromDB.participants.length)
+    .populate('courseOwner')
+    .populate('participants')
+    .then(courseFromDB => {
       //0. User non connecté    
       if (!req.session.currentUser) {
         res.render('auth/login', { errorMessage: 'Please log in to access course details.' });
@@ -351,14 +360,13 @@ router.get('/courses/:id', (req, res, next) => {
           userSignUp: true
         })
         //3. No more free space
-      } else if (courseFromDB.maxParticipants - courseFromDB.participants.length === 0){
-        console.log('no more space')    
+      } else if (courseFromDB.maxParticipants - courseFromDB.participants.length === 0) {
         res.render('courses/details', {
           course: courseFromDB,
           convertedDate: dateConvertion(courseFromDB.date),
           spaceTaken: courseFromDB.maxParticipants - courseFromDB.participants.length,
           user: req.session.currentUser,
-          isFull:true
+          isFull: true
         })
         //4. User != Participant && != Owner => il peut s'inscrire
       } else {

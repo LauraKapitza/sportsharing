@@ -61,6 +61,12 @@ if (pathname === '/courses') {
     let weekdays = daysOfWeek(firstday);
     const [monday, tuesday, wednesday, thursday, friday, saturday, sunday] = weekdays
 
+    //Can't update week in the past
+    if (monday.getTime() < Date.now()){
+      document.querySelector('.btn-previous-week').style.visibility = 'hidden';
+    } else {
+      document.querySelector('.btn-previous-week').style.visibility = 'visible';
+    }
     
     let firstDayFormatted = getFormattedDate(monday);
     let lastDayFormatted = getFormattedDate(sunday);
@@ -91,6 +97,7 @@ if (pathname === '/courses') {
     let date = new Date(`${arr[2]}/${arr[1]}/${arr[0]}`);
     let nextWeek = startOfNextWeek(date);
     updateWeek(nextWeek);
+    resetFields();
   });
 
   document.querySelector('.btn-previous-week').addEventListener('click', () => {
@@ -98,6 +105,7 @@ if (pathname === '/courses') {
     let date = new Date(`${arr[2]}/${arr[1]}/${arr[0]}`);
     let previousWeek = startOfPreviousWeek(date);
     updateWeek(previousWeek);
+    resetFields();
   });
 
 
@@ -113,5 +121,4 @@ if (pathname === '/courses') {
       .then((response) => updateCalendar(response.data))
       .catch(err => console.log(`Error while sending the week dates: ${err}`))
   }, false);
-
 }
