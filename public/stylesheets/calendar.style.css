@@ -10,7 +10,7 @@
 
 .scroll {
   position: fixed;
-  top: 0px;
+  top: 51px;
   left: 0; right: 0; /*Centrage horizontal*/
   background-color: white;
   padding-bottom: 10px;
@@ -114,8 +114,6 @@
 .course-wrapper li.is-participant h5{
   color: #7cd437;
 }
-
-
 
 .course-wrapper h4 {
   padding: 15px 0 5px;

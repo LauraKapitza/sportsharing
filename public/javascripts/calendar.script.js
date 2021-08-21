@@ -84,23 +84,29 @@ if (pathname === '/courses') {
   ////////////////////////////////////////////////////////////////////////
   /////////////////////// EVENT LISTENERS ////////////////////////////////
   ////////////////////////////////////////////////////////////////////////
-  // window.addEventListener('scroll', () => {
+  window.addEventListener('scroll', () => {
    
-  //   let element = document.getElementById("test");
-  //   console.log('scrollTop2',document.documentElement.scrollTop)
-  //   if (document.documentElement.scrollTop > 310) {
-  //     element.classList.add("scroll");
-  //   }
-  //   else {
-  //     element.classList.remove("scroll");
-  //   }
-  // })
+    let $calendarHeader = document.getElementById("calendar-header");
+    let $courseList = document.getElementById("course-list");
+
+    if (document.documentElement.scrollTop > 90 && document.documentElement.clientWidth > 900) {
+      $calendarHeader.classList.add("scroll");
+      $courseList.style.marginTop = "120px";
+    }
+    else if (document.documentElement.scrollTop > 270 && document.documentElement.clientWidth < 900) {
+      $calendarHeader.classList.add("scroll");
+      $courseList.style.marginTop = "120px";
+    }
+    else {
+      $calendarHeader.classList.remove("scroll");
+      $courseList.style.marginTop = "0px";
+    }
+  })
 
   window.addEventListener('load', () => {
     let today = new Date()
     updateWeek(today)
   })
-
 
   //WEEK BTN
   document.querySelector('.btn-next-week').addEventListener('click', () => {
