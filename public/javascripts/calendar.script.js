@@ -1,11 +1,11 @@
 const pathname = new URL(location.href).pathname
 
 let goBackBtn = document.getElementById('go-back');
-  if (goBackBtn) {
-    goBackBtn.addEventListener('click', () => {
-      window.history.back();
-    })
-  }
+if (goBackBtn) {
+  goBackBtn.addEventListener('click', () => {
+    window.history.back();
+  })
+}
 
 if (pathname === '/courses') {
 
@@ -25,31 +25,31 @@ if (pathname === '/courses') {
     let dd = String(date.getDate());
     let mm = String(date.getMonth() + 1);
     let yy = String(date.getFullYear());
-    
+
     if (mm.length < 2) mm = '0' + mm;
     if (dd.length < 2) dd = '0' + dd;
-    
+
     return `${dd}/${mm}/${yy}`
   }
 
   // GET FIRST DAY OF NEXT WEEK
-  function startOfNextWeek(firstDay){
+  function startOfNextWeek(firstDay) {
     let startdate = new Date(firstDay.getTime() + 24 * 60 * 60 * 1000)
-    let dateFormatted = new Date(startdate.getFullYear(), startdate.getMonth(), startdate.getDate()+6);
+    let dateFormatted = new Date(startdate.getFullYear(), startdate.getMonth(), startdate.getDate() + 6);
     return dateFormatted;
   }
 
   // GET FIRST DAY OF PREVIOUS WEEK
-  function startOfPreviousWeek(firstDay){
+  function startOfPreviousWeek(firstDay) {
     let startdate = new Date(firstDay.getTime() - 24 * 60 * 60 * 1000)
-    let dateFormatted = new Date(startdate.getFullYear(), startdate.getMonth(), startdate.getDate()-6);
+    let dateFormatted = new Date(startdate.getFullYear(), startdate.getMonth(), startdate.getDate() - 6);
     return dateFormatted;
   }
 
   //GET DATES OF TUESDAY - SUNDAY
   function daysOfWeek(monday) {
     const weekArr = [];
-    for(i=0; i<7; i++) {
+    for (i = 0; i < 7; i++) {
       let day = monday.getDate() - (monday.getDay() - 1) + i;
       weekArr.push(new Date(monday.setDate(day)))
     }
@@ -62,29 +62,40 @@ if (pathname === '/courses') {
     const [monday, tuesday, wednesday, thursday, friday, saturday, sunday] = weekdays
 
     //Can't update week in the past
-    if (monday.getTime() < Date.now()){
+    if (monday.getTime() < Date.now()) {
       document.querySelector('.btn-previous-week').style.visibility = 'hidden';
     } else {
       document.querySelector('.btn-previous-week').style.visibility = 'visible';
     }
-    
+
     let firstDayFormatted = getFormattedDate(monday);
     let lastDayFormatted = getFormattedDate(sunday);
 
     document.querySelector('.current-week').innerHTML = `${firstDayFormatted} - ${lastDayFormatted}`;
-    
+
     axios.post('/courses', {
       firstday: firstDayFormatted,
       lastday: lastDayFormatted
     })
-    .then((response) => updateCalendar(response.data))
-    .catch(err => console.log(`Error while sending the week dates: ${err}`))
+      .then((response) => updateCalendar(response.data))
+      .catch(err => console.log(`Error while sending the week dates: ${err}`))
   }
-
 
   ////////////////////////////////////////////////////////////////////////
   /////////////////////// EVENT LISTENERS ////////////////////////////////
   ////////////////////////////////////////////////////////////////////////
+  // window.addEventListener('scroll', () => {
+   
+  //   let element = document.getElementById("test");
+  //   console.log('scrollTop2',document.documentElement.scrollTop)
+  //   if (document.documentElement.scrollTop > 310) {
+  //     element.classList.add("scroll");
+  //   }
+  //   else {
+  //     element.classList.remove("scroll");
+  //   }
+  // })
+
   window.addEventListener('load', () => {
     let today = new Date()
     updateWeek(today)

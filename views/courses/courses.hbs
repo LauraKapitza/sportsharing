@@ -3,12 +3,12 @@
 {{> searchbar}}
 
 <div class="calendar-container">
+  <div id='test' class='calendar-header'>
   {{#if user}}
     <h2>Your Course Calendar</h2> 
   {{else}}
     <h2>Course Calendar</h2> 
   {{/if}}
-  <div class='calendar-header'>
     <div class="week-btn">
       <button class='btn-previous-week'><</button>
       <p id = "date-week" class='current-week'>e</p>

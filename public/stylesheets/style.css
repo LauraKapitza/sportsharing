@@ -20,10 +20,15 @@ button{
 /* -------------------- */
 
 nav{
-  padding:5px;
+  position: fixed;
+  padding: 5px;
   display: flex;
   justify-content: center;
   border-bottom: solid 1px #e1811f;
+  left: 0;
+  right: 0;
+  top: 0;
+  background-color: white;
 }
 
 .nav-wrapper {
@@ -265,11 +270,13 @@ nav{
   width: 300px;
   margin-left: auto; margin-right: auto;
   padding-bottom: 20px;
+  margin-top: 75px;
 }
 @media (min-width:900px) {
   .form-searchbar{
     width: 100%;
     padding-top: 20px;
+    margin-top: 65px;
   }
   .form-searchbar h2{
     display: none;

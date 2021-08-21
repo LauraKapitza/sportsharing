@@ -12,13 +12,11 @@ function setInputFields() {
 
   // CHECK IF ELEMENT IS ON THE PAGE
   if ($searchDate) {
-    console.log('try to reset')
     let today = new Date(new Date().getTime() - new Date().getTimezoneOffset() * 60000).toISOString().split("T")[0];
     let tomorrow = new Date(new Date().getTime() + (1000 * 60 * 60 * 24) - new Date().getTimezoneOffset() * 60000).toISOString().split("T")[0];
 
     $searchDate.setAttribute("min", today);
     $searchDate.setAttribute("value", today);
-    console.log('searchdate',$searchDate)
 
     let now = new Date();
     let timeNow = twoDigitsNumber(now.getHours()) + ":" + twoDigitsNumber(now.getMinutes());

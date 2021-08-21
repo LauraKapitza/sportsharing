@@ -8,6 +8,14 @@
   align-items: center;
 }
 
+.scroll {
+  position: fixed;
+  top: 0px;
+  left: 0; right: 0; /*Centrage horizontal*/
+  background-color: white;
+  padding-bottom: 10px;
+}
+
 .week-btn {
   width: 80vw; 
 }
@@ -199,9 +207,7 @@
   .course-wrapper li {
     margin-right: auto; margin-left: auto;
     width: 80%;
-  }
-
-  
+  }  
 }
 
 
