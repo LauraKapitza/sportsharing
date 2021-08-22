@@ -89,13 +89,13 @@ if (pathname === '/courses') {
     let $calendarHeader = document.getElementById("calendar-header");
     let $courseList = document.getElementById("course-list");
 
-    if (document.documentElement.scrollTop > 90 && document.documentElement.clientWidth > 900) {
+    if (document.documentElement.scrollTop > 84 && document.documentElement.clientWidth > 900) {
       $calendarHeader.classList.add("scroll");
-      $courseList.style.marginTop = "120px";
+      $courseList.style.marginTop = "114px";
     }
-    else if (document.documentElement.scrollTop > 270 && document.documentElement.clientWidth < 900) {
+    else if (document.documentElement.scrollTop > 267 && document.documentElement.clientWidth < 900) {
       $calendarHeader.classList.add("scroll");
-      $courseList.style.marginTop = "120px";
+      $courseList.style.marginTop = "117px";
     }
     else {
       $calendarHeader.classList.remove("scroll");
