@@ -85,7 +85,7 @@ if (pathname === '/courses') {
   /////////////////////// EVENT LISTENERS ////////////////////////////////
   ////////////////////////////////////////////////////////////////////////
   window.addEventListener('scroll', () => {
-   
+
     let $calendarHeader = document.getElementById("calendar-header");
     let $courseList = document.getElementById("course-list");
 
@@ -115,6 +115,12 @@ if (pathname === '/courses') {
     let nextWeek = startOfNextWeek(date);
     updateWeek(nextWeek);
     resetFields();
+    // Scroll to Monday
+    if (document.documentElement.scrollTop > 84 && document.documentElement.clientWidth > 900) {
+      document.documentElement.scrollBy(0,84-document.documentElement.scrollTop)
+    } else if (document.documentElement.scrollTop > 267 && document.documentElement.clientWidth < 900) {
+      document.documentElement.scrollBy(0,267-document.documentElement.scrollTop)
+    }
   });
 
   document.querySelector('.btn-previous-week').addEventListener('click', () => {
@@ -123,6 +129,12 @@ if (pathname === '/courses') {
     let previousWeek = startOfPreviousWeek(date);
     updateWeek(previousWeek);
     resetFields();
+    // Scroll to Monday
+    if (document.documentElement.scrollTop > 84 && document.documentElement.clientWidth > 900) {
+      document.documentElement.scrollBy(0,84-document.documentElement.scrollTop)
+    } else if (document.documentElement.scrollTop > 267 && document.documentElement.clientWidth < 900) {
+      document.documentElement.scrollBy(0,267-document.documentElement.scrollTop)
+    }
   });
 
 
