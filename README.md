@@ -4,13 +4,13 @@
 
 ## Introduction
 Sportsharing is the web application where people can organize sport events with other sport enthusiasts.
-For this project we used the following technologies which we had acquired during Module 2: Node.js (especially Express.js), MongoDB & Mongoose, Handlebars, HTML & CSS.
+For this project we used the following technologies which we had acquired during Module 2: Node.js (especially Express.js), MongoDB & Mongoose, Handlebars, Axios, HTML & CSS.
 
 <div class="pict-readme">
 <img src="https://raw.githubusercontent.com/LauraKapitza/sportsharing/main/public/images/sportsharing_mobil.png" alt="Sportsharing home mobile" width="400"/>
 </div>
 
-### Pitch:
+## Pitch:
 
 - You want to exercise in a flexible way?
 - You want to do sports in group, but your friends are not motivated?
@@ -18,7 +18,7 @@ For this project we used the following technologies which we had acquired during
 
 **→ Sportsharing is made for you !**
 
-### Give it a try:
+## Give it a try:
 
 To try Sportsharing, please go to the website: https://sportsharing.herokuapp.com/
 
@@ -29,7 +29,7 @@ You can use these credentials to log in:
 
 Enjoy your training!!
 
-### Contributors:
+## Contributors:
 
 [Laura Kapitza](https://github.com/LauraKapitza)
 [Julien Leblanc](https://github.com/JuLblc)
