@@ -249,11 +249,14 @@ router.get('/courses/:id/edit', (req, res, next) => {
   Courses.findById(req.params.id)
     .populate('courseOwner')
     .populate('participants')
-    .then(courseFromDB => res.render('courses/edit', {
-      course: courseFromDB,
-      user: req.session.currentUser,
-      categories: CATEGORIES
-    }))
+    .then(courseFromDB => {
+        res.render('courses/edit', {
+        course: courseFromDB,
+        convertedDate: dateConvertionEditCourse(courseFromDB.date),
+        user: req.session.currentUser,
+        categories: CATEGORIES
+      })
+    })
     .catch(err => next(err))
 })
 
@@ -330,6 +333,13 @@ function dateConvertion(date) {
   var month = twoDigitsNumber(date.getMonth() + 1);
   var year = date.getFullYear();
   return day + "-" + month + "-" + year;
+}
+
+function dateConvertionEditCourse(date) {
+  var day = twoDigitsNumber(date.getDate());
+  var month = twoDigitsNumber(date.getMonth() + 1);
+  var year = date.getFullYear();
+  return year + "-" + month + "-" + day;
 }
 
 router.get('/courses/:id', (req, res, next) => {
