@@ -3,24 +3,31 @@
 # Module 2 | Project: Sportsharing
 
 ## Introduction
-Sportsharing is the web application where people can organize sport events with other sport enthusiasts.
-For this project we used the following technologies which we had acquired during Module 2: Node.js (especially Express.js), MongoDB & Mongoose, Handlebars, Axios, HTML & CSS.
 
-<div class="pict-readme">
-<img src="https://raw.githubusercontent.com/LauraKapitza/sportsharing/main/public/images/sportsharing_mobil.png" alt="Sportsharing home mobile" width="400"/>
-</div>
+Module 2 is focused on learning the Backend Framework.</br>
+Project 2 aim is to create and present a full-stack app having users and all CRUD operations.</br>
+
+For this we used the following technologies which we had acquired during this Module: 
+- Node.js (especially Express.js),
+- MongoDB & Mongoose, 
+- Handlebars, 
+- Axios.
 
 ## Pitch:
+
+Sportsharing is the web application where people can organize sport events with other sport enthusiasts.
 
 - You want to exercise in a flexible way?
 - You want to do sports in group, but your friends are not motivated?
 - You want to discover new sports?
 
+<img src="https://raw.githubusercontent.com/LauraKapitza/sportsharing/main/public/images/sportsharing_mobil.png" alt="Sportsharing home mobile" width="350"/> 
+
 **→ Sportsharing is made for you !**
 
 ## Give it a try:
 
-To try Sportsharing, please go to the website: https://sportsharing.herokuapp.com/
+To try Sportsharing, please go to the website: https://sportsharing.herokuapp.com/ or watch the <a href="https://res.cloudinary.com/dwznpgbcd/video/upload/v1629955969/Ironhack-project2:%20Sportsharing/20210825-195657-hvxova07-vfto6xur-s3bs-9duyz1rd-2kaa_QlHVdkAc_iy8jys.mp4">demo</a>
 
 You can use these credentials to log in:
 
@@ -31,5 +38,5 @@ Enjoy your training!!
 
 ## Contributors:
 
-[Laura Kapitza](https://github.com/LauraKapitza)
+[Laura Kapitza](https://github.com/LauraKapitza) </br>
 [Julien Leblanc](https://github.com/JuLblc)
